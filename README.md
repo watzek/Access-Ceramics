@@ -7,7 +7,8 @@ The access ceramics website is maintained by Watzek Digital Initiatives.
 
 
 
-
+### Flip Animations
+The flip animations used in browse.html were adapted from [David Walsh's blog post](https://davidwalsh.name/css-flip) about css flip animations.
 
 
 

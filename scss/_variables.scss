@@ -3,11 +3,27 @@
 // Color overrides
 
 // Set a custom color
-$orange: #f4623a !default;
-$brown: #5c4d42 !default;
+//$orange: #f4623a !default;
+//$brown: #5c4d42 !default;
+$lightpurple: #6400a0;
+$purple: #190028;
+$darkgrey: #666666;
+$ceramicsblue: #6666B1;
+$ceramicspurple: #63397c;
+
+$collection:#6666b1;
+$artist:#6666b1;
+$glazing:#8c66b1;
+$material:#66b1b1;
+$object:#63397c;
+$technique:#7c3973;
+$temperature:#42397c;
+
 
 // Set primary color to orange
-$primary: $orange !default;
+$primary: $ceramicsblue !default;
+$secondary: $ceramicspurple !default;
+$dark: $darkgrey;
 
 // Font overrides
 $font-family-sans-serif: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", 'Noto Color Emoji' !default;

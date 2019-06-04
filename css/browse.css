@@ -1,9 +1,9 @@
 @charset "UTF-8";
-#accessText {
+.accessText {
   color: #63397c;
 }
 
-#ceramicsText {
+.ceramicsText {
   color: #6666B1;
 }
 
@@ -9763,38 +9763,6 @@ hr.light {
   }
 }
 
-header.masthead {
-  padding-top: 10rem;
-  padding-bottom: calc(10rem - 72px);
-  background: linear-gradient(to bottom, #190028 0%, rgba(25, 0, 40, 0.1) 100%), url("../img/bg-masthead.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-size: cover;
-}
-header.masthead h1 {
-  font-size: 2.25rem;
-}
-@media (min-width: 992px) {
-  header.masthead {
-    height: 100vh;
-    min-height: 40rem;
-    padding-top: 72px;
-    padding-bottom: 0;
-  }
-  header.masthead p {
-    font-size: 1.15rem;
-  }
-  header.masthead h1 {
-    font-size: 3rem;
-  }
-}
-@media (min-width: 1200px) {
-  header.masthead h1 {
-    font-size: 3.5rem;
-  }
-}
-
 #portfolio .container-fluid {
   max-width: 1920px;
 }
@@ -9831,4 +9799,101 @@ header.masthead h1 {
   opacity: 1;
 }
 
-/*# sourceMappingURL=creative.css.map */
+header.main-tile {
+  padding-top: 72px;
+  background: linear-gradient(to bottom, #190028 0%, rgba(25, 0, 40, 0.1) 100%), url("../img/collection.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+}
+@media (min-width: 992px) {
+  header.main-tile {
+    height: 40vh;
+    min-height: 30rem;
+    margin-bottom: -2 72px;
+  }
+}
+.artist-tile {
+  background: linear-gradient(to bottom, #6666b1 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
+  background-size: cover;
+}
+
+.glazing-tile {
+  background: linear-gradient(to bottom, #8c66b1 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
+  background-size: cover;
+}
+
+.material-tile {
+  background: linear-gradient(to bottom, #66b1b1 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
+  background-size: cover;
+}
+
+.object-tile {
+  background: linear-gradient(to bottom, #63397c 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
+  background-size: cover;
+}
+
+.technique-tile {
+  background: linear-gradient(to bottom, #7c3973 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
+  background-size: cover;
+}
+
+.temperature-tile {
+  background: linear-gradient(to bottom, #42397c 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
+  background-size: cover;
+}
+
+.tile {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  height: 30vh;
+  position: relative;
+  /* @include media-breakpoint-up(lg) {
+
+  	min-height: 10rem;
+  	margin: 0;
+  } */
+}
+.tile div.titlediv {
+  position: absolute;
+  bottom: 50%;
+  text-align: center;
+  width: 100%;
+}
+.tile h2 {
+  font-size: 2rem;
+}
+
+.flip-container {
+  perspective: 1000px;
+}
+
+.flip-container:hover .flipper, .flip-container.hover .flipper {
+  transform: rotateY(180deg);
+}
+
+.flipper {
+  transition: 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.front, .back {
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.front {
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+/*# sourceMappingURL=browse.css.map */

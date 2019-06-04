@@ -9,7 +9,7 @@
 
 .ceramicsText
 {
-	color: $ceramicsblue;
+	color:$ceramicsblue;
 }
 
 // Import Bootstrap
@@ -18,5 +18,5 @@
 // Import custom styles
 @import "./global.scss";
 @import "./navbar.scss";
-@import "./masthead.scss";
 @import "./portfolio.scss";
+@import "./tile.scss"

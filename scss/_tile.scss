@@ -1,0 +1,107 @@
+header.main-tile{
+  padding-top: #{$navbar-height};// 10rem;
+  // replace the masthead.jpg image in the /img directory to change the image
+  // if the image name change, make sure to update the url path below!
+  background: linear-gradient(to bottom, #{fade-out($purple, 0)} 0%,#{fade-out($purple, .9)} 100%), url('../img/collection.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+  @include media-breakpoint-up(lg) {
+    height: 40vh;
+    min-height: 30rem;
+    margin-bottom: -2#{$navbar-height};//-10rem;
+  }
+  @include media-breakpoint-up(xl) {
+
+  }
+}
+
+.artist-tile
+{
+	background: linear-gradient(to bottom, #{fade-out($artist, 0)} 0%,#{fade-out($darkgrey,.7)} 100%), url('../img/bg-masthead.jpg');
+	background-size: cover;
+}
+.glazing-tile
+{
+	background: linear-gradient(to bottom, #{fade-out($glazing, 0)} 0%,#{fade-out($darkgrey,.7)} 100%), url('../img/bg-masthead.jpg');
+	background-size: cover;
+}
+.material-tile
+{
+	background: linear-gradient(to bottom, #{fade-out($material, 0)} 0%,#{fade-out($darkgrey,.7)} 100%), url('../img/bg-masthead.jpg');
+	background-size: cover;
+}
+.object-tile
+{
+	background: linear-gradient(to bottom, #{fade-out($object, 0)} 0%,#{fade-out($darkgrey,.7)} 100%), url('../img/bg-masthead.jpg');
+	background-size: cover;
+}
+.technique-tile
+{
+	background: linear-gradient(to bottom, #{fade-out($technique, 0)} 0%,#{fade-out($darkgrey,.7)} 100%), url('../img/bg-masthead.jpg');
+	background-size: cover;
+}
+.temperature-tile
+{
+	background: linear-gradient(to bottom, #{fade-out($temperature, 0)} 0%,#{fade-out($darkgrey,.7)} 100%), url('../img/bg-masthead.jpg');
+	background-size: cover;
+}
+
+.tile
+{
+	background-position: center;
+  	background-repeat: no-repeat;
+  	background-attachment: scroll;
+  	height: 30vh;
+  	position:relative;
+  	/* @include media-breakpoint-up(lg) {
+  		
+  		min-height: 10rem;
+  		margin: 0;
+  	} */
+  	div.titlediv
+  	{
+  		position: absolute;
+  		bottom: 50%;
+  		text-align: center;
+  		width: 100%;
+  	}
+  	h2
+	{
+		font-size:2rem;
+	}
+}
+
+.flip-container
+{
+	perspective: 1000px;
+}
+.flip-container:hover .flipper, .flip-container.hover .flipper{
+	transform: rotateY(180deg);
+}
+
+.flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+
+	position: relative;
+}
+
+
+.front, .back {
+	backface-visibility: hidden;
+
+	position: absolute;
+	top:0;
+	left:0;
+}
+
+.front{
+	z-index: 2;
+	transform: rotateY(0deg);
+}
+
+.back{
+	transform: rotateY(180deg);
+}

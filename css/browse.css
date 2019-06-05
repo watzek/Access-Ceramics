@@ -9799,66 +9799,69 @@ hr.light {
   opacity: 1;
 }
 
-header.main-tile {
-  padding-top: 72px;
-  background: linear-gradient(to bottom, #190028 0%, rgba(25, 0, 40, 0.1) 100%), url("../img/collection.jpg");
+body {
+  background: linear-gradient(to bottom, rgba(99, 57, 124, 0.3) 0%, #63397c 100%), url("../img/collection.jpg");
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: scroll;
   background-size: cover;
 }
-@media (min-width: 992px) {
-  header.main-tile {
-    height: 40vh;
-    min-height: 30rem;
-    margin-bottom: -2 72px;
-  }
+
+.info-tile {
+  background: linear-gradient(to bottom, #6666b1 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
 }
+
 .artist-tile {
   background: linear-gradient(to bottom, #6666b1 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
-  background-size: cover;
 }
 
 .glazing-tile {
   background: linear-gradient(to bottom, #8c66b1 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
-  background-size: cover;
 }
 
 .material-tile {
   background: linear-gradient(to bottom, #66b1b1 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
-  background-size: cover;
 }
 
 .object-tile {
   background: linear-gradient(to bottom, #63397c 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
-  background-size: cover;
 }
 
 .technique-tile {
   background: linear-gradient(to bottom, #7c3973 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
-  background-size: cover;
 }
 
 .temperature-tile {
   background: linear-gradient(to bottom, #42397c 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
-  background-size: cover;
+}
+
+#mosaic {
+  margin-top: 5rem;
+  height: calc(100vh - 72px);
+  width: 100%;
+  padding: 0;
 }
 
 .tile {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
-  height: 30vh;
-  position: relative;
-  /* @include media-breakpoint-up(lg) {
+  position: absolute;
+  background-size: cover;
+  height: 100%;
+  margin: 0;
+  /* 
+    	@include media-breakpoint-up(md){//four rows of two
+    		height: calc(100% / 4);	
 
-  	min-height: 10rem;
-  	margin: 0;
-  } */
+    	} 
+    	@include media-breakpoint-up(lg) {//two rows of 4
+    		height: calc(100% / 2);
+    		//min-height: 10rem;
+    	} */
 }
 .tile div.titlediv {
   position: absolute;
-  bottom: 50%;
+  bottom: 0;
   text-align: center;
   width: 100%;
 }
@@ -9875,6 +9878,7 @@ header.main-tile {
 }
 
 .flipper {
+  height: 100%;
   transition: 0.6s;
   transform-style: preserve-3d;
   position: relative;
@@ -9894,6 +9898,7 @@ header.main-tile {
 
 .back {
   transform: rotateY(180deg);
+  background-color: rgba(25, 0, 40, 0.5);
 }
 
 /*# sourceMappingURL=browse.css.map */

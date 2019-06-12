@@ -1,25 +1,4 @@
-<script type="text/javascript">
-	window.onload = function()
-	{
-
-		var pane = document.getElementById('panedisplay');
-		var results = document.getElementsByClassName('paneobj');
-		for (var i = 0; i < results.length; i++) {
-			results[i].onclick = function(){
-				console.log('hey there');
-				pane.src = this.querySelector('.panepic').src;
-			};
-		}
-	}
-
-/*	function findByClassName(children, tag)
-	{
-		for (var i = 0; i < children.length; i++) {
-			if (children[i]
-		}
-	}*/
-
-</script>
+<link rel="stylesheet" type="text/css" href="../css/pane.css">
 
 <div id="content" class="container-fluid">
 	<div class="row h-100">

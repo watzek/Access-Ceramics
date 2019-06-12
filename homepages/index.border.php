@@ -1,6 +1,6 @@
 <?php
 	$NUM_IMG = 105;
-	require('./startbootstrap-creative/classes/mysql.class.php');
+	require('../classes/mysql.class.php');
 	$mydb = new mysql();
 	$images = $mydb->allImages(); 
 	$len = count($images);
@@ -29,16 +29,16 @@
   <title>bordertile</title>
 
   <!-- Font Awesome Icons -->
-  <link href="startbootstrap-creative/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
 
   <!-- Icon -->
-  <link href="startbootstrap-creative/img/a.gif" rel="shortcut icon">
+  <link href="../img/a.gif" rel="shortcut icon">
 
-  <link rel="stylesheet" type="text/css" href="css/bordertile.css">
+  <link rel="stylesheet" type="text/css" href="../css/bordertile.css">
 
 </head>
 
@@ -53,7 +53,7 @@
 		<div class="d-flex flex-column border-container flex-wrap justify-content-around align-items-stretch bg-dark sideborder"> <!-- mid left --></div>
 
 		<div id="main" class=""> <!-- middle -->
-			<h1 class="text-center mt-lg-5 mt-2"><img class="logo-img" src="startbootstrap-creative/img/accessCeramics_logo.png"></h1>
+			<h1 class="text-center mt-lg-5 mt-2"><img class="logo-img" src="../img/accessCeramics_logo.png"></h1>
 			<hr class="invisible my-5" style="max-width:5rem;">
 			<p id="main-text" class="lead text-light mx-auto text-center">
       			accessCeramics is a growing collection of contemporary ceramics images by recognized artists enhancing ceramics education worldwide.
@@ -75,12 +75,12 @@
 
 
   <!-- Bootstrap core JavaScript -->
-  <script src="startbootstrap-creative/vendor/jquery/jquery.min.js"></script>
-  <script src="startbootstrap-creative/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Plugin JavaScript -->
-  <script src="startbootstrap-creative/vendor/jquery-easing/jquery.easing.min.js"></script>
-  <script src="startbootstrap-creative/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+  <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 
 
 </body>

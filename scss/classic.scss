@@ -1,0 +1,108 @@
+
+$ceramicstext: #7f4c38;
+$ceramicstextalt: #96935f;
+$light: #F4F8E7;
+
+$primary:$ceramicstext;
+$secondary:$ceramicstextalt;
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+
+.navbar-toggler
+{
+	visibility:visible;
+	
+	@include media-breakpoint-up(md)
+	{
+		visibility:hidden;
+	}	
+}
+
+body, html
+{
+	height:100%;
+	width:100%;
+	margin:0;
+}
+
+.accessText
+{
+
+	font-weight: bolder;
+    color: $ceramicstext;
+}
+
+.ceramicsText
+{
+	font-weight: bolder;
+	color: $ceramicstextalt;
+}
+
+#news span
+{
+	background-color: $light;
+}
+
+
+#nbar-brand
+{
+	width: 60%;
+	margin-right: 0;
+	@include media-breakpoint-up(sm)
+	{
+		width:initial;
+	}	
+}
+
+.logo-img
+{
+	width: 80%;
+	@include media-breakpoint-up(sm)
+	{
+		width:initial;
+	}
+}
+
+#masthead
+{
+	
+	background: linear-gradient(to bottom, #{fade-out($secondary, .2)} 0%,#{fade-out($primary,.9)} 100%), url(../img/acpics/Lauren-Sandler.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-size: cover;
+	height: 60vh;
+
+	@include media-breakpoint-up(sm)
+	{
+		background: linear-gradient(to bottom, #{fade-out($secondary, .2)} 0%,#{fade-out($primary,.9)} 100%), url(../img/collection.jpg);	
+		background-position: center;
+		background-repeat: no-repeat;
+		background-attachment: scroll;
+		background-size: cover;
+	}
+  	
+}
+
+#info
+{
+	height: 35vh;	
+	@include media-breakpoint-up(sm)
+	{
+		height: calc(40vh - 72px);	
+		div
+		{
+			margin: auto;
+			max-width: 20vw;
+		}
+	}
+	
+}
+
+.divider
+{
+	max-width: 7rem;
+	border-radius:2px;
+}
+
+@import "../node_modules/bootstrap/scss/bootstrap.scss";

@@ -4,24 +4,30 @@ require 'templates.class.php';
 require 'mysql.class.php';
 
 
-class main
+class Main
 {
-	private $body;
+	private $template;
 	private $db;
+	private $args;
 
-	public function __construct()
+	public function __construct($args)
 	{
-		//get body body
-		if(isset($_GET['view'])) $this->body = Templates::getTemplate($_GET['view']);
-		else $this->body = Templates::getTemplate(''); //if no view is set, pass empty string for default template
-
-
+		//if no view is set, default template is returned
+		$this->args = $args;
+		$this->template = new Templates($args['view']);
+		
 		$this->db = new mysql(); 
 	}
 
-	public function printTemplate()
+	public function show()
 	{
-		echo $this->body;
+		$this->template->getHTML();
+		unset($this->template);
+	}
+
+	public function query_db()
+	{
+		$this->db->do_query($this->args);
 	}
 }
 ?>

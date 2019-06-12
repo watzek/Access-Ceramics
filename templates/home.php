@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" href="..\css\browse.css">
+
 <div id="content" class="container-fluid" style="overflow-x: hidden; overflow-y: hidden;">
 	<div class="row h-100">
 		

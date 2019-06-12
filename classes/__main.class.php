@@ -9,7 +9,7 @@ class main
 	private $body;
 	private $db;
 
-	public function __construct()
+	public function __construct($args)
 	{
 		//get body body
 		if(isset($_GET['view'])) $this->body = Templates::getTemplate($_GET['view']);

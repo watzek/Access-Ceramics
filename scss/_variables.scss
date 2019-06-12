@@ -9,10 +9,11 @@ $browse-cardbacks : rgba(25,0,40,.5);
 
 $lightpurple: #6400a0;
 $purple: #190028;
+$dark-purple: $purple;
 $darkgrey: #666666;
 $ceramicsblue: #6666B1;
 $ceramicspurple: #63397c;
-
+$dark : $dark-purple !default;
 
 $search:#ababff;
 $collection:#6b6bb1;
@@ -27,7 +28,7 @@ $temperature:#42397c;
 // Set primary color to orange
 $primary: $ceramicsblue !default;
 $secondary: $ceramicspurple !default;
-$dark: $darkgrey;
+//$dark: $darkgrey;
 
 // Font overrides
 $font-family-sans-serif: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", 'Noto Color Emoji' !default;

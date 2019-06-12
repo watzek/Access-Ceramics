@@ -1,48 +1,59 @@
-body
+$pane-object : rgba(25,0,40,.5);
+
+
+
+
+.bg-pic
 {
-	background: linear-gradient(to bottom, #{fade-out($secondary, .7)} 0%,#{fade-out($secondary,0)} 100%), url('../img/collection.jpg');	
+	background: linear-gradient(to bottom, #{fade-out($purple, 0)} 0%,#{fade-out($secondary,.7)} 100%), url('../img/collection.jpg');	
 	background-position: center;
   	background-repeat: no-repeat;
   	background-size: cover;
 }
 
-.info-tile
+
+.collection-tile
 {
-	background: linear-gradient(to bottom, #{fade-out($artist, 0)} 0%,#{fade-out($darkgrey,.7)} 100%), url('../img/bg-masthead.jpg');
+	background: linear-gradient(to top, #{fade-out($collection, 0)} 0%, #{fade-out($collection, .1)} 25%, #{fade-out($darkgrey,.7)} 100%), url('../img/acpics/45167486162.jpg');	
+}
+
+.search-tile
+{
+	background: linear-gradient(to top, #{fade-out($search, 0)} 0%, #{fade-out($search, .1)} 25%, #{fade-out($darkgrey,.7)} 100%), url('../img/acpics/Luciana-Grazia-Menegazzi.jpg');
 }
 
 .artist-tile
 {
-	background: linear-gradient(to bottom, #{fade-out($artist, 0)} 0%,#{fade-out($darkgrey,.7)} 100%), url('../img/bg-masthead.jpg');
+	background: linear-gradient(to top, #{fade-out($artist, 0)} 0%, #{fade-out($artist, .1)} 25%, #{fade-out($darkgrey,.7)} 100%), url('../img/acpics/23578883568.jpg');
 	
 }
 .glazing-tile
 {
-	background: linear-gradient(to bottom, #{fade-out($glazing, 0)} 0%,#{fade-out($darkgrey,.7)} 100%), url('../img/bg-masthead.jpg');
+	background: linear-gradient(to top, #{fade-out($glazing, 0)} 0%, #{fade-out($glazing, .1)} 25%, #{fade-out($darkgrey,.7)} 100%), url('../img/acpics/Luciana-Grazia-Menegazzi.Alice-in-Wonderland.jpg');
 	
 }
 .material-tile
 {
-	background: linear-gradient(to bottom, #{fade-out($material, 0)} 0%,#{fade-out($darkgrey,.7)} 100%), url('../img/bg-masthead.jpg');
+	background: linear-gradient(to top, #{fade-out($material, 0)} 0%, #{fade-out($material, .1)} 25%, #{fade-out($darkgrey,.7)} 100%), url('../img/acpics/45217378221.jpg');
 	
 }
 .object-tile
 {
-	background: linear-gradient(to bottom, #{fade-out($object, 0)} 0%,#{fade-out($darkgrey,.7)} 100%), url('../img/bg-masthead.jpg');
+	background: linear-gradient(to top, #{fade-out($object, 0)} 0%, #{fade-out($object, .1)} 25%, #{fade-out($darkgrey,.7)} 100%), url('../img/acpics/Hirotake-Imanishi.shell.jpg');
 	
 }
 .technique-tile
 {
-	background: linear-gradient(to bottom, #{fade-out($technique, 0)} 0%,#{fade-out($darkgrey,.7)} 100%), url('../img/bg-masthead.jpg');
+	background: linear-gradient(to top, #{fade-out($technique, 0)} 0%, #{fade-out($technique, .1)} 25%, #{fade-out($darkgrey,.7)} 100%), url('../img/acpics/Lauren-Sandler.jpg');
 	
 }
 .temperature-tile
 {
-	background: linear-gradient(to bottom, #{fade-out($temperature, 0)} 0%,#{fade-out($darkgrey,.7)} 100%), url('../img/bg-masthead.jpg');
+	background: linear-gradient(to top, #{fade-out($temperature, 0)} 0%, #{fade-out($temperature, .1)} 25%, #{fade-out($darkgrey,.7)} 100%), url('../img/acpics/32389990910.jpg');
 	
 }
 
-#mosaic
+#content
 {
 	margin-top: 5rem;
 	height: calc(100vh - #{$navbar-height});
@@ -56,21 +67,11 @@ body
   	background-attachment: scroll;
   	position:absolute;
   	background-size: cover;
+  	//object-fit: contain;
   	//default is 8 rows of 1
   	height: 100%;
   	//min-height: 10rem;
   	margin: 0;
-
-/* 
-  	@include media-breakpoint-up(md){//four rows of two
-  		height: calc(100% / 4);	
-
-  	} 
-  	@include media-breakpoint-up(lg) {//two rows of 4
-  		height: calc(100% / 2);
-  		//min-height: 10rem;
-  	} */
-  	
   	div.titlediv
   	{
   		position: absolute;
@@ -80,7 +81,7 @@ body
   	}
   	h2
 	{
-		font-size:2rem;
+		font-size:1rem;
 	}
 }
 
@@ -88,7 +89,7 @@ body
 {
 	perspective: 1000px;
 }
-.flip-container:hover .flipper, .flip-container.hover .flipper{
+.flip-container:hover .flipper{
 	transform: rotateY(180deg);
 }
 
@@ -96,7 +97,6 @@ body
 	height: 100%;
 	transition: 0.6s;
 	transform-style: preserve-3d;
-
 	position: relative;
 }
 
@@ -117,4 +117,61 @@ body
 .back{
 	transform: rotateY(180deg);
 	background-color: $browse-cardbacks;
+}
+
+
+
+.paneview
+{
+
+	@include media-breakpoint-up(sm) {
+		height: calc( 50vh - ( #{$navbar-height} / 2 ) );
+	}
+	@include media-breakpoint-up(lg) {
+		//height: calc(100vh - #{$navbar-height} );
+		height: 100%;
+	}
+
+}
+
+#panedisplay
+{
+	position:absolute;
+	width:95%;
+	height: auto;
+	object-fit: contain;
+}
+
+.panepic
+{
+	display: flex;
+	display:inline-block;
+	height: auto;
+	max-height: 70%;
+	width: auto;
+	object-fit: contain;
+}
+.paneobj
+{	
+	display:inline-block;
+	margin-left: .5rem;
+	margin-top: 1rem;
+	background-color: $pane-object;
+	border-radius: 5px;
+	text-align: center;
+	height: calc( ( 50vh - #{$navbar-height} ) / 5 );
+
+
+	@include media-breakpoint-up(lg) {
+		height: calc( ( 100vh - #{$navbar-height} ) / 5 );
+	}
+	p.mdata
+	{
+		text-align:center;
+		font-size: 8pt;
+		color: white;
+		@include media-breakpoint-up(lg) {
+			font-size: 12pt;
+		}	
+	}
 }

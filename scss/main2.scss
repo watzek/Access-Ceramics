@@ -1,0 +1,8 @@
+$theme-colors: (
+	"dark": #222222,
+	"primary": #FFFFFF
+);
+
+$enable-gradients : true;
+
+@import "node_modules/bootstrap/scss/bootstrap";

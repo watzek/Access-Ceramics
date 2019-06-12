@@ -1,0 +1,58 @@
+
+/*Dark Brown: #887564*/
+/*Background Brown:#7A6451; */
+/*Pagebody and searchbar lightbeige: #F4F8E7*/
+
+html, body
+{
+	/*background-color: #7A6451;*/
+	margin: 0;
+	height: 100%;
+}
+
+.navbar-light .navbar-nav .nav-link 
+{
+	color: #FFFFFFFF;
+}
+
+.navbar-light .navbar-nav .active>.nav-link
+{
+	color: #AAAAAAAA;	
+}
+
+.bg-light
+{
+	background-color: #FFFFFFFF!important;
+}
+.toprule
+{
+	background-color: #887564;
+}
+.form-control, .btn-outline-success
+{
+	background-color: #FFFFFFFF;
+	color: #7A6451;
+	border-color: #7A6451;
+}
+
+#accessText
+{
+    color: #7f4c38;
+    font-weight: bold;
+}
+
+#ceramicsText
+{
+	color: #96935f;
+	font-weight: bold;
+}
+
+#newsHead
+{
+	background-color: #887564;
+}
+
+#news
+{
+	background-color: #F4F8E7;
+}

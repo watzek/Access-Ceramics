@@ -9799,42 +9799,46 @@ hr.light {
   opacity: 1;
 }
 
-body {
-  background: linear-gradient(to bottom, rgba(99, 57, 124, 0.3) 0%, #63397c 100%), url("../img/collection.jpg");
+.bg-pic {
+  background: linear-gradient(to bottom, #190028 0%, rgba(99, 57, 124, 0.3) 100%), url("../img/collection.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.info-tile {
-  background: linear-gradient(to bottom, #6666b1 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
+.collection-tile {
+  background: linear-gradient(to top, #6b6bb1 0%, rgba(107, 107, 177, 0.9) 25%, rgba(102, 102, 102, 0.3) 100%), url("../img/acpics/45167486162.jpg");
+}
+
+.search-tile {
+  background: linear-gradient(to top, #ababff 0%, rgba(171, 171, 255, 0.9) 25%, rgba(102, 102, 102, 0.3) 100%), url("../img/acpics/Luciana-Grazia-Menegazzi.jpg");
 }
 
 .artist-tile {
-  background: linear-gradient(to bottom, #6666b1 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
+  background: linear-gradient(to top, #6666b1 0%, rgba(102, 102, 177, 0.9) 25%, rgba(102, 102, 102, 0.3) 100%), url("../img/acpics/23578883568.jpg");
 }
 
 .glazing-tile {
-  background: linear-gradient(to bottom, #8c66b1 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
+  background: linear-gradient(to top, #8c66b1 0%, rgba(140, 102, 177, 0.9) 25%, rgba(102, 102, 102, 0.3) 100%), url("../img/acpics/Luciana-Grazia-Menegazzi.Alice-in-Wonderland.jpg");
 }
 
 .material-tile {
-  background: linear-gradient(to bottom, #66b1b1 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
+  background: linear-gradient(to top, #66b1b1 0%, rgba(102, 177, 177, 0.9) 25%, rgba(102, 102, 102, 0.3) 100%), url("../img/acpics/45217378221.jpg");
 }
 
 .object-tile {
-  background: linear-gradient(to bottom, #63397c 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
+  background: linear-gradient(to top, #63397c 0%, rgba(99, 57, 124, 0.9) 25%, rgba(102, 102, 102, 0.3) 100%), url("../img/acpics/Hirotake-Imanishi.shell.jpg");
 }
 
 .technique-tile {
-  background: linear-gradient(to bottom, #7c3973 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
+  background: linear-gradient(to top, #7c3973 0%, rgba(124, 57, 115, 0.9) 25%, rgba(102, 102, 102, 0.3) 100%), url("../img/acpics/Lauren-Sandler.jpg");
 }
 
 .temperature-tile {
-  background: linear-gradient(to bottom, #42397c 0%, rgba(102, 102, 102, 0.3) 100%), url("../img/bg-masthead.jpg");
+  background: linear-gradient(to top, #42397c 0%, rgba(66, 57, 124, 0.9) 25%, rgba(102, 102, 102, 0.3) 100%), url("../img/acpics/32389990910.jpg");
 }
 
-#mosaic {
+#content {
   margin-top: 5rem;
   height: calc(100vh - 72px);
   width: 100%;
@@ -9849,15 +9853,6 @@ body {
   background-size: cover;
   height: 100%;
   margin: 0;
-  /* 
-    	@include media-breakpoint-up(md){//four rows of two
-    		height: calc(100% / 4);	
-
-    	} 
-    	@include media-breakpoint-up(lg) {//two rows of 4
-    		height: calc(100% / 2);
-    		//min-height: 10rem;
-    	} */
 }
 .tile div.titlediv {
   position: absolute;
@@ -9866,7 +9861,7 @@ body {
   width: 100%;
 }
 .tile h2 {
-  font-size: 2rem;
+  font-size: 1rem;
 }
 
 .flip-container {
@@ -9899,6 +9894,58 @@ body {
 .back {
   transform: rotateY(180deg);
   background-color: rgba(25, 0, 40, 0.5);
+}
+
+@media (min-width: 576px) {
+  .paneview {
+    height: calc( 50vh - ( 72px / 2 ) );
+  }
+}
+@media (min-width: 992px) {
+  .paneview {
+    height: 100%;
+  }
+}
+
+#panedisplay {
+  position: absolute;
+  width: 95%;
+  height: auto;
+  object-fit: contain;
+}
+
+.panepic {
+  display: flex;
+  display: inline-block;
+  height: auto;
+  max-height: 70%;
+  width: auto;
+  object-fit: contain;
+}
+
+.paneobj {
+  display: inline-block;
+  margin-left: 0.5rem;
+  margin-top: 1rem;
+  background-color: rgba(25, 0, 40, 0.5);
+  border-radius: 5px;
+  text-align: center;
+  height: calc( ( 50vh - 72px ) / 5 );
+}
+@media (min-width: 992px) {
+  .paneobj {
+    height: calc( ( 100vh - 72px ) / 5 );
+  }
+}
+.paneobj p.mdata {
+  text-align: center;
+  font-size: 8pt;
+  color: white;
+}
+@media (min-width: 992px) {
+  .paneobj p.mdata {
+    font-size: 12pt;
+  }
 }
 
 /*# sourceMappingURL=browse.css.map */

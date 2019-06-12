@@ -1,0 +1,146 @@
+
+//Import any custom variables
+@import "./variables.scss";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+html, body
+{
+	height: 100%;
+}
+
+body
+{
+
+}
+
+#content
+{
+	min-height:100%;
+	display: grid;
+	margin: 0;
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+	grid-template-columns: 10vh auto 10vh;
+	grid-template-rows: 10vh auto 10vh;
+
+	@include media-breakpoint-up(md)
+	{
+		grid-template-columns: 15vh auto 15vh;
+		grid-template-rows: 15vh auto 15vh;	
+
+	}
+}
+
+#main
+{
+	background: linear-gradient(to bottom, #{fade-out($dark-purple, 0)} 0%, #{fade-out($purple, .75)} 15%, #{fade-out($purple, .75)} 85%, #{fade-out($dark-purple, 0)} 100%), url('../startbootstrap-creative/img/bg-masthead.jpg');
+	background-position: center;
+  	background-repeat: no-repeat;
+  	background-attachment: scroll;
+  	background-size: cover;
+}	
+
+#main-text
+{
+	max-width: 15rem;
+	font-size: 14pt;
+	@include media-breakpoint-up(md)
+	{
+		max-width:30rem;
+		font-size: 22pt;
+	}
+}
+
+.borderimg
+{
+	background: linear-gradient(to bottom, #{fade-out($primary, 0)} 0%, #{fade-out($purple, .75)} 15%, #{fade-out($purple, .75)} 85%, #{fade-out($secondary, 0)} 100%);
+	opacity: .5;
+	
+	object-fit: cover;
+
+	height: 10vh;
+	width: 10vh;
+	@include media-breakpoint-up(md)
+	{
+		height: 15vh;
+		width: 15vh;
+	}
+
+}
+.border-container
+{
+	overflow: hidden;
+}
+
+.flip-container
+{
+	perspective: 1000px;
+}
+
+/* .flip-container:hover .flipper,
+{
+	transform: rotateY(180deg);
+} */
+
+.flipper
+{
+	height: 100%;
+	transition: 0.6s;
+	transform-style: preserve-3d;
+	position: relative;
+	animation: rotoY 10s infinite;
+	animation-delay: 1s;
+}
+
+.bt-front, .bt-back
+{
+	backface-visibility: hidden;
+	position: absolute;
+	top:0;
+	left:0;
+}
+
+.bt-front
+{
+	z-index: 2;
+	transform: rotateY(0deg);
+}
+
+.bt-back
+{
+	transform: rotateY(180deg);
+}
+
+.bordertile
+{
+	margin:0;
+	object-fit: cover;
+	width:auto;
+
+	height: 10vh;
+	width: 10vh;
+	@include media-breakpoint-up(md)
+	{
+		height: 15vh;
+		width: 15vh;
+	}
+}
+
+.logo-img
+{
+	width:80%;
+	@include media-breakpoint-up(md)
+	{
+		width:initial;
+	}
+
+}
+
+
+@keyframes rotoY
+{
+	0% {transform: rotateY(0deg);}
+	50% {transform: rotateY(180deg);}
+	100% {transform: rotateY(360deg);}
+}
+

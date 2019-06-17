@@ -2,4 +2,4 @@ vendor
 node_modules 
 package-lock.json 
 .*
-classes\config.class.php
+classes/config.class.php

@@ -5,7 +5,7 @@ require 'config.class.php';
 class mysql
 {
 	static $queries = [
-		'artists' => "SELECT a.artist_fname, a.artist_lname, i.original, a.id FROM artists a JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) WHERE i.featured = '1' ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC;",
+		'artists' => "SELECT CONCAT(a.artist_fname, a.artist_lname) AS title , i.original AS original, a.id AS id FROM artists a JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) WHERE i.featured = '1' ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC;",
 
 		'artist' => "SELECT a.artist_fname, a.artist_lname, i.original, a.id FROM artists a JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) WHERE (i.featured = '1' AND a.artist_fname LIKE ('%%s%') AND a.artist_lname LIKE ('%%s%')) ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC;",
 

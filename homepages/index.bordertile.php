@@ -2,20 +2,20 @@
 	$NUM_IMG = 105;
 	require('../classes/mysql.class.php');
 	$mydb = new mysql();
-	$images = $mydb->get_collection(); 
+	$images = $mydb->query_db('images'); 
 	$len = count($images);
 	$imgs = [];
 	$temp;
 	for ($i=0; $i < $NUM_IMG; $i++)
 	{ 
-		if($images[$i]->active == 'yes')
+		$rand_i = mt_rand(0,$len-(1+$i));
+		if($images[$rand_i]['active'] == 'yes')
 		{
-			$rand_i = mt_rand(0,$len-(1+$i));
 			$imgs[$i] = $images[$rand_i];
 			$temp = $images[$i];
 			$images[$i] = $images[$rand_i];
 			$images[$rand_i] = $temp;
-		}
+		}else $i--;
 	}
 ?>
 
@@ -24,9 +24,12 @@
 
 <head>
 
-<script type="text/javascript" href="../js/bordertile.js">
+<script>
   	<?='var imgs = '. json_encode($imgs) .';'?>//pass php images to js
 </script>
+
+<script src="../js/bordertile.js"></script>
+
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

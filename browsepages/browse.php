@@ -1,19 +1,6 @@
 <?php
   require('../classes/navbar.class.php');
-  require('../classes/browsemain.class.php');
-
-  $artist_fn = isset($_GET['af']) ? $_GET['af'] : NULL;
-  $artist_ln = isset($_GET['al']) ? $_GET['al'] : NULL;
-  $glazing = isset($_GET['g']) ? $_GET['g'] : NULL;
-  $material = isset($_GET['m']) ? $_GET['m'] : NULL;
-  $object = isset($_GET['o']) ? $_GET['o'] : NULL;
-  $technique = isset($_GET['t']) ? $_GET['t'] : NULL;
-  $temperature = isset($_GET['tem']) ? $_GET['tem'] : NULL;
-  $view = isset($_GET['v']) ? $_GET['v'] : NULL;
-
-
   $navbar = new navbar('classic');
-  $main = new main($view);
 ?>
 
 
@@ -49,7 +36,109 @@
 
 <!-- <header class="tile main-tile align-text-bottom">
 </header> -->
-	<?php $main->printTemplate(); ?>
+	<link rel="stylesheet" type="text/css" href="..\css\browse.css">
+
+<div id="content" class="container-fluid" style="overflow-x: hidden; overflow-y: hidden;">
+  <div class="row h-100">
+    
+    <div class="col-xl-3 col-6 flip-container px-0">
+      <div class="flipper w-100">
+        <div class="front w-100 tile collection-tile">
+          <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Collection</h2></div>
+        </div>
+        <div class="back tile w-100">
+          <a class="btn btn-primary btn-xl" href="view.php?q=images">Browse Collection</a>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-xl-3 col-6 flip-container px-0">
+      <div class="flipper w-100">
+        <div class="front w-100 tile artist-tile">
+          <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Artists</h2></div>
+        </div>
+        <div class="back tile w-100">
+          <a class="btn btn-primary btn-xl" href="view.php?q=artists">Browse By Artists</a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-6 flip-container px-0">
+      <div class="flipper w-100">
+        <div class="front w-100 tile glazing-tile">
+          <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Glazing/Surface</h2></div>
+        </div>
+        <div class="back tile w-100 text-center">
+          <a class="btn btn-primary btn-xl" href="view.php?q=glazings">Browse By Glazing/Surface</a>
+        </div>
+
+      </div>
+    
+    </div>
+
+    <div class="col-xl-3 col-6 flip-container px-0">
+      <div class="flipper w-100">
+        <div class="front w-100 tile material-tile">
+          <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Materials</h2></div>
+        </div>
+        <div class="back tile w-100">
+          <a class="btn btn-primary btn-xl" href="view.php?q=materials">Browse By Material</a>
+        </div>
+
+      </div>
+    
+    </div>
+
+    <div class="col-xl-3 col-6 flip-container px-0">
+      <div class="flipper w-100">
+        <div class="front w-100 tile object-tile">
+          <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Objects</h2></div>
+        </div>
+        <div class="back tile w-100">
+          <a class="btn btn-primary btn-xl" href="view.php?q=objects">Browse By Object Type</a>
+        </div>
+
+      </div>
+    
+    </div>
+
+    <div class="col-xl-3 col-6 flip-container px-0">
+      <div class="flipper w-100">
+        <div class="front w-100 tile technique-tile">
+          <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Technique</h2></div>
+        </div>
+        <div class="back tile w-100">
+          <a class="btn btn-primary btn-xl" href="view.php?q=techniques">Browse By Technique</a>
+        </div>
+
+      </div>
+    
+    </div>
+
+    <div class="col-xl-3 col-6 flip-container px-0 ">
+      <div class="flipper w-100">
+        <div class="front w-100 tile temperature-tile">
+          <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Temperature</h2></div>
+        </div>
+        <div class="back tile w-100">
+          <a class="btn btn-primary btn-xl" href="view.php?q=temperatures">Browse By Temperature</a>
+        </div>
+      </div>  
+    </div>
+
+    <div class="col-xl-3 col-6 flip-container px-0 ">
+      <div class="flipper w-100">
+        <div class="front w-100 tile search-tile">
+          <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Search</h2></div>
+        </div>
+        <div class="back tile w-100">
+          <a class="btn btn-primary btn-xl" href="browse.php?v=search">Advanced Search</a>
+        </div>
+      </div>  
+    </div>
+  </div> <!-- end row -->
+</div>
 
 
   <!-- Bootstrap core JavaScript -->
@@ -64,9 +153,9 @@
   <!-- Custom scripts for this template -->
   <script src="../js/creative.min.js"></script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	$("#card").flip();
-</script>
+</script> -->
 </body>
 
 </html>

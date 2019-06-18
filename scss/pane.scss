@@ -1,0 +1,77 @@
+@import "./variables.scss";
+//@import "./style.css";
+
+.accessText
+{
+    color: $ceramicspurple;
+}
+
+.ceramicsText
+{
+	color:$ceramicsblue;
+}
+
+// Import Bootstrap
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+// Import custom styles
+@import "./global.scss";
+@import "./navbar.scss";
+@import "./portfolio.scss";
+
+$pane-object : rgba(25,0,40,.5);
+
+.paneview
+{
+
+	@include media-breakpoint-up(sm) {
+		height: calc( 50vh - ( #{$navbar-height} / 2 ) );
+	}
+	@include media-breakpoint-up(lg) {
+		//height: calc(100vh - #{$navbar-height} );
+		height: 100%;
+	}
+
+}
+
+#panedisplay
+{
+	position:absolute;
+	width:95%;
+	height: auto;
+	object-fit: contain;
+}
+
+.panepic
+{
+	display: flex;
+	display:inline-block;
+	height: auto;
+	max-height: 70%;
+	width: auto;
+	object-fit: contain;
+}
+.paneobj
+{	
+	display:inline-block;
+	margin-left: .5rem;
+	margin-top: 1rem;
+	background-color: $pane-object;
+	border-radius: 5px;
+	text-align: center;
+	height: calc( ( 50vh - #{$navbar-height} ) / 5 );
+
+
+	@include media-breakpoint-up(lg) {
+		height: calc( ( 100vh - #{$navbar-height} ) / 5 );
+	}
+	p.mdata
+	{
+		text-align:center;
+		font-size: 8pt;
+		color: white;
+		@include media-breakpoint-up(lg) {
+			font-size: 12pt;
+		}	
+	}
+}

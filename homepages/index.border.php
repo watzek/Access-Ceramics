@@ -1,21 +1,3 @@
-<?php
-	$NUM_IMG = 105;
-	require('../classes/mysql.class.php');
-	$mydb = new mysql();
-	$images = $mydb->allImages(); 
-	$len = count($images);
-	$imgs = [];
-	$temp;
-	for ($i=0; $i < $NUM_IMG; $i++)
-	{ 
-		$rand_i = mt_rand(0,$len-(1+$i));
-		$imgs[$i] = $images[$rand_i];
-		$temp = $images[$i];
-		$images[$i] = $images[$rand_i];
-		$images[$rand_i] = $temp;
-	}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 

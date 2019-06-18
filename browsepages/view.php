@@ -67,8 +67,8 @@
     foreach ($results as $res) {
       ?>
       <div class="result"><!-- result skeleton -->
-        <img class="result-img" src=<?=$res->original?>>
-        <p class="result-title">$res->title</p>
+        <img class="result-img" src=""> <!-- <?=$res->original?>>-->
+        <p class="result-title"><?=$res->title?></p>
       </div><!-- end -->
 
       <?php

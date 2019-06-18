@@ -9,14 +9,13 @@ class Main
 	private $template;
 	private $db;
 	private $args;
-	private $result;
+	private $result = false;
 
 	public function __construct($args)
 	{
 		//if no view is set, default template is returned
 		$this->args = $args;
 		$this->template = new Templates($args['view']);
-		
 		if(isset($args['q']))
 		{
 			$this->db = new mysql();
@@ -28,6 +27,11 @@ class Main
 	{
 		$this->template->getHTML();
 		unset($this->template);
+	}
+
+	public function get_results()
+	{
+		return $this->result;
 	}
 }
 ?>

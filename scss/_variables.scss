@@ -11,8 +11,7 @@ $lightpurple: #6400a0;
 $purple: #190028;
 $dark-purple: $purple;
 $darkgrey: #666666;
-$ceramicsblue: #6666B1;
-$ceramicspurple: #63397c;
+
 $dark : $dark-purple !default;
 
 $search:#ababff;
@@ -25,9 +24,15 @@ $technique:#7c3973;
 $temperature:#42397c;
 
 
-// Set primary color to orange
-$primary: $ceramicsblue !default;
-$secondary: $ceramicspurple !default;
+$ceramicstext: #7f4c38;
+$ceramicstextalt: #96935f;
+
+$ceramicsblue: #6666B1;
+$ceramicspurple: #63397c;
+
+// Set primary color in next abstraction level
+/* $primary: $ceramicsblue;
+$secondary: $ceramicspurple; */
 //$dark: $darkgrey;
 
 // Font overrides

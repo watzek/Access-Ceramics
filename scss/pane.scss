@@ -1,25 +1,114 @@
 @import "./variables.scss";
-//@import "./style.css";
+
+
+$primary: $ceramicstext !default;
+$secondary: $ceramicstextalt !default;
+
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+
+
+//new theme
+//$primary: $ceramicspurple; 
+//$secondary: $ceramicsblue; 
+
 
 .accessText
 {
-    color: $ceramicspurple;
+    color: $primary;
 }
 
 .ceramicsText
 {
-	color:$ceramicsblue;
+	color: $secondary;
 }
 
 // Import Bootstrap
-@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
 
 // Import custom styles
 @import "./global.scss";
 @import "./navbar.scss";
 @import "./portfolio.scss";
 
-$pane-object : rgba(25,0,40,.5);
+
+html, body
+{
+	margin: 0;
+	height: 100vh;
+	width: 100vw;
+}
+#content
+{
+	padding: 0;
+	grid-row-gap: 0;
+	grid-column-gap: 0;
+	display: grid;
+	grid-template-rows: 50vh 50vh;
+
+	@include media-breakpoint-up(xl)
+	{
+		grid-template-rows: 100vh;
+		grid-template-columns: 50vw 50vw;
+	}
+
+}
+
+#results
+{
+	background: $light;
+	
+	display: inline-grid;
+	grid-template-columns: auto auto auto auto auto auto;
+	grid-row-gap: .5rem;
+
+	overflow-y: auto;
+	overflow-x: hidden;
+	
+}
+
+.result
+{
+
+}
+
+.result-img
+{
+	object-fit: contain;
+	margin: auto;
+}
+
+.result-title
+{
+	text-align: center;
+	text-align: justify;
+	font-size: 12pt;
+	@include media-breakpoint-up(lg)
+	{
+		font-size: 14pt;
+	}
+}
+
+#view
+{
+	background: linear-gradient(to right, $secondary 0% , darkgrey 40%, white 50%, darkgrey 60%,  $secondary 100% );	
+	/* min-height: 50vh;
+	min-width: 100vh;
+
+	@include media-breakpoint-up(lg)
+	{
+		min-height: 100vh;
+		min-width: 50vh;
+	} */
+}
+
+#view-img
+{
+
+}
+
+
+
 
 .paneview
 {
@@ -56,7 +145,6 @@ $pane-object : rgba(25,0,40,.5);
 	display:inline-block;
 	margin-left: .5rem;
 	margin-top: 1rem;
-	background-color: $pane-object;
 	border-radius: 5px;
 	text-align: center;
 	height: calc( ( 50vh - #{$navbar-height} ) / 5 );

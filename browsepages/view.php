@@ -3,7 +3,7 @@
   require('../classes/browsemain.class.php');
 
   $args = [
-    'query' => isset($_GET['q']) ? $_GET['q'] : NULL,
+    'q' => isset($_GET['q']) ? $_GET['q'] : NULL,
     'artist_fn' => isset($_GET['af']) ? $_GET['af'] : NULL,
     'artist_ln' => isset($_GET['al']) ? $_GET['al'] : NULL,
     'glazing' => isset($_GET['g']) ? $_GET['g'] : NULL,
@@ -17,6 +17,8 @@
 
   $navbar = new navbar('classic');
   $main = new main($args);
+  $results = $main->get_results();
+  
 ?>
 
 
@@ -45,44 +47,40 @@
   <!-- Icon -->
   <link href="../img/a.gif" rel="shortcut icon">
 
+  <!-- pane view css --> 
   <link rel="stylesheet" type="text/css" href="../css/pane.css">
+  <!-- grid view css --> 
+  <!-- <link rel="stylesheet" type="text/css" href="../css/grid.css"> -->
+  <!-- list view css --> 
+  <!-- <link rel="stylesheet" type="text/css" href="../css/list.css"> -->
+  <!-- full view css --> 
+ <!--  <link rel="stylesheet" type="text/css" href="../css/full.css"> -->
+
 </head>
 
 
 <div id="content" class="container-fluid">
-	<div class="row h-100">
-		<div class="col-lg-6 col-12 bg-primary paneview"> <!-- begin results div -->
-			<div class="row">
-				<button class="paneobj p-2">
-					<img src="../img/acpics/Hirotake-Imanishi.shell.jpg" class="panepic">
-					<p class="mdata">shell <br>
-					Hirotake Imanishi</p>
-				</button>
-				<button class="paneobj p-2">
-					<img src="../img/acpics/Hirotake-Imanishi.shell.jpg" class="panepic">
-					<p class="mdata">shell <br>
-					Hirotake Imanishi</p>
-				</button>
-			<button class="paneobj p-2">
-					<img src="../img/acpics/Hirotake-Imanishi.shell.jpg" class="panepic">
-					<p class="mdata">shell <br>
-					Hirotake Imanishi</p>
-				</button>
-			<button class="paneobj p-2">
-					<img src="../img/acpics/Hirotake-Imanishi.shell.jpg" class="panepic">
-					<p class="mdata">shell <br>
-					Hirotake Imanishi</p>
-				</button>
-			</div>
+  <div id="results">
+    <?php
+    echo $results;
+    if($results)
+    foreach ($results as $res) {
+      ?>
+      <div class="result"><!-- result skeleton -->
+        <img class="result-img" src=<?=$res->original?>>
+        <p class="result-title">$res->title</p>
+      </div><!-- end -->
 
-		</div> <!-- end results div -->
-		<div class="col-lg-6 col-12 bg-secondary paneview">
-				<img id="panedisplay" src="">
-				<p class="author"></p>
-				<p class="name"></p>
-		</div>
-	</div>
-</div>
+      <?php
+    }
+    ?>
+  </div> <!-- end results -->
+  <div id="view">
+    <img id="view-img" src="../img/default.jpg">
+
+  </div> <!-- end view -->
+</div> <!-- end content -->
+
 
   <!-- Bootstrap core JavaScript -->
   <script src="../vendor/jquery/jquery.min.js"></script>

@@ -6,15 +6,15 @@ require 'config.class.php';
 class mysql
 {
 	static $queries = [
-		'artists' => "SELECT CONCAT(a.artist_fname,' ', a.artist_lname) AS title , i.original AS original, a.id AS id FROM artists a JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) WHERE i.featured = '1' ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC LIMIT %d OFFSET %d;",
+		'artists' => "SELECT CONCAT(a.artist_fname,' ', a.artist_lname) AS title, MAX(i.original) AS original, a.id AS id FROM artists a JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) WHERE i.featured = '1' GROUP BY a.id ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC LIMIT %d OFFSET %d;",
 
-		'artist' => "SELECT a.artist_fname, a.artist_lname, i.original, a.id FROM artists a JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) WHERE (i.featured = '1' AND a.artist_fname LIKE ('%%s%') AND a.artist_lname LIKE ('%%s%')) ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC LIMIT %d OFFSET %d;",
+		'artist' => "",#"SELECT a.artist_fname, a.artist_lname, i.original, a.id FROM artists a JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) WHERE (i.featured = '1' AND a.artist_fname LIKE ('%%s%') AND a.artist_lname LIKE ('%%s%')) ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC LIMIT %d OFFSET %d;",
 
-		'institutions' => "SELECT * FROM organizations ORDER BY organizations.name ASC LIMIT %d OFFSET %d;",
+		'institutions' => "SELECT DISTINCT * FROM organizations ORDER BY organizations.name ASC LIMIT %d OFFSET %d;",
 
 		'institution' => "",#"",
 
-		'images' => "SELECT DISTINCT CONCAT(i.artist_fname, ' ', i.artist_lname), i.title AS title, i.original as original FROM images i WHERE i.active = 'yes' AND i.artist_fname IS NOT NULL AND i.artist_fname != '' AND i.title IS NOT NULL AND i.title != '' LIMIT %d OFFSET %d;",
+		'images' => "SELECT CONCAT(i.artist_fname, ' ', i.artist_lname) AS artist, i.title AS title, MAX(i.original) AS original FROM images i WHERE i.active = 'yes' AND i.artist_fname IS NOT NULL AND i.artist_fname != '' AND i.title IS NOT NULL AND i.title != '' GROUP BY i.original LIMIT %d OFFSET %d;",
 
 		'image' => "",#"SELECT * from images i where i.id = %s",
 

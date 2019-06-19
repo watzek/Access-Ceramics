@@ -85,18 +85,18 @@
   <div id="view">
     <img id="view-img" src="../img/default.jpg">
     <div id=view-meta>
-      Title:<p class="meta-deta"></p>
-      Series Title:<p class="meta-deta"> </p>
-      Artist:<p class="meta-deta"></p>
-      Date:<p class="meta-deta"></p>
-      Technique:<p class="meta-deta"></p>
-      Temperature:<p class="meta-deta"></p>
-      Glazing / Surface Treatment:<p class="meta-deta"></p>
-      Material:<p class="meta-deta"></p>
-      Height:<p class="meta-deta"></p>|
-      Width:<p class="meta-deta"></p>| 
-      Depth:<p class="meta-deta"></p>
-      License:<p class="meta-data"></p> 
+      Title:<p id="meta-title" class="meta-data"></p>
+      Series Title:<p id="meta-stitle" class="meta-data"> </p>
+      Artist:<p id="meta-artist" class="meta-data"></p>
+      Date:<p id="meta-date" class="meta-data"></p>
+      Technique:<p id="meta-technique" class="meta-data"></p>
+      Temperature:<p id="meta-temperature" class="meta-data"></p>
+      Glazing / Surface Treatment:<p id="meta-glazing" class="meta-data"></p>
+      Material:<p id="meta-material" class="meta-data"></p>
+      Height:<p id="meta-height" class="meta-data"></p>|
+      Width:<p id="meta-width" class="meta-data"></p>| 
+      Depth:<p id="meta-depth" class="meta-data"></p>
+      License:<p id="meta-liscense" class="meta-data"></p> 
     </div>
   </div> <!-- end view -->
 </div> <!-- end content -->

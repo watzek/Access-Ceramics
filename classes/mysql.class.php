@@ -1,6 +1,8 @@
 <?php  
 require 'config.class.php';
 
+
+
 class mysql
 {
 	static $queries = [
@@ -38,8 +40,10 @@ class mysql
 	];
 
 	static $default_query = "images";
-	static $default_query_lim = 20;
-	static $default_query_offset = 0;
+	const DEFAULT_QUERY_LIM = 20;
+	const DEFAULT_QUERY_OFFSET = 0;
+
+
 	public function __construct()
 	{
 		$config = new config();
@@ -58,7 +62,7 @@ class mysql
 		
 	}
 
-	public function query_db($query_key, $offset=self::$default_query_offset, $limit=self::$default_query_lim, $arg_dict=NULL)
+	public function query_db($query_key, $offset=self::DEFAULT_QUERY_OFFSET, $limit=self::DEFAULT_QUERY_LIM, $arg_dict=NULL)
 	{
 		if(!isset($query_key) or !isset(self::$queries[$query_key]))
 		{

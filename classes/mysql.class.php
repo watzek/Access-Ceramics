@@ -58,7 +58,7 @@ class mysql
 		
 	}
 
-	public function query_db($query_key, $limit=self::$default_query_lim, $offset=self::$default_query_offset, $arg_dict=NULL)
+	public function query_db($query_key, $offset=self::$default_query_offset, $limit=self::$default_query_lim, $arg_dict=NULL)
 	{
 		if(!isset($query_key) or !isset(self::$queries[$query_key]))
 		{
@@ -83,7 +83,7 @@ class mysql
 		//mysql_real_escape_string(unescaped_string)	
 		if($args['artist_fn'] !== NULL or $args['artist_ln'] !== NULL)
 		{
-			
+
 		}
 		else if($args['glazing'] !== NULL)
 		{

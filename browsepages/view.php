@@ -55,29 +55,49 @@
   <!-- <link rel="stylesheet" type="text/css" href="../css/list.css"> -->
   <!-- full view css --> 
  <!--  <link rel="stylesheet" type="text/css" href="../css/full.css"> -->
+<script>
+    <?='var q_results ='. json_encode($results) .';'?> 
+</script>
 
+<script src="../js/view.js">
+
+</script>
 </head>
 
+<?php $navbar->show()?>
 
 <div id="content" class="container-fluid">
   <div id="results">
     <?php
-    echo $results;
+    $ind = -1;
     if($results)
     foreach ($results as $res) {
+      $ind++;
       ?>
-      <div class="result"><!-- result skeleton -->
-        <img class="result-img" src=""> <!-- <?=$res->original?>>-->
-        <p class="result-title"><?=$res->title?></p>
+      <div class="result" value=<?=$ind?>><!-- result skeleton -->
+        <img class="result-img" src=<?=$res['original']?>>
+        <p class="result-title"><?=$res['title']?></p>
       </div><!-- end -->
-
       <?php
     }
     ?>
   </div> <!-- end results -->
   <div id="view">
     <img id="view-img" src="../img/default.jpg">
-
+    <div id=view-meta>
+      Title:<p class="meta-deta"></p>
+      Series Title:<p class="meta-deta"> </p>
+      Artist:<p class="meta-deta"></p>
+      Date:<p class="meta-deta"></p>
+      Technique:<p class="meta-deta"></p>
+      Temperature:<p class="meta-deta"></p>
+      Glazing / Surface Treatment:<p class="meta-deta"></p>
+      Material:<p class="meta-deta"></p>
+      Height:<p class="meta-deta"></p>|
+      Width:<p class="meta-deta"></p>| 
+      Depth:<p class="meta-deta"></p>
+      License:<p class="meta-data"></p> 
+    </div>
   </div> <!-- end view -->
 </div> <!-- end content -->
 

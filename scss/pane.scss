@@ -3,7 +3,7 @@
 
 $primary: $ceramicstext !default;
 $secondary: $ceramicstextalt !default;
-
+$light: #F4F8E7 !default;
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 
@@ -11,8 +11,6 @@ $secondary: $ceramicstextalt !default;
 //new theme
 //$primary: $ceramicspurple; 
 //$secondary: $ceramicsblue; 
-
-
 .accessText
 {
     color: $primary;
@@ -37,18 +35,20 @@ html, body
 	margin: 0;
 	height: 100vh;
 	width: 100vw;
+	overflow-x: hidden;
 }
+
 #content
 {
 	padding: 0;
 	grid-row-gap: 0;
 	grid-column-gap: 0;
 	display: grid;
-	grid-template-rows: 50vh 50vh;
+	grid-template-rows: calc(50vh - #{$navbar-height}) calc(50vh - #{$navbar-height});
 
-	@include media-breakpoint-up(xl)
+	@include media-breakpoint-up(lg)
 	{
-		grid-template-rows: 100vh;
+		grid-template-rows: calc(100vh - #{$navbar-height});
 		grid-template-columns: 50vw 50vw;
 	}
 
@@ -59,29 +59,36 @@ html, body
 	background: $light;
 	
 	display: inline-grid;
-	grid-template-columns: auto auto auto auto auto auto;
-	grid-row-gap: .5rem;
+	grid-template-columns: auto auto auto auto auto;
+	grid-row-gap: 5px;
 
-	overflow-y: auto;
 	overflow-x: hidden;
-	
 }
 
 .result
 {
-
+	width:20vw;
+	height:20vw;
+	@include media-breakpoint-up(lg)
+	{
+		width:10vw;
+		height:10vw;
+	}
 }
 
 .result-img
 {
-	object-fit: contain;
+	display:block;
+	object-fit: cover;
 	margin: auto;
+	max-width: 100%;
+	max-height: 75%;
+	padding:2px;
 }
 
 .result-title
 {
 	text-align: center;
-	text-align: justify;
 	font-size: 12pt;
 	@include media-breakpoint-up(lg)
 	{
@@ -91,7 +98,8 @@ html, body
 
 #view
 {
-	background: linear-gradient(to right, $secondary 0% , darkgrey 40%, white 50%, darkgrey 60%,  $secondary 100% );	
+	//background: linear-gradient(to right, $primary 0% , $primary 40% , white 50%, $secondary 60%, $secondary 100% );	
+	background-color: $primary;
 	/* min-height: 50vh;
 	min-width: 100vh;
 
@@ -100,13 +108,18 @@ html, body
 		min-height: 100vh;
 		min-width: 50vh;
 	} */
+	text-align: center;
 }
 
 #view-img
 {
+	object-fit: contain;
+	max-height: 80%;
+	max-width:95%;
+	margin: auto;
 
 }
-
+/* 
 
 
 
@@ -162,4 +175,4 @@ html, body
 			font-size: 12pt;
 		}	
 	}
-}
+} */

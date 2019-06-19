@@ -12,6 +12,7 @@ function shuffle(array)
 
 window.onload = function()
 {
+	//var imgs --(included from php), contains json object of all query results
 	var tiles = Array.from(document.getElementsByClassName("flipper"));
 	var pics = Array.from(document.getElementsByClassName("borderimg"));
 	var anim_len = 10;
@@ -25,7 +26,7 @@ window.onload = function()
 
 	 //UNCOMMENT to change tile pictures
 	var url, img_i = 0;
-	for (var i = 0; i < pics.length; i++) {
+	for (var i = 0; i < pics.length && i < imgs.length; i++) {
 		url = imgs[i].original;
 		pics[i].src = url;
 		img_i++;

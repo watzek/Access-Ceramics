@@ -6,16 +6,13 @@
 	$len = count($images);
 	$imgs = [];
 	$temp;
-	for ($i=0; $i < $NUM_IMG; $i++)
+	for ($i=0; $i < $NUM_IMG and $i < $len; $i++)
 	{ 
 		$rand_i = mt_rand(0,$len-(1+$i));
-		if($images[$rand_i]['active'] == 'yes')
-		{
-			$imgs[$i] = $images[$rand_i];
-			$temp = $images[$i];
-			$images[$i] = $images[$rand_i];
-			$images[$rand_i] = $temp;
-		}else $i--;
+		$imgs[$i] = $images[$rand_i];
+		$temp = $images[$i];
+		$images[$i] = $images[$rand_i];
+		$images[$rand_i] = $temp;
 	}
 ?>
 

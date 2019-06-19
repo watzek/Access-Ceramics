@@ -6,18 +6,18 @@ window.onload = function()
 	var viewmeta = document.getElementById('view-meta').childNodes;
 	view = {
 		img : document.getElementById('view-img'),
-			title : viewmeta[0],
-			stitle : viewmeta[1],
-			artist : viewmeta[2],
-			date : viewmeta[3],
-			technique : viewmeta[4],
-			temperature : viewmeta[5],
-			glazing : viewmeta[6],
-			material : viewmeta[7],
-			height : viewmeta[8],
-			width : viewmeta[9],
-			depth : viewmeta[10],
-			license : viewmeta[11]
+			title : document.getElementById('meta-title'),
+			stitle : document.getElementById('meta-stitle'),
+			artist : document.getElementById('meta-artist'),
+			date : document.getElementById('meta-date'),
+			technique : document.getElementById('meta-technique'),
+			temperature : document.getElementById('meta-temperature'),
+			glazing : document.getElementById('meta-glazing'),
+			material : document.getElementById('meta-material'),
+			height : document.getElementById('meta-height'),
+			width : document.getElementById('meta-width'),
+			depth : document.getElementById('meta-depth'),
+			license : document.getElementById('meta-license')
 		};
 
 	view.img.src = q_results[0].original;

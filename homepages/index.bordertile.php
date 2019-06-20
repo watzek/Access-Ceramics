@@ -1,8 +1,10 @@
 <?php
-	$NUM_IMG = 105;
+	$num_rows = 10;
+	$main_squares = 16;
+	$NUM_IMG = $num_rows*$num_rows*2;
 	require('../classes/mysql.class.php');
 	$mydb = new mysql();
-	$images = $mydb->query_db('images'); 
+	$images = $mydb->query_db('images',0,$NUM_IMG*2); 
 	$len = count($images);
 	$imgs = [];
 	$temp;
@@ -14,6 +16,8 @@
 		$images[$i] = $images[$rand_i];
 		$images[$rand_i] = $temp;
 	}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +29,7 @@
   	<?='var imgs = '. json_encode($imgs) .';'?>//pass php images to js
 </script>
 
-<script src="../js/bordertile.js"></script>
+<!-- <script src="../js/bordertile.js"></script> -->
 
 
   <meta charset="utf-8">
@@ -49,564 +53,34 @@
 
 </head>
 
-<body>
-	<div id="content" class="container-fluid m-0 p-0 h-100">
-		<div class="bg-dark border-container bordertile"> <!-- top left corner -->
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<div class="d-flex border-container flex-wrap justify-content-around align-items-stretch bg-dark"> <!-- top middle -->
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/Hirotake-Imanishi.shell.
-					jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-		</div>
+<body style="overflow: hidden;">
+	<div id="content" class="container p-0">
+		<?php
+		$_i = 0;
+		$lim = $num_rows*$num_rows - $main_squares;
 
-		<div class="bg-dark border-container bordertile"> <!-- top right corner -->
+		for ($i=0; $i < $lim; $i++)
+		{ 
+			?>
 			<div class="bordertile flip-container">
-				<div class="flipper">
+				<div class="flipper" style="animation-play-state: paused;">
 					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
+						<img class="borderimg" src=<?=$imgs[$_i]['original']?>>
 					</div>
 					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
+						<img class="borderimg" src=<?=$imgs[$_i]['original']?>>
 					</div>
 				</div>
 			</div>
-		</div>
-
-		<div class="d-flex flex-column border-container flex-wrap justify-content-around align-items-stretch bg-dark sideborder"> <!-- mid left -->
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
+		<?php	
+		$_i += 2;		
+		}
+		?>
+			<div id="main">
+				<img class="mt-2" src="../img/accessCeramics_logo2.png">
+				<hr class="invisible my-5" style="max-width:5rem;">
+				<p>accessCeramics is a growing collection of contemporary ceramics images by recognized artists enhancing ceramics education worldwide.</p>
 			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div id="main" class=""> <!-- middle -->
-			<h1 class="text-center mt-lg-5 mt-2"><img class="logo-img" src="../img/accessCeramics_logo.png"></h1>
-			<hr class="invisible my-5" style="max-width:5rem;">
-			<p id="main-text" class="lead text-light mx-auto text-center">
-      			accessCeramics is a growing collection of contemporary ceramics images by recognized artists enhancing ceramics education worldwide.
-			</p>
-			<div class="container mx-auto text-center mt-md-5 pt-lg-5">
-			<button type="button "class="btn btn-primary btn-lg mx-lg-5"><h3 class="text-dark">Browse</h3></button>
-			<button type="button "class="btn btn-secondary btn-lg mx-lg-5"><h3 class="text-dark">Info</h3></button>
-			</div>
-		</div>
-		<div class=" d-flex flex-column border-container flex-wrap justify-content-around align-items-stretch bg-dark sideborder"> <!-- mid right -->
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="bg-dark border-container bordertile"> <!-- bot left corner -->
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="d-flex border-container flex-wrap justify-content-around align-items-stretch bg-dark"> <!-- bot middle -->
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="bg-dark border-container bordertile"> <!-- bot right corner -->
-			<div class="bordertile flip-container">
-				<div class="flipper">
-					<div class="bt-front">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-					<div class="bt-back">
-						<img class="borderimg" src="../img/acpics/23578883568.jpg">
-					</div>
-				</div>
-			</div>
-		</div>
-
 	</div>
 
 

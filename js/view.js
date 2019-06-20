@@ -39,4 +39,5 @@ function showImage(id)
 {
 	view.img.src = q_results[id].original;
 	view.title.innerHTML = q_results[id].title;
+	view.title.artist = q_results[id].artist;
 }

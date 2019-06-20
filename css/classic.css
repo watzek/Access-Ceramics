@@ -9682,6 +9682,12 @@ body, html {
 
 #news span {
   background-color: #F4F8E7;
+  font-size: 12pt;
+}
+@media (min-width: 992px) {
+  #news span {
+    font-size: 14pt;
+  }
 }
 
 #nbar-brand {
@@ -9723,15 +9729,18 @@ body, html {
 
 #info {
   height: 35vh;
+  border-right: 2px solid black;
+  border-left: 2px solid black;
 }
 @media (min-width: 576px) {
   #info {
     height: calc(40vh - 72px);
   }
-  #info div {
-    margin: auto;
-    max-width: 20vw;
-  }
+}
+#info #info-blurb {
+  padding-left: 2em;
+  padding-right: 2em;
+  max-width: 20vw;
 }
 
 .divider {
@@ -9739,6 +9748,7 @@ body, html {
   border-radius: 2px;
 }
 
+/* ---For Browse Classic--- */
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
@@ -19410,6 +19420,47 @@ h3 {
     color: inherit;
     border-color: #dee2e6;
   }
+}
+.bg-browse {
+  background: linear-gradient(to right, black 0%, grey 50%, black 100%);
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow-y: hidden;
+}
+
+#bg-picture {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url(../img/Velvet-Torque.jpg);
+  z-index: -1;
+  position: fixed;
+  top: 10vh;
+  left: 0;
+  min-width: 100vw;
+  min-height: 90vh;
+}
+
+.selection-card {
+  height: calc((100vh - 20vh) / 3);
+  width: 100%;
+}
+.selection-card div {
+  color: #96935f;
+  font-weight: bolder;
+}
+
+.selection-card.right img {
+  margin-left: 1rem;
+}
+
+.selection-card.left img {
+  margin-right: 1rem;
+}
+
+.img-selection {
+  max-height: calc((100vh - 20vh) / 3);
+  max-width: 50%;
 }
 
 /*# sourceMappingURL=classic.css.map */

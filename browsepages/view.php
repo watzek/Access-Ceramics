@@ -63,7 +63,7 @@
 
 </script>
 </head>
-
+<body>
 <?php $navbar->show()?>
 
 <div id="content" class="container-fluid">
@@ -85,18 +85,18 @@
   <div id="view">
     <img id="view-img" src="../img/default.jpg">
     <div id=view-meta>
-      Title:<p id="meta-title" class="meta-data"></p>
-      Series Title:<p id="meta-stitle" class="meta-data"> </p>
-      Artist:<p id="meta-artist" class="meta-data"></p>
-      Date:<p id="meta-date" class="meta-data"></p>
-      Technique:<p id="meta-technique" class="meta-data"></p>
-      Temperature:<p id="meta-temperature" class="meta-data"></p>
-      Glazing / Surface Treatment:<p id="meta-glazing" class="meta-data"></p>
-      Material:<p id="meta-material" class="meta-data"></p>
-      Height:<p id="meta-height" class="meta-data"></p>|
-      Width:<p id="meta-width" class="meta-data"></p>| 
-      Depth:<p id="meta-depth" class="meta-data"></p>
-      License:<p id="meta-liscense" class="meta-data"></p> 
+      <p>Title:<span id="meta-title" class="meta-data"></span></p>
+      <p>Artist:<span id="meta-artist" class="meta-data"></span></p>
+      <p>Series Title:<span id="meta-stitle" class="meta-data"> </span></p>
+      <p>Date:<span id="meta-date" class="meta-data"></span></p>
+      <p>Technique:<span id="meta-technique" class="meta-data"></span></p>
+      <p>Temperature:<span id="meta-temperature" class="meta-data"></span></p>
+      <p>Glazing / Surface Treatment:<span id="meta-glazing" class="meta-data"></span></p>
+      <p>Material:<span id="meta-material" class="meta-data"></span></p>
+      <p>Height:<span id="meta-height" class="meta-data"></span>|
+      Width:<span id="meta-width" class="meta-data"></span>| 
+      Depth:<span id="meta-depth" class="meta-data"></span></p>
+      <p>License:<span id="meta-liscense" class="meta-data"></span></p> 
     </div>
   </div> <!-- end view -->
 </div> <!-- end content -->

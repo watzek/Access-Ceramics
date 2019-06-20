@@ -114,10 +114,19 @@ html, body
 #view-img
 {
 	object-fit: contain;
-	max-height: 80%;
+	max-height: 70%;
 	max-width:95%;
 	margin: auto;
+}
+#view-meta p
+{
+	font-weight: bold;
+	color: $ceramicstextalt;
+}
 
+.meta-data
+{
+	font-weight: initial;
 }
 /* 
 

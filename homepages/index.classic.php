@@ -18,35 +18,42 @@
 	<link rel="stylesheet" type="text/css" href="../css/classic.css">
 </head>
 
-<body>
+<body style="overflow: hidden;">
 <?php $navbar->show() ?> <!--read corresponding navbar file -->
 
 <div id="masthead" class="container-fluid py-1"></div>
 
 <div class="container-fluid bg-light text-center">
-
-	<img class="logo-img mx-auto pt-3 d-block" src="../img/accessCeramics_logo.png" alt="Access Ceramics Logo"></a>
-	<hr class="pb-1 mt-4 divider bg-primary">
-
-	<div id="info" class="lead d-block text-center mx-auto">
-		<div><span class="accessText">access</span><span class="ceramicsText">Ceramics</span>
-		is a growing collection of contemporary ceramics images by recognized artists enhancing ceramics education worldwide.</div>
+	<div class="row">
+		<div class="col-3">
+			<h3 class="h4 mb-0 ">Something</h3>
+			<hr class="pb-1 mt-4 divider bg-primary">
+		</div>
+		<div id="info" class=" mx-auto col-6 lead text-center mx-auto">
+			<div id="info-blurb" class="mx-auto">
+			<h3 class="h4 mb-0 ">Access Ceramics</h3>
+			<hr class="pb-1 mt-4 divider bg-primary">
+				<span class="accessText">access</span><span class="ceramicsText">Ceramics</span>
+				is a growing collection of contemporary ceramics images by recognized artists enhancing ceramics education worldwide.
+			</div>
+		</div>
+		<div class="col-3 lead text-center">
+			<h3 class="h4 mb-0 ">News</h3>
+			<hr class="pb-1 mt-4 divider bg-primary">
+			<p id="news">
+				<span><i>Apr 26 2019:</i> New images by Luciana Grazia Menegazzi.</span>
+				<br/><br/>
+				<span><i>Feb 26 2019:</i> New images by Hunter Stamps.</span>
+				<br/><br/>
+				<span><i>Feb 16 2019:</i> New images by Elaine Buss.</span>
+				<br/><br/>
+			</p>
+		</div>	
 	</div>	
 </div> <!-- end container-fluid -->
 
 <div class="container-fluid bg-white text-center mt-5">
-	<div class="lead text-center">
-		<h3 class="h4 mb-0 ">News</h3>
-		<hr class="pb-1 mt-4 divider bg-primary">
-		<p id="news">
-		<span><i>Apr 26 2019:</i> New images by Luciana Grazia Menegazzi.</span>
-		<br/><br/>
-		<span><i>Feb 26 2019:</i> New images by Hunter Stamps.</span>
-		<br/><br/>
-		<span><i>Feb 16 2019:</i> New images by Elaine Buss.</span>
-		<br/><br/>
-		</p>
-	</div>
+	
 
 
 </div>

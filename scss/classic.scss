@@ -10,17 +10,45 @@ $secondary:$ceramicstextalt;
 {
 	visibility:visible;
 	
-	@include media-breakpoint-up(md)
+	@include media-breakpoint-up(lg)
 	{
 		visibility:hidden;
 	}	
 }
 
-body, html
+html
+{
+	font-size: 12pt;
+	@include media-breakpoint-up(md)
+	{
+		font-size: 14pt;
+	}
+	@include media-breakpoint-up(lg)
+	{
+		font-size: 16pt;
+	}
+	@include media-breakpoint-up(xl)
+	{
+		font-size: 16pt;
+	}
+}
+
+body,html 
 {
 	height:100%;
 	width:100%;
 	margin:0;
+	overflow-x: hidden;
+	overflow-y: auto;
+	@include media-breakpoint-up(sm)
+	{
+	overflow: hidden;
+	}
+}
+
+body
+{
+
 }
 
 .accessText
@@ -36,16 +64,15 @@ body, html
 	color: $ceramicstextalt;
 }
 
+#news-container
+{
+	overflow-y: scroll;
+}
+
 #news span
 {
 	background-color: $light;
-	font-size: 12pt;
-	@include media-breakpoint-up(lg)
-	{
-		font-size: 14pt;	
-	}
-	
-	
+	font-size: 1rem;	
 }
 
 
@@ -53,7 +80,7 @@ body, html
 {
 	width: 60%;
 	margin-right: 0;
-	@include media-breakpoint-up(sm)
+	@include media-breakpoint-up(md)
 	{
 		width:initial;
 	}	
@@ -76,7 +103,8 @@ body, html
 	background-repeat: no-repeat;
 	background-attachment: scroll;
 	background-size: cover;
-	height: 60vh;
+	
+	height: 45vh;
 
 	@include media-breakpoint-up(sm)
 	{
@@ -85,24 +113,22 @@ body, html
 		background-repeat: no-repeat;
 		background-attachment: scroll;
 		background-size: cover;
+		height: 60vh;
 	}
   	
 }
 
 #info
 {
-	height: 35vh;	
-	border-right: 2px solid black;
-	border-left: 2px solid black;
+	//height: 35vh;	
+	overflow-y: hidden;
+	height: 1%;	
+	border-bottom: 2px solid black;
 	@include media-breakpoint-up(sm)
 	{
 		height: calc(40vh - 72px);	
-	}
-	#info-blurb
-	{
-		padding-left: 2em;
-		padding-right: 2em;
-		max-width: 20vw;
+		border-right: 2px solid black;
+		border-left: 2px solid black;
 	}
 		
 	
@@ -177,3 +203,24 @@ $card-height: calc((100vh - #{$bot-height}) / 3);
 	max-width:50%;
 }
 
+//for searchbar
+form
+{
+	@include media-breakpoint-up(lg)
+	{
+		input
+		{
+			width: 65% !important;
+			
+			margin-left: 0;
+			padding-left: 0;
+		}
+		button
+		{
+			width: 30% !important;
+			margin-right: 0;
+			padding-right: 0;
+			font-size: 10pt;
+		}
+	}
+}

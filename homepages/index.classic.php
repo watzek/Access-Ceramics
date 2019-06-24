@@ -18,26 +18,27 @@
 	<link rel="stylesheet" type="text/css" href="../css/classic.css">
 </head>
 
-<body style="overflow: hidden;">
+<body class="bg-light">
 <?php $navbar->show() ?> <!--read corresponding navbar file -->
 
 <div id="masthead" class="container-fluid py-1"></div>
 
 <div class="container-fluid bg-light text-center">
 	<div class="row">
-		<div class="col-3">
-			<h3 class="h4 mb-0 ">Something</h3>
-			<hr class="pb-1 mt-4 divider bg-primary">
-		</div>
-		<div id="info" class=" mx-auto col-6 lead text-center mx-auto">
+		<div id="info" class="my-md-0 py-pd-0 pb-5 mb-5 mx-auto col-sm-6 order-sm-2 lead text-center mx-auto">
 			<div id="info-blurb" class="mx-auto">
 			<h3 class="h4 mb-0 ">Access Ceramics</h3>
 			<hr class="pb-1 mt-4 divider bg-primary">
 				<span class="accessText">access</span><span class="ceramicsText">Ceramics</span>
 				is a growing collection of contemporary ceramics images by recognized artists enhancing ceramics education worldwide.
-			</div>
+			</div>	
 		</div>
-		<div class="col-3 lead text-center">
+		<div class="col-12 col-sm-3 order-sm-1">
+			<h3 class="h4 mb-0 ">Something</h3>
+			<hr class="pb-1 mt-4 divider bg-primary">
+		</div>
+		
+		<div class="col-12 col-sm-3 order-sm-3 lead text-center" id="news-container">
 			<h3 class="h4 mb-0 ">News</h3>
 			<hr class="pb-1 mt-4 divider bg-primary">
 			<p id="news">

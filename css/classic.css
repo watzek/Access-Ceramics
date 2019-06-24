@@ -9658,16 +9658,43 @@ h3 {
 .navbar-toggler {
   visibility: visible;
 }
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .navbar-toggler {
     visibility: hidden;
   }
 }
 
+html {
+  font-size: 12pt;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 14pt;
+  }
+}
+@media (min-width: 992px) {
+  html {
+    font-size: 16pt;
+  }
+}
+@media (min-width: 1200px) {
+  html {
+    font-size: 16pt;
+  }
+}
+
 body, html {
+  background-color: #F4F8E7;
   height: 100%;
   width: 100%;
   margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+@media (min-width: 576px) {
+  body, html {
+    overflow: hidden;
+  }
 }
 
 .accessText {
@@ -9680,21 +9707,20 @@ body, html {
   color: #96935f;
 }
 
+#news-container {
+  overflow-y: scroll;
+}
+
 #news span {
   background-color: #F4F8E7;
-  font-size: 12pt;
-}
-@media (min-width: 992px) {
-  #news span {
-    font-size: 14pt;
-  }
+  font-size: 1rem;
 }
 
 #nbar-brand {
   width: 60%;
   margin-right: 0;
 }
-@media (min-width: 576px) {
+@media (min-width: 768px) {
   #nbar-brand {
     width: initial;
   }
@@ -9715,7 +9741,7 @@ body, html {
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-size: cover;
-  height: 60vh;
+  height: 45vh;
 }
 @media (min-width: 576px) {
   #masthead {
@@ -9724,23 +9750,21 @@ body, html {
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-size: cover;
+    height: 60vh;
   }
 }
 
 #info {
-  height: 35vh;
-  border-right: 2px solid black;
-  border-left: 2px solid black;
+  overflow-y: hidden;
+  height: 1%;
+  border-bottom: 2px solid black;
 }
 @media (min-width: 576px) {
   #info {
     height: calc(40vh - 72px);
+    border-right: 2px solid black;
+    border-left: 2px solid black;
   }
-}
-#info #info-blurb {
-  padding-left: 2em;
-  padding-right: 2em;
-  max-width: 20vw;
 }
 
 .divider {
@@ -19461,6 +19485,20 @@ h3 {
 .img-selection {
   max-height: calc((100vh - 20vh) / 3);
   max-width: 50%;
+}
+
+@media (min-width: 992px) {
+  form input {
+    width: 65% !important;
+    margin-left: 0;
+    padding-left: 0;
+  }
+  form button {
+    width: 30% !important;
+    margin-right: 0;
+    padding-right: 0;
+    font-size: 10pt;
+  }
 }
 
 /*# sourceMappingURL=classic.css.map */

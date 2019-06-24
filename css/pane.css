@@ -9845,7 +9845,7 @@ html, body {
   display: block;
   object-fit: cover;
   margin: auto;
-  max-width: 100%;
+  max-width: 90%;
   max-height: 75%;
   padding: 2px;
 }
@@ -9861,6 +9861,8 @@ html, body {
 }
 
 #view {
+  overflow-y: auto;
+  height: 100%;
   background-color: #7f4c38;
   /* min-height: 50vh;
   min-width: 100vh;
@@ -9877,7 +9879,8 @@ html, body {
   object-fit: contain;
   max-height: 70%;
   max-width: 95%;
-  margin: auto;
+  margin-right: auto;
+  margin-left: 0;
 }
 
 #view-meta p {

@@ -6,48 +6,45 @@ require 'config.class.php';
 class mysql
 {
 	static $queries = [
-		'artists' => "SELECT CONCAT(a.artist_fname,' ', a.artist_lname) AS title, MAX(i.original) AS original, a.id AS id FROM artists a JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) WHERE i.featured = '1' GROUP BY a.id ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC LIMIT ? OFFSET ?",
+		'artists' => 'SELECT CONCAT(a.artist_fname,\' \', a.artist_lname) AS title, MAX(i.original) AS original, a.id AS id FROM artists a JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) WHERE i.featured = \'1\' GROUP BY a.id ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC LIMIT ? OFFSET ?',
 
-		'artist' => "",
+		'artist' => '',
 
-		'institutions' => "SELECT DISTINCT * FROM organizations ORDER BY organizations.name ASC LIMIT ? OFFSET ?",
+		'institutions' => 'SELECT DISTINCT * FROM organizations ORDER BY organizations.name ASC LIMIT ? OFFSET ?',
 
-		'institution' => "",
+		'institution' => '',
 
-		'images' => "SELECT CONCAT(i.artist_fname, ' ', i.artist_lname) AS artist, i.title AS title, MAX(i.original) AS original FROM images i WHERE i.active = 'yes' AND i.artist_fname IS NOT NULL AND i.artist_fname != '' AND i.title IS NOT NULL AND i.title != '' GROUP BY i.original LIMIT ? OFFSET ?",
+		'images' => 'SELECT CONCAT(i.artist_fname, \' \', i.artist_lname) AS artist, i.title AS title, MAX(i.original) AS original FROM images i WHERE i.active = \'yes\' AND i.artist_fname IS NOT NULL AND i.artist_fname != \'\' AND i.title IS NOT NULL AND i.title != \'\' GROUP BY i.original LIMIT ? OFFSET ?',
 
-		'image' => "",
+		'image' => '',
 
-		'glazings' => "SELECT COUNT(i.id) AS count, g.glazing AS title, m.glazing_id AS id, i.original AS original FROM glazing g JOIN glazing_match m ON g.id = m.glazing_id JOIN images i ON m.image_id = i.id AND i.active = 'yes' GROUP BY g.glazing ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?",
+		'glazings' => 'SELECT COUNT(i.id) AS count, g.glazing AS title, m.glazing_id AS id, i.original AS original FROM glazing g JOIN glazing_match m ON g.id = m.glazing_id JOIN images i ON m.image_id = i.id AND i.active = \'yes\' GROUP BY g.glazing ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
 
-		'glazing' => "",
+		'glazing' => '',
 
-		'materials' => "SELECT COUNT(i.id) as count, m.material as title, mm.material_id as id FROM material m JOIN material_match mm ON m.id = mm.material_id JOIN images i ON mm.image_id = i.id AND i.active = 'yes' GROUP BY m.material ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?",
+		'materials' => 'SELECT COUNT(i.id) as count, m.material as title, mm.material_id as id FROM material m JOIN material_match mm ON m.id = mm.material_id JOIN images i ON mm.image_id = i.id AND i.active =\'yes\' GROUP BY m.material ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
 
-		'material' => "",
+		'material' => '',
 
-		'objects' => "SELECT COUNT(i.id) as count, m.object_type as title, om.object_type_id as id i.original AS original FROM object_type m JOIN object_type_match om ON m.id = om.object_type_id JOIN images i ON om.image_id = i.id AND i.active = 'yes' GROUP BY m.object_type ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?",
+		'objects' => 'SELECT COUNT(i.id) as count, m.object_type as title, om.object_type_id as id i.original AS original FROM object_type m JOIN object_type_match om ON m.id = om.object_type_id JOIN images i ON om.image_id = i.id AND i.active = \'yes\' GROUP BY m.object_type ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
 
-		'object' => "",
+		'object' => '',
 
-		'techniques' => "SELECT COUNT(i.id) as count, m.techniques as title, tm.techniques_id as id i.original AS original FROM techniques m JOIN technique_match tm ON m.id = tm.techniques_id JOIN images i ON tm.image_id = i.id AND i.active = 'yes' GROUP BY m.techniques ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?",
+		'techniques' => 'SELECT COUNT(i.id) as count, m.techniques as title, tm.techniques_id as id i.original AS original FROM techniques m JOIN technique_match tm ON m.id = tm.techniques_id JOIN images i ON tm.image_id = i.id AND i.active = \'yes\' GROUP BY m.techniques ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
 
-		'technique' => "",
+		'technique' => '',
 
-		'temperatures' => "SELECT COUNT(i.id) as count, m.temperature as title, tm.temperature_id as id i.original AS original FROM temperature m JOIN temperature_match tm ON m.id = tm.temperature_id JOIN images i ON tm.image_id = i.id AND i.active = 'yes' GROUP BY m.temperature ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?",
+		'temperatures' => 'SELECT COUNT(i.id) as count, m.temperature as title, tm.temperature_id as id i.original AS original FROM temperature m JOIN temperature_match tm ON m.id = tm.temperature_id JOIN images i ON tm.image_id = i.id AND i.active = \'yes\' GROUP BY m.temperature ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
 
-		'temperature' => "",
-		'elaborate' => "
+		'temperature' => '',
+		'elaborate' => '
 		SELECT  i.original AS src,
 				i.id,
 				i.title AS title,
-				CONCAT(i.artist_fname,' ',i.artist_lname) AS artist,
+				CONCAT(i.artist_fname,\' \',i.artist_lname) AS artist,
 				i.date1 AS date1,
-				i.date2 AS date2,
 				t.technique AS tech,
 				tt.temperature AS temp,
-				g.glazing AS glaze,
-				m.material AS mat,
 				i.height AS h,
 				i.width AS w,
 				i.depth AS d,
@@ -56,14 +53,12 @@ class mysql
 			      JOIN techniques t ON tm.technique_id = t.id 
 			      JOIN temperature_match ttm ON ttm.image_id = i.id 
 			      JOIN temperature tt ON tt.id = ttm.temperature_id
-			      JOIN glazing_match gm ON gm.image_id = i.id
-			      JOIN glazing g ON g.id = gm.glazing_id
-			      JOIN material_match mm ON mm.image_id = i.id
-			      JOIN material m ON mm.material_id = m.id
 			      JOIN object_type_match om ON om.image_id = i.id
 			      JOIN object_type o ON o.id = om.object_type_id
-			WHERE i.active = 'yes' and i.id in"
-			];
+			WHERE i.active = \'yes\' and i.id in',
+			
+		'elab_g'=>'SELECT glazing, g.id from glazing_match gm join glazing g on gm.glazing_id = g.id where gm.image_id = ?;',
+		'elab_m'=>'SELECT material, m.id from material_match mm join material m on mm.material_id = m.id where mm.image_id = ?;'];
 
 	static $custom_query_strings = [
 		'base' =>  'SELECT i.original as src, CONCAT(i.artist_fname,\' \',i.artist_lname,\' \',i.title,\' \') as title, i.id as id FROM images i',
@@ -84,7 +79,7 @@ class mysql
 		'created' => ' i.date1 BETWEEN :year_s and :year_e'
 	];
 
-	static $default_query = "images";
+	static $default_query = 'images';
 	const DEFAULT_QUERY_LIM = 20;
 	const DEFAULT_QUERY_OFFSET = 0;
 
@@ -112,7 +107,7 @@ class mysql
 	{
 		if(!isset($query_key) or !isset(self::$queries[$query_key]))
 		{
-			printf("no value matching key: |%s| found, using default",$query_key);
+			printf('no value matching key: |%s| found, using default',$query_key);
 			$query_key = self::$default_query;
 		}
 
@@ -121,7 +116,7 @@ class mysql
 		$result = $this->stmt->execute($limit,$offset);
 		if(!$result)
 		{
-			printf("no results from query: %s",self::$queries[$query_key]);
+			printf('no results from query: %s',self::$queries[$query_key]);
 			return false;
 		}
 		
@@ -173,7 +168,7 @@ class mysql
 		if($args['date_s'])
 		{
 			$date_s = $args['date_s'];
-			if($args['date_e'] == '') $args['date_e'] = date("Y");//if the end date isnt specified, use current year
+			if($args['date_e'] == '') $args['date_e'] = date('Y');//if the end date isnt specified, use current year
 			else $date_e = $args['date_e'];
 			
 			$constructed_query .= ($flag ? ' AND' : ' WHERE').self::$custom_query_strings['created'];
@@ -211,7 +206,7 @@ class mysql
 		$stmt->bindValue(':lim',$lim, PDO::PARAM_INT);
 		$stmt->bindValue(':ofs', $ofs, PDO::PARAM_INT);
 		
-		//echo "Query String: ".$stmt->queryString; // to see query string used (sin. bound arguments)
+		//echo 'Query String: '.$stmt->queryString; //query string (without bound arguments)
 
 		$querystart = microtime(true);
 		try
@@ -233,21 +228,47 @@ class mysql
 	}
 
 	//Takes a array of image ids and returns elaborated information about the image
-	public function elaborate($ids)//TEST
+	public function elaborate($ids)
 	{
+		//since the query requires an array, we have to construct count($id) place holders (?) to be filled by ids
 		$inQuery = implode(',', array_fill(0, count($ids), '?'));
 
 		$query = self::$queries['elaborate']." ($inQuery) GROUP BY src";
 
 		$stmt = $this->db->prepare($query);
-		?>
-			<h1><?=$stmt->queryString?></h1>
-		<?php
+		
+		//echo 'Query String: '.$stmt->queryString; //query string (without bound arguments)
+		
 		foreach ($ids as $k => $id)
     		$stmt->bindValue(($k+1), $id, PDO::PARAM_INT);
 
-		$result = $stmt->execute();
-		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    	$stmt->execute();
+		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		/* 
+			Images can have multiple glazings and materials, so for each result we issue
+			another query and construct an array of the form id => name.
+			This functionality could probably be added to the above query, but I was having trouble with that.
+		*/
+		foreach ($result as &$res) {
+
+			$glazing = $this->db->prepare(self::$queries['elab_g']);
+			$glazing->execute(array($res['id']));
+			$res['glazing'] = [];
+
+			foreach ($glazing->fetchAll(PDO::FETCH_ASSOC) as $value)
+				$res['glazing'][$value['id']] = $value['glazing'];
+
+			$material = $this->db->prepare(self::$queries['elab_m']);
+			$material->execute(array($res['id']));
+			$res['material'] = [];
+
+			foreach ($material->fetchAll(PDO::FETCH_ASSOC) as $value)
+				$res['material'][$value['id']] = $value['material'];
+
+		} unset($res);
+
+		return $result;
 	}
 
 }

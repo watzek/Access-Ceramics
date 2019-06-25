@@ -62,8 +62,7 @@ class mysql
 			      JOIN material m ON mm.material_id = m.id
 			      JOIN object_type_match om ON om.image_id = i.id
 			      JOIN object_type o ON o.id = om.object_type_id
-			WHERE i.active = '1' and i.id in (?)
-			GROUP BY src"
+			WHERE i.active = 'yes' and i.id in"
 			];
 
 	static $custom_query_strings = [
@@ -117,9 +116,9 @@ class mysql
 			$query_key = self::$default_query;
 		}
 
-		$prep_q = $this->db->prepare(self::$queries[$query_key]);
+		$stmt = $this->db->prepare(self::$queries[$query_key]);
 
-		$result = $this->prep_q->execute($limit,$offset);
+		$result = $this->stmt->execute($limit,$offset);
 		if(!$result)
 		{
 			printf("no results from query: %s",self::$queries[$query_key]);
@@ -183,24 +182,24 @@ class mysql
 
 
 		$constructed_query .= ($flag ? ' AND' : ' WHERE').self::$custom_query_strings['end'];
-		$prep_q = $this->db->prepare($constructed_query);
+		$stmt = $this->db->prepare($constructed_query);
 
 		//now that the query is built we bind all the parameters
-		if (isset($glazing)) $prep_q->bindParam(':glaze',$glazing);
-		if (isset($material)) $prep_q->bindParam(':mat',$material);
-		if (isset($object)) $prep_q->bindParam(':obj',$object);
-		if (isset($technique)) $prep_q->bindParam(':tech',$technique);
-		if (isset($temperature)) $prep_q->bindParam(':temp',$temperature);
+		if (isset($glazing)) $stmt->bindParam(':glaze',$glazing);
+		if (isset($material)) $stmt->bindParam(':mat',$material);
+		if (isset($object)) $stmt->bindParam(':obj',$object);
+		if (isset($technique)) $stmt->bindParam(':tech',$technique);
+		if (isset($temperature)) $stmt->bindParam(':temp',$temperature);
 		
 		if(isset($first) or isset($last))
 		{
-			$prep_q->bindParam(':first',$first);
-			$prep_q->bindParam(':last',$last);
+			$stmt->bindParam(':first',$first);
+			$stmt->bindParam(':last',$last);
 		}
 		if(isset($date_s))
 		{
-			$prep_q->bindParam(':year_s',$date_s);
-			$prep_q->bindParam(':year_e',$date_e);
+			$stmt->bindParam(':year_s',$date_s);
+			$stmt->bindParam(':year_e',$date_e);
 		}
 		
 		//limit and offset are always included, so they are handled at the end
@@ -209,15 +208,15 @@ class mysql
 		if($args['offset'] !== '') $ofs = $args['offset'];
 			else $ofs = self::DEFAULT_QUERY_OFFSET;
 
-		$prep_q->bindValue(':lim',$lim, PDO::PARAM_INT);
-		$prep_q->bindValue(':ofs', $ofs, PDO::PARAM_INT);
+		$stmt->bindValue(':lim',$lim, PDO::PARAM_INT);
+		$stmt->bindValue(':ofs', $ofs, PDO::PARAM_INT);
 		
-		//echo "Query String: ".$prep_q->queryString; // to see query string used (sin. bound arguments)
+		//echo "Query String: ".$stmt->queryString; // to see query string used (sin. bound arguments)
 
 		$querystart = microtime(true);
 		try
 		{
-			$result = $prep_q->execute();
+			$result = $stmt->execute();
 		}catch(PDOException $e)//FIXTHIS for end
 		{
 			//deal with error, dont echo it 
@@ -226,7 +225,7 @@ class mysql
 			<?php
 		}
 		
-		$result = $prep_q->fetchAll(PDO::FETCH_ASSOC);
+		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 		
 		$result['time'] = microtime(true) - $querystart; //time taken for query
@@ -236,15 +235,19 @@ class mysql
 	//Takes a array of image ids and returns elaborated information about the image
 	public function elaborate($ids)//TEST
 	{
-		$request_str = $ids[0];
-		$cnt = count($ids);
-		for ($i=1; $i < $cnt; $i++) { 
-			$request_str .= ','.$ids[$i];
-		}
+		$inQuery = implode(',', array_fill(0, count($ids), '?'));
 
-		$prep_q = $this->db->prepare(self::$queries['elaborate']);
-		$result = $this->db->execute($request_str);
-		return $result->fetchAll(PDO::FETCH_ASSOC);
+		$query = self::$queries['elaborate']." ($inQuery) GROUP BY src";
+
+		$stmt = $this->db->prepare($query);
+		?>
+			<h1><?=$stmt->queryString?></h1>
+		<?php
+		foreach ($ids as $k => $id)
+    		$stmt->bindValue(($k+1), $id, PDO::PARAM_INT);
+
+		$result = $stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 }

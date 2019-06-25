@@ -14,41 +14,69 @@ class mysql
 
 		'institution' => '',
 
-		'images' => 'SELECT CONCAT(i.artist_fname, \' \', i.artist_lname) AS artist, i.title AS title, MAX(i.original) AS original FROM images i WHERE i.active = \'yes\' AND i.artist_fname IS NOT NULL AND i.artist_fname != \'\' AND i.title IS NOT NULL AND i.title != \'\' GROUP BY i.original LIMIT ? OFFSET ?',
+		'images' => 'SELECT CONCAT(i.artist_fname, \' \', i.artist_lname) AS artist, i.title AS title, MAX(i.original) AS original 
+			FROM images i 
+			WHERE i.active = \'yes\' 
+			AND i.artist_fname IS NOT NULL 
+			AND i.artist_fname != \'\' 
+			AND i.title IS NOT NULL 
+			AND i.title != \'\' GROUP BY i.original order by i.timestamp DESC LIMIT ? OFFSET ?',
 
 		'image' => '',
 
-		'glazings' => 'SELECT COUNT(i.id) AS count, g.glazing AS title, m.glazing_id AS id, i.original AS original FROM glazing g JOIN glazing_match m ON g.id = m.glazing_id JOIN images i ON m.image_id = i.id AND i.active = \'yes\' GROUP BY g.glazing ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
+		'glazings' => 'SELECT COUNT(i.id) AS count, g.glazing AS title, m.glazing_id AS id, i.original AS original 
+		FROM glazing g 
+		JOIN glazing_match m ON g.id = m.glazing_id 
+		JOIN images i ON m.image_id = i.id AND i.active = \'yes\' 
+		GROUP BY g.glazing ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
 
 		'glazing' => '',
 
-		'materials' => 'SELECT COUNT(i.id) as count, m.material as title, mm.material_id as id FROM material m JOIN material_match mm ON m.id = mm.material_id JOIN images i ON mm.image_id = i.id AND i.active =\'yes\' GROUP BY m.material ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
+		'materials' => 'SELECT COUNT(i.id) as count, m.material AS title, mm.material_id as id, i.original as original
+		FROM material m 
+		JOIN material_match mm ON m.id = mm.material_id 
+		JOIN images i ON mm.image_id = i.id AND i.active =\'yes\' 
+		GROUP BY m.material ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
 
 		'material' => '',
 
-		'objects' => 'SELECT COUNT(i.id) as count, m.object_type as title, om.object_type_id as id i.original AS original FROM object_type m JOIN object_type_match om ON m.id = om.object_type_id JOIN images i ON om.image_id = i.id AND i.active = \'yes\' GROUP BY m.object_type ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
+		'objects' => 'SELECT COUNT(i.id) as count, o.object_type as title, om.object_type_id as id, i.original AS original 
+			FROM object_type o
+			JOIN object_type_match om ON o.id = om.object_type_id 
+			JOIN images i ON om.image_id = i.id AND i.active = \'yes\' 
+			GROUP BY o.object_type ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
 
 		'object' => '',
 
-		'techniques' => 'SELECT COUNT(i.id) as count, m.techniques as title, tm.techniques_id as id i.original AS original FROM techniques m JOIN technique_match tm ON m.id = tm.techniques_id JOIN images i ON tm.image_id = i.id AND i.active = \'yes\' GROUP BY m.techniques ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
+		'techniques' => 'SELECT COUNT(i.id) as count, t.technique as title, tm.technique_id as id, i.original AS original 
+			FROM techniques t 
+			JOIN technique_match tm ON t.id = tm.technique_id 
+			JOIN images i ON tm.image_id = i.id AND i.active = \'yes\' 
+			GROUP BY t.technique ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
 
 		'technique' => '',
 
-		'temperatures' => 'SELECT COUNT(i.id) as count, m.temperature as title, tm.temperature_id as id i.original AS original FROM temperature m JOIN temperature_match tm ON m.id = tm.temperature_id JOIN images i ON tm.image_id = i.id AND i.active = \'yes\' GROUP BY m.temperature ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
+		'temperatures' => 'SELECT COUNT(i.id) as count, te.temperature as title, tem.temperature_id as id, i.original AS original 
+			FROM temperature te 
+			JOIN temperature_match tem ON te.id = tem.temperature_id 
+			JOIN images i ON tem.image_id = i.id AND i.active = \'yes\' 
+			GROUP BY te.temperature ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
 
-		'temperature' => '',
+		'temperature' => ''];
+
+	static $elaborate_queries = [
 		'elaborate' => '
-		SELECT  i.original AS src,
-				i.id,
-				i.title AS title,
-				CONCAT(i.artist_fname,\' \',i.artist_lname) AS artist,
-				i.date1 AS date1,
-				t.technique AS tech,
-				tt.temperature AS temp,
-				i.height AS h,
-				i.width AS w,
-				i.depth AS d,
-				i.license AS lic 
+			SELECT  i.original AS src,
+					i.id,
+					i.title AS title,
+					CONCAT(i.artist_fname,\' \',i.artist_lname) AS artist,
+					i.date1 AS date1,
+					t.technique AS tech,
+					tt.temperature AS temp,
+					i.height AS h,
+					i.width AS w,
+					i.depth AS d,
+					i.license AS lic 
 			FROM images i JOIN technique_match tm ON i.id = tm.image_id 
 			      JOIN techniques t ON tm.technique_id = t.id 
 			      JOIN temperature_match ttm ON ttm.image_id = i.id 
@@ -58,8 +86,9 @@ class mysql
 			WHERE i.active = \'yes\' and i.id in',
 			
 		'elab_g'=>'SELECT glazing, g.id from glazing_match gm join glazing g on gm.glazing_id = g.id where gm.image_id = ?;',
-		'elab_m'=>'SELECT material, m.id from material_match mm join material m on mm.material_id = m.id where mm.image_id = ?;'];
-
+		'elab_m'=>'SELECT material, m.id from material_match mm join material m on mm.material_id = m.id where mm.image_id = ?;'
+	];
+	
 	static $custom_query_strings = [
 		'base' =>  'SELECT i.original as src, CONCAT(i.artist_fname,\' \',i.artist_lname,\' \',i.title,\' \') as title, i.id as id FROM images i',
 		'end' => ' i.active = \'yes\' GROUP BY i.original LIMIT :lim OFFSET :ofs',
@@ -112,15 +141,17 @@ class mysql
 		}
 
 		$stmt = $this->db->prepare(self::$queries[$query_key]);
+		$stmt->bindValue(1,$limit,PDO::PARAM_INT);
+		$stmt->bindValue(2,$offset,PDO::PARAM_INT);
 
-		$result = $this->stmt->execute($limit,$offset);
+		$result = $stmt->execute();
 		if(!$result)
 		{
 			printf('no results from query: %s',self::$queries[$query_key]);
 			return false;
 		}
 		
-		return $result->fetchAll(PDO::FETCH_ASSOC);
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	// Used to create custom queries based on user entered parameters
@@ -233,7 +264,7 @@ class mysql
 		//since the query requires an array, we have to construct count($id) place holders (?) to be filled by ids
 		$inQuery = implode(',', array_fill(0, count($ids), '?'));
 
-		$query = self::$queries['elaborate']." ($inQuery) GROUP BY src";
+		$query = self::$elaborate_queries['elaborate']." ($inQuery) GROUP BY src";
 
 		$stmt = $this->db->prepare($query);
 		
@@ -252,14 +283,14 @@ class mysql
 		*/
 		foreach ($result as &$res) {
 
-			$glazing = $this->db->prepare(self::$queries['elab_g']);
+			$glazing = $this->db->prepare(self::$elaborate_queries['elab_g']);
 			$glazing->execute(array($res['id']));
 			$res['glazing'] = [];
 
 			foreach ($glazing->fetchAll(PDO::FETCH_ASSOC) as $value)
 				$res['glazing'][$value['id']] = $value['glazing'];
 
-			$material = $this->db->prepare(self::$queries['elab_m']);
+			$material = $this->db->prepare(self::$elaborate_queries['elab_m']);
 			$material->execute(array($res['id']));
 			$res['material'] = [];
 

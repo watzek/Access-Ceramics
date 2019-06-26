@@ -109,6 +109,17 @@ class mysql
 	];
 
 	static $default_query = 'images';
+
+	static $category_queries = 
+	[
+		'collection'=>'SELECT COUNT(i.original) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM images i WHERE i.active = \'yes\';',
+		'artists'=>'SELECT COUNT(a.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM artists a;',
+		'glazing'=>'SELECT COUNT(g.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM glazing g;',
+		'material'=>'SELECT COUNT(m.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM material m;',
+		'object'=>'SELECT COUNT(o.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM object_type o;',
+		'technique'=>'SELECT COUNT(t.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM techniques t;',
+		'temperature'=>'SELECT COUNT(t.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM temperature t;'
+	];
 	const DEFAULT_QUERY_LIM = 20;
 	const DEFAULT_QUERY_OFFSET = 0;
 
@@ -130,6 +141,16 @@ class mysql
 		  	echo $e->getMessage();//FIXTHIS AT END
 		}
 		
+	}
+
+	public function categories()
+	{
+		$categories = [];
+		foreach (self::$category_queries as $key => $query) {
+			$stmt = $this->db->query($query);
+			$categories[$key] = $stmt->fetch(PDO::FETCH_ASSOC);
+		}
+		return $categories;
 	}
 
 	public function query_db($query_key, $offset=self::DEFAULT_QUERY_OFFSET, $limit=self::DEFAULT_QUERY_LIM, $arg_dict=NULL)//TEST

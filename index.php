@@ -93,22 +93,13 @@
 
 		$ap = new ArgParser($_GET);
 		$db = new mysql();
-		$image_ids = array(2536,2546,2538,2541,2548,2537);
-		$result = $db->elaborate($image_ids);
-		echo nl2br(' |'.count($result).'| '." Results\r\n");
-		$i = 0;
-		foreach ($result as $row => $res) {
-			echo nl2br($row."=> \r\n") ;
-			foreach ($res as $col => $val) {
-				if(gettype($val) == 'array'){
-					echo nl2br($col." => \r\n");
-					foreach ($val as $v) echo $v.' | ';
-					echo nl2br("\r\n");
-				}
-				else
-					echo nl2br($col.' => '.$val."\r\n");
-			}		
-		}
+		 foreach ($db->categories() as $cat => $vals) {
+		 	?>
+		 	<h1><?=$cat?></h1>
+		 	<h3><?=$vals['ct']?></h3>
+		 	<img  style="width: 20vh; height: 20vh; object-fit: contain;" src=<?=$vals['src']?>>
+		 	<?php
+		 }
 	?>
 </body>
 </html>

@@ -1,5 +1,6 @@
 // Base styling for the navbar
 #mainNav {
+  max-height: 9vh;
   box-shadow: $box-shadow;
   background-color: $white;
   transition: background-color 0.2s ease;

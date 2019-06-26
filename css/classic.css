@@ -9658,7 +9658,7 @@ h3 {
 .navbar-toggler {
   visibility: visible;
 }
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   .navbar-toggler {
     visibility: hidden;
   }
@@ -9769,6 +9769,20 @@ body, html {
 .divider {
   max-width: 7rem;
   border-radius: 2px;
+}
+
+@media (min-width: 992px) {
+  form input {
+    width: 65% !important;
+    margin-left: 0;
+    padding-left: 0;
+  }
+  form button {
+    width: 30% !important;
+    margin-right: 0;
+    padding-right: 0;
+    font-size: 10pt;
+  }
 }
 
 /* ---For Browse Classic--- */
@@ -19484,20 +19498,6 @@ h3 {
 .img-selection {
   max-height: calc((100vh - 20vh) / 3);
   max-width: 50%;
-}
-
-@media (min-width: 992px) {
-  form input {
-    width: 65% !important;
-    margin-left: 0;
-    padding-left: 0;
-  }
-  form button {
-    width: 30% !important;
-    margin-right: 0;
-    padding-right: 0;
-    font-size: 10pt;
-  }
 }
 
 /*# sourceMappingURL=classic.css.map */

@@ -1,24 +1,20 @@
 <?php
   require('../classes/navbar.class.php');
   require('../classes/browsemain.class.php');
+  require('../classes/argparser.class.php');
 
-  $args = [
-    'q' => isset($_GET['q']) ? $_GET['q'] : NULL,
-    'artist_fn' => isset($_GET['af']) ? $_GET['af'] : NULL,
-    'artist_ln' => isset($_GET['al']) ? $_GET['al'] : NULL,
-    'glazing' => isset($_GET['g']) ? $_GET['g'] : NULL,
-    'material' => isset($_GET['m']) ? $_GET['m'] : NULL,
-    'object' => isset($_GET['o']) ? $_GET['o'] : NULL,
-    'technique' => isset($_GET['t']) ? $_GET['t'] : NULL,
-    'temperature' => isset($_GET['tem']) ? $_GET['tem'] : NULL,
-    'view' => isset($_GET['v']) ? $_GET['v'] : NULL,  
-  ];
+  $argparser = new ArgParser($_GET);
+  $args = $argparser->get_args();
 
 
   $navbar = new navbar('classic');
   $main = new main($args);
   $results = $main->get_results();
-  
+  $res_count = count($results);
+  $res_count = ($res_count > 0 ? '('.$res_count.')' : '');
+
+  $search_title = !isset($args['q']) ? 'No search specified' : ucfirst($args['q']).' '.$res_count;
+
 ?>
 
 
@@ -48,7 +44,9 @@
   <link href="../img/a.gif" rel="shortcut icon">
 
   <!-- pane view css --> 
-  <link rel="stylesheet" type="text/css" href="../css/pane.css">
+  <!-- <link rel="stylesheet" type="text/css" href="../css/pane.css"> -->
+  <!-- outer browse -->
+  <link rel="stylesheet" type="text/css" href="../css/browse_outer.css">
   <!-- grid view css --> 
   <!-- <link rel="stylesheet" type="text/css" href="../css/grid.css"> -->
   <!-- list view css --> 
@@ -65,9 +63,25 @@
 </head>
 <body>
 <?php $navbar->show()?>
-
+<hr class="my-1" />
 <div id="content" class="container-fluid">
   <div id="results">
+    <div class="container-fluid span-all-cols" id="header">
+        <span id="search-title"><?=$search_title?></span>
+      <br/>
+      View Mode: 
+      (<span class="view-mode active" id="comfortable">Comfortable</span>) 
+      (<span class="view-mode" id="lost">List</span>) 
+      (<span class="view-mode" id="compact">Compact</span>)
+      <br/>
+      Results Per Page: 
+      (<span class="limit-choice" value="20">20</span>, 
+      <span class="limit-choice" value="50">50</span>, 
+      <span class="limit-choice" value="100">100</span>, 
+      <span class="limit-choice active" value="all">all</span>)
+      <br/>      
+  </div>
+  <div class="navigate span-all-cols">< Prev 1 2 3 4 5 Next ></div>
     <?php
     $ind = -1;
     if($results)
@@ -81,6 +95,7 @@
       <?php
     }
     ?>
+    <div class="navigate span-all-cols">< Prev 1 2 3 4 5 Next ></div>
   </div> <!-- end results -->
   <div id="view">
     <img id="view-img" src="../img/default.jpg">

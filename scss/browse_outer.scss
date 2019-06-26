@@ -1,0 +1,191 @@
+@import "./variables.scss";
+
+
+$primary: $ceramicstext !default;
+$secondary: $ceramicstextalt !default;
+$light: #F4F8E7 !default;
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+
+
+//new theme
+//$primary: $ceramicspurple; 
+//$secondary: $ceramicsblue; 
+.accessText
+{
+    color: $primary;
+}
+
+.ceramicsText
+{
+	color: $secondary;
+}
+
+// Import Bootstrap
+
+
+// Import custom styles
+@import "./global.scss";
+@import "./navbar.scss";
+@import "./portfolio.scss";
+
+
+html, body
+{
+	margin: 0;
+	height: 100vh;
+	width: 100vw;
+	overflow-x: hidden;
+}
+
+.span-all-cols
+{
+	grid-column: 1 / 4;
+	@include media-breakpoint-up(md)
+	{
+		grid-column: 1 / 5;
+	}
+	@include media-breakpoint-up(lg)
+	{
+		grid-column: 1 / 6;
+	}
+
+}
+#header
+{
+	height: 10vh;
+	font-size: 8pt;
+	#search-title
+	{
+		font-size: 12pt;
+	}
+
+	@include media-breakpoint-up(md)
+	{
+		height: 13vh;
+		font-size: 10pt;
+		#search-title
+		{
+			font-size: 14pt;
+		}
+	}
+	@include media-breakpoint-up(lg)
+	{
+		font-size: 12pt;
+		#search-title
+		{
+			font-size: 16pt;
+		}
+	}
+	
+}
+#content
+{
+	padding-top: 5vh;
+	padding-right: 4vw;
+	padding-left: 4vw;
+	padding-bottom:none;
+	height: $body-height;
+}
+
+#results
+{
+	border: 2px $primary solid;
+	background: $light;
+	width: 100%;
+	height: 100%;
+	display: inline-grid;
+
+	grid-template-columns: auto auto auto;
+	grid-row-gap: 5px;
+
+	@include media-breakpoint-up(md)
+	{
+		grid-template-columns: auto auto auto auto;
+		grid-row-gap: 5px;
+	}
+	@include media-breakpoint-up(lg)
+	{
+		grid-template-columns: auto auto auto auto auto;
+		grid-row-gap: 5px;
+	}
+
+	overflow-x: hidden;
+}
+
+.result
+{
+	margin: auto;
+	width: 30vw;
+	height: 30vw;
+	text-align: center;
+	@include media-breakpoint-up(md)
+	{
+		width: 18vw;
+		height: 18vw;
+	}
+}
+
+.result-img
+{
+	margin: auto;
+	width: 20vw;
+	height: 20vw;
+
+	@include media-breakpoint-up(sm)
+	{
+		margin:0;
+	}
+
+	@include media-breakpoint-up(md)
+	{
+		width: 12vw;
+		height: 12vw;
+	}	
+}
+
+.result-title
+{
+	margin: 0;
+	padding: 0 2px 0 2px;
+	font-size: 85%;
+	@include media-breakpoint-up(md)
+	{
+		padding: 0 3vw 0 3vw;
+	}
+}
+.navigate
+{
+	height: 3vh;
+	text-align: center;
+}
+
+.limit-choice
+{
+	font-size: 85%;	
+}
+.limit-choice.active
+{
+	color: $ceramicstext;
+	text-decoration: underline;
+}
+
+
+.view-mode
+{
+	text-decoration: underline;
+	color: $ceramicstextalt;
+	font-size: 85%;
+}
+.view-mode.active
+{
+	color: $ceramicstext;
+}
+
+#view
+{
+	position: fixed;
+	bottom: -5px;
+	height: 0%;	
+	visibility: hidden;
+}

@@ -1,9 +1,11 @@
 <?php
   require('../classes/navbar.class.php');
-  require('../classes/mysql.class.php')
+  require('../classes/mysql.class.php');
+
   $navbar = new navbar('classic');
 
   $db = new mysql();
+  $categories = $db->categories();
 ?>
 
 
@@ -33,6 +35,7 @@
   <link href="../img/a.gif" rel="shortcut icon">
 
   <link rel="stylesheet" type="text/css" href="..\css\browse.css">
+  
 </head>
 
 <body id="page-top" class="bg-pic">
@@ -45,9 +48,10 @@
     <div class="col-xl-3 col-6 flip-container px-0">
       <a href="view.php?q=images">
       <div class="flipper w-100">
-        <div class="front w-100 tile collection-tile">
-          
-            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?='\'amount\''?> Collection</h2></div>
+        <div class="front w-100 tile">
+          <img src=<?="{$categories['collection']['src']}"?>/>
+            <!-- <p><?="background: url('{$categories['collection']['src']}')"?></p> -->
+            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['collection']['ct']?> Images</h2></div>
         </div>
         <div class="back tile w-100">
           <!-- <a class="selection-btn btn btn-primary btn-xl" href="view.php?q=images"></a> -->
@@ -59,9 +63,10 @@
     <div class="col-xl-3 col-6 flip-container px-0">
       <a href="view.php?q=artists">
       <div class="flipper w-100">
-        <div class="front w-100 tile artist-tile">
-          
-            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?='\'amount\''?> Artists</h2></div>
+        <div class="front w-100 tile">
+          <img src=<?="{$categories['artists']['src']}"?>/>
+            <!-- <p><?="background: url('{$categories['artists']['src']}')"?></p> -->
+            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['artists']['ct']?> Artists</h2></div>
         </div>
         <div class="back tile w-100">
           <!-- <a class="selection-btn btn btn-primary btn-xl" href="view.php?q=artists"></a> -->
@@ -74,9 +79,10 @@
     <div class="col-xl-3 col-6 flip-container px-0">
       <a href="view.php?q=glazings">
       <div class="flipper w-100">
-        <div class="front w-100 tile glazing-tile">
-          
-            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?='\'amount\''?> Glazing/Surface</h2></div>
+        <div class="front w-100 tile">
+          <img src=<?="{$categories['glazing']['src']}"?>/>
+            <!-- <p><?="background: url('{$categories['glazing']['src']}')"?></p> -->
+            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['glazing']['ct']?> Glazing/Surfaces</h2></div>
         </div>
         <div class="back tile w-100">
           <!-- <a class="selection-btn btn btn-primary btn-xl" href="view.php?q=glazings"></a> -->
@@ -90,9 +96,10 @@
     <div class="col-xl-3 col-6 flip-container px-0">
       <a href="view.php?q=materials">
       <div class="flipper w-100">
-        <div class="front w-100 tile material-tile">
-          
-            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?='\'amount\''?> Material</h2></div>
+        <div class="front w-100 tile">
+          <img src=<?="{$categories['material']['src']}"?>/>
+            <!-- <p><?="background: url('{$categories['material']['src']}')"?></p> -->
+            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['material']['ct']?> Materials</h2></div>
         </div>
         <div class="back tile w-100">
           <!-- <a class="selection-btn btn btn-primary btn-xl" href="view.php?q=materials"></a> -->
@@ -106,9 +113,10 @@
     <div class="col-xl-3 col-6 flip-container px-0">
       <a href="view.php?q=objects">
       <div class="flipper w-100">
-        <div class="front w-100 tile object-tile">
-          
-            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?='\'amount\''?> Object Type</h2></div>
+        <div class="front w-100 tile">
+          <img src=<?="{$categories['object']['src']}"?>/>
+            <!-- <p><?="background: url('{$categories['object']['src']}')"?></p> -->
+            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['object']['ct']?> Object Types</h2></div>
         </div>
         <div class="back tile w-100">
           <!-- <a class="selection-btn btn btn-primary btn-xl" href="view.php?q=objects"></a> -->
@@ -122,9 +130,10 @@
     <div class="col-xl-3 col-6 flip-container px-0">
       <a href="view.php?q=techniques">
       <div class="flipper w-100">
-        <div class="front w-100 tile technique-tile">
-          
-            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?='\'amount\''?> Technique</h2></div>
+        <div class="front w-100 tile">
+          <img src=<?="{$categories['technique']['src']}"?>/>
+            <!-- <p><?="background: url('{$categories['technique']['src']}')"?></p> -->
+            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['technique']['ct']?> Techniques</h2></div>
         </div>
         <div class="back tile w-100">
           <!-- <a class="selection-btn btn btn-primary btn-xl" href="view.php?q=techniques"></a> -->
@@ -138,9 +147,10 @@
     <div class="col-xl-3 col-6 flip-container px-0 ">
       <a href="view.php?q=temperatures">
       <div class="flipper w-100">
-        <div class="front w-100 tile temperature-tile">
-          
-            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?='\'amount\''?> Temperature</h2></div>
+        <div class="front w-100 tile">
+          <img src=<?="{$categories['temperature']['src']}"?>/>
+            <!-- <p><?="background: url('{$categories['temperature']['src']}')"?></p> -->
+            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['temperature']['ct']?> Temperatures</h2></div>
         </div>
         <div class="back tile w-100">
           <!-- <a class="selection-btn btn btn-primary btn-xl" href="view.php?q=temperatures"></a> -->

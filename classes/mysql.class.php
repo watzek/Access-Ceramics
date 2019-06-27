@@ -5,48 +5,35 @@ require 'config.class.php';
 
 class mysql
 {
-	static $queries = [
+	static $category_queries = [
 		'artists' => 'SELECT CONCAT(a.artist_fname,\' \', a.artist_lname) AS title, MAX(i.original) AS original, a.id AS id FROM artists a JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) WHERE i.featured = \'1\' GROUP BY a.id ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC LIMIT ? OFFSET ?',
-
-		'artist' => '',
-
 		'institutions' => 'SELECT DISTINCT * FROM organizations ORDER BY organizations.name ASC LIMIT ? OFFSET ?',
-
-		'institution' => '',
-
-		'images' => 'SELECT CONCAT(i.artist_fname, \' \', i.artist_lname) AS artist, i.title AS title, MAX(i.original) AS original 
+		/*'images' => 'SELECT CONCAT(i.artist_fname, \' \', i.artist_lname) AS artist, i.title AS title, MAX(i.original) AS original 
 			FROM images i 
 			WHERE i.active = \'yes\' 
 			AND i.artist_fname IS NOT NULL 
 			AND i.artist_fname != \'\' 
 			AND i.title IS NOT NULL 
-			AND i.title != \'\' GROUP BY i.original order by i.timestamp DESC LIMIT ? OFFSET ?',
-
-		'image' => '',
-
-		'glazings' => 'SELECT COUNT(i.id) AS count, g.glazing AS title, m.glazing_id AS id, i.original AS original 
-		FROM glazing g 
-		JOIN glazing_match m ON g.id = m.glazing_id 
-		JOIN images i ON m.image_id = i.id AND i.active = \'yes\' 
-		GROUP BY g.glazing ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
-
-		'glazing' => '',
-
+			AND i.title != \'\' GROUP BY i.original order by i.timestamp DESC LIMIT ? OFFSET ?'*/,
+		'glazings' => 'SELECT COUNT(i.id) AS count, 
+							  g.glazing AS title, 
+							  m.glazing_id AS id, 
+							  i.original AS original 
+			FROM glazing g 
+			JOIN glazing_match m ON g.id = m.glazing_id 
+			JOIN images i ON m.image_id = i.id AND i.active = \'yes\' 
+			GROUP BY g.glazing ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
 		'materials' => 'SELECT COUNT(i.id) as count, m.material AS title, mm.material_id as id, i.original as original
-		FROM material m 
-		JOIN material_match mm ON m.id = mm.material_id 
-		JOIN images i ON mm.image_id = i.id AND i.active =\'yes\' 
-		GROUP BY m.material ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
-
-		'material' => '',
-
+			FROM material m 
+			JOIN material_match mm ON m.id = mm.material_id 
+			JOIN images i ON mm.image_id = i.id AND i.active =\'yes\' 
+			GROUP BY m.material ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
+	
 		'objects' => 'SELECT COUNT(i.id) as count, o.object_type as title, om.object_type_id as id, i.original AS original 
 			FROM object_type o
 			JOIN object_type_match om ON o.id = om.object_type_id 
 			JOIN images i ON om.image_id = i.id AND i.active = \'yes\' 
 			GROUP BY o.object_type ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
-
-		'object' => '',
 
 		'techniques' => 'SELECT COUNT(i.id) as count, t.technique as title, tm.technique_id as id, i.original AS original 
 			FROM techniques t 
@@ -54,15 +41,14 @@ class mysql
 			JOIN images i ON tm.image_id = i.id AND i.active = \'yes\' 
 			GROUP BY t.technique ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
 
-		'technique' => '',
-
 		'temperatures' => 'SELECT COUNT(i.id) as count, te.temperature as title, tem.temperature_id as id, i.original AS original 
 			FROM temperature te 
 			JOIN temperature_match tem ON te.id = tem.temperature_id 
 			JOIN images i ON tem.image_id = i.id AND i.active = \'yes\' 
-			GROUP BY te.temperature ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
+			GROUP BY te.temperature ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?'
+		];
 
-		'temperature' => ''];
+	
 
 	static $elaborate_queries = [
 		'elaborate' => '
@@ -108,7 +94,7 @@ class mysql
 		'created' => ' i.date1 BETWEEN :year_s and :year_e'
 	];
 
-	static $default_query = 'images';
+	static $default_category = 'artists';
 
 	static $category_queries = 
 	[
@@ -153,22 +139,22 @@ class mysql
 		return $categories;
 	}
 
-	public function query_db($query_key, $offset=self::DEFAULT_QUERY_OFFSET, $limit=self::DEFAULT_QUERY_LIM, $arg_dict=NULL)//TEST
+	public function query_category($query_key, $offset=self::DEFAULT_QUERY_OFFSET, $limit=self::DEFAULT_QUERY_LIM, $arg_dict=NULL)//TEST
 	{
-		if(!isset($query_key) or !isset(self::$queries[$query_key]))
+		if(!isset($query_key) or !isset(self::$category_queries[$query_key]))
 		{
 			printf('no value matching key: |%s| found, using default',$query_key);
-			$query_key = self::$default_query;
+			$query_key = self::$default_category;
 		}
 
-		$stmt = $this->db->prepare(self::$queries[$query_key]);
+		$stmt = $this->db->prepare(self::$category_queries[$query_key]);
 		$stmt->bindValue(1,$limit,PDO::PARAM_INT);
 		$stmt->bindValue(2,$offset,PDO::PARAM_INT);
 
 		$result = $stmt->execute();
 		if(!$result)
 		{
-			printf('no results from query: %s',self::$queries[$query_key]);
+			printf('no results from query: %s',self::$category_queries[$query_key]);
 			return false;
 		}
 		
@@ -176,7 +162,7 @@ class mysql
 	}
 
 	// Used to create custom queries based on user entered parameters
-	public function do_custom_query($args)
+	public function do_custom_query($args, $ofs=self::DEFAULT_QUERY_OFFSET, $lim=self::DEFAULT_QUERY_LIM)
 	{
 		$constructed_query = self::$custom_query_strings['base'];
 		/*
@@ -251,9 +237,7 @@ class mysql
 		
 		//limit and offset are always included, so they are handled at the end
 		if($args['limit'] !== '') $lim = $args['limit'];
-			else $lim = self::DEFAULT_QUERY_LIM;
 		if($args['offset'] !== '') $ofs = $args['offset'];
-			else $ofs = self::DEFAULT_QUERY_OFFSET;
 
 		$stmt->bindValue(':lim',$lim, PDO::PARAM_INT);
 		$stmt->bindValue(':ofs', $ofs, PDO::PARAM_INT);

@@ -26,7 +26,7 @@ class Main
 
 	public function get_results()
 	{
-		if(!$args)
+		if(!$this->args)
 		{
 			$this->result = $this->db->categories();
 		}

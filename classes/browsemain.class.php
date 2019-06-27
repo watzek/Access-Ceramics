@@ -30,7 +30,7 @@ class Main
 		{
 			$this->result = $this->db->categories();
 		}
-		else if($args['category'])
+		else if($this->args['category'])
 		{
 			$this->results = $this->db->query_category($this->args['category'],$this->args['offset'], $this->args['limit']);
 		}

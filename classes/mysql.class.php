@@ -14,7 +14,7 @@ class mysql
 			AND i.artist_fname IS NOT NULL 
 			AND i.artist_fname != \'\' 
 			AND i.title IS NOT NULL 
-			AND i.title != \'\' GROUP BY i.original order by i.timestamp DESC LIMIT ? OFFSET ?'*/,
+			AND i.title != \'\' GROUP BY i.original order by i.timestamp DESC LIMIT ? OFFSET ?',*/
 		'glazings' => 'SELECT COUNT(i.id) AS count, 
 							  g.glazing AS title, 
 							  m.glazing_id AS id, 

@@ -11,16 +11,11 @@ class Main
 	private $args;
 	private $result = false;
 
-	public function __construct($args)
+	public function __construct($args=NULL)
 	{
-		//if no view is set, default template is returned
 		$this->args = $args;
-		$this->template = new Templates($args['view']);
-		if(isset($args['q']))
-		{
-			$this->db = new mysql();
-			$this->result = $this->db->query_db($this->args['q']);
-		}
+		//$this->template = new Templates($args['view']);
+		$this->db = new mysql();
 	}
 
 	public function show()
@@ -31,6 +26,18 @@ class Main
 
 	public function get_results()
 	{
+		if(!$args)
+		{
+			$this->result = $this->db->categories();
+		}
+		else if($args['category'])
+		{
+			$this->results = $this->db->query_category($this->args['category'],$this->args['offset'], $this->args['limit']);
+		}
+		else
+		{
+			$this->results = $this->db->do_custom_query($this->args);
+		}
 		return $this->result;
 	}
 }

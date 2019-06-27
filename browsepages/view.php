@@ -4,10 +4,12 @@
   require('../classes/argparser.class.php');
 
   $argparser = new ArgParser($_GET);
-  $navbar = new navbar('classic');
-  $main = new main($args);
-
   $args = $argparser->get_args();
+  
+  $navbar = new navbar('classic');
+  $main = new Main($args);
+
+  
   $results = $main->get_results();
 
   /* need to change below, but for now its fine */ 

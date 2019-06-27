@@ -13,7 +13,7 @@
   $results = $main->get_results();
 
   /* need to change below, but for now its fine */ 
-  $res_count = count($results);
+  $res_count = $results ? count($results) : 0;
   $res_count = ($res_count > 0 ? '('.$res_count.')' : '');
 
   $search_title = !isset($args['category']) ? 'No search specified' : ucfirst($args['category']).' '.$res_count;

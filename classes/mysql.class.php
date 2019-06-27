@@ -96,7 +96,7 @@ class mysql
 
 	static $default_category = 'artists';
 
-	static $category_queries = 
+	static $category_overview = 
 	[
 		'collection'=>'SELECT COUNT(i.original) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM images i WHERE i.active = \'yes\';',
 		'artists'=>'SELECT COUNT(a.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM artists a;',
@@ -132,7 +132,7 @@ class mysql
 	public function categories()
 	{
 		$categories = [];
-		foreach (self::$category_queries as $key => $query) {
+		foreach (self::$category_overview as $key => $query) {
 			$stmt = $this->db->query($query);
 			$categories[$key] = $stmt->fetch(PDO::FETCH_ASSOC);
 		}

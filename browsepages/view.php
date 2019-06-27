@@ -4,17 +4,17 @@
   require('../classes/argparser.class.php');
 
   $argparser = new ArgParser($_GET);
-  $args = $argparser->get_args();
-
-
   $navbar = new navbar('classic');
   $main = new main($args);
+
+  $args = $argparser->get_args();
   $results = $main->get_results();
+
+  /* need to change below, but for now its fine */ 
   $res_count = count($results);
   $res_count = ($res_count > 0 ? '('.$res_count.')' : '');
 
-  $search_title = !isset($args['q']) ? 'No search specified' : ucfirst($args['q']).' '.$res_count;
-
+  $search_title = !isset($args['category']) ? 'No search specified' : ucfirst($args['category']).' '.$res_count;
 ?>
 
 
@@ -43,18 +43,35 @@
   <!-- Icon -->
   <link href="../img/a.gif" rel="shortcut icon">
 
-  <!-- pane view css --> 
-  <!-- <link rel="stylesheet" type="text/css" href="../css/pane.css"> -->
-  <!-- outer browse -->
-  <link rel="stylesheet" type="text/css" href="../css/browse_outer.css">
-  <!-- grid view css --> 
-  <!-- <link rel="stylesheet" type="text/css" href="../css/grid.css"> -->
-  <!-- list view css --> 
-  <!-- <link rel="stylesheet" type="text/css" href="../css/list.css"> -->
-  <!-- full view css --> 
+  <?php
+    if($args['category'])
+    {
+    ?>
+    <link rel="stylesheet" type="text/css" href="../css/browse_outer.css">
+    <?php
+    }
+    else
+    {
+      switch($args['view'])
+      {
+        case 'pane':
+    echo "<link rel='stylesheet' type='text/css' href='../css/pane.css'>";
+          break;
+        case 'grid':
+    echo "<link rel='stylesheet' type='text/css' href='../css/grid.css'>";
+          break;
+        case 'list':
+    echo "<link rel='stylesheet' type='text/css' href='../css/list.css'>";
+          break;
+      }
+    }
+  ?>
  <!--  <link rel="stylesheet" type="text/css" href="../css/full.css"> -->
 <script>
-    <?='var q_results ='. json_encode($results) .';'?> 
+    
+    <?='var q_results ='. json_encode($results) .';'?>
+    <?='var get_args  ='. json_encode($args).';'?>
+     
 </script>
 
 <script src="../js/view.js">
@@ -75,10 +92,10 @@
       (<span class="view-mode" id="compact">Compact</span>)
       <br/>
       Results Per Page: 
-      (<span class="limit-choice" value="20">20</span>, 
-      <span class="limit-choice" value="50">50</span>, 
-      <span class="limit-choice" value="100">100</span>, 
-      <span class="limit-choice active" value="all">all</span>)
+      (<span class="limit-choice" value="0">20</span>, 
+      <span class="limit-choice" value="1">50</span>, 
+      <span class="limit-choice" value="2">100</span>, 
+      <span class="limit-choice active" value="3">all</span>)
       <br/>      
   </div>
   <div class="navigate span-all-cols">< Prev 1 2 3 4 5 Next ></div>

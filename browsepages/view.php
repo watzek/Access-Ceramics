@@ -2,23 +2,19 @@
   require('../classes/navbar.class.php');
   require('../classes/browsemain.class.php');
 
-  $args = [
-    'q' => isset($_GET['q']) ? $_GET['q'] : NULL,
-    'artist_fn' => isset($_GET['af']) ? $_GET['af'] : NULL,
-    'artist_ln' => isset($_GET['al']) ? $_GET['al'] : NULL,
-    'glazing' => isset($_GET['g']) ? $_GET['g'] : NULL,
-    'material' => isset($_GET['m']) ? $_GET['m'] : NULL,
-    'object' => isset($_GET['o']) ? $_GET['o'] : NULL,
-    'technique' => isset($_GET['t']) ? $_GET['t'] : NULL,
-    'temperature' => isset($_GET['tem']) ? $_GET['tem'] : NULL,
-    'view' => isset($_GET['v']) ? $_GET['v'] : NULL,  
-  ];
-
-
+  $argparser = new ArgParser($_GET);
   $navbar = new navbar('classic');
   $main = new main($args);
+
+  $args = $argparser->get_args();
   $results = $main->get_results();
-  
+
+  /* need to change below, but for now its fine */ 
+  $res_count = count($results);
+  $res_count = ($res_count > 0 ? '('.$res_count.')' : '');
+
+  $search_title = !isset($args['category']) ? 'No search specified' : ucfirst($args['category']).' '.$res_count;
+
 ?>
 
 
@@ -48,15 +44,38 @@
   <link href="../img/a.gif" rel="shortcut icon">
 
   <!-- pane view css --> 
-  <link rel="stylesheet" type="text/css" href="../css/pane.css">
-  <!-- grid view css --> 
-  <!-- <link rel="stylesheet" type="text/css" href="../css/grid.css"> -->
-  <!-- list view css --> 
-  <!-- <link rel="stylesheet" type="text/css" href="../css/list.css"> -->
-  <!-- full view css --> 
+
+  <!--  -->
+  <!-- outer browse -->
+  <?php
+    if($args['category'])
+    {
+    ?>
+    <link rel="stylesheet" type="text/css" href="../css/browse_outer.css">
+    <?php
+    }
+    else
+    {
+      switch($args['view'])
+      {
+        case 'pane':
+    echo "<link rel='stylesheet' type='text/css' href='../css/pane.css'>";
+          break;
+        case 'grid':
+    echo "<link rel='stylesheet' type='text/css' href='../css/grid.css'>";
+          break;
+        case 'list':
+    echo "<link rel='stylesheet' type='text/css' href='../css/list.css'>";
+          break;
+      }
+    }
+  ?>
  <!--  <link rel="stylesheet" type="text/css" href="../css/full.css"> -->
 <script>
-    <?='var q_results ='. json_encode($results) .';'?> 
+    
+    <?='var q_results ='. json_encode($results) .';'?>
+    <?='var get_args  ='. json_encode($args).';'?>
+     
 </script>
 
 <script src="../js/view.js">
@@ -68,6 +87,22 @@
 
 <div id="content" class="container-fluid">
   <div id="results">
+    <div class="container-fluid span-all-cols" id="header">
+        <span id="search-title"><?=$search_title?></span>
+      <br/>
+      View Mode: 
+      (<span class="view-mode active" id="comfortable">Comfortable</span>) 
+      (<span class="view-mode" id="lost">List</span>) 
+      (<span class="view-mode" id="compact">Compact</span>)
+      <br/>
+      Results Per Page: 
+      (<span class="limit-choice" value="0">20</span>, 
+      <span class="limit-choice" value="1">50</span>, 
+      <span class="limit-choice" value="2">100</span>, 
+      <span class="limit-choice active" value="3">all</span>)
+      <br/>      
+  </div>
+  <div class="navigate span-all-cols">< Prev 1 2 3 4 5 Next ></div>
     <?php
     $ind = -1;
     if($results)

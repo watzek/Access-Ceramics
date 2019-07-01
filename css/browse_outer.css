@@ -9824,7 +9824,7 @@ html, body {
 }
 
 #header {
-  height: 10vh;
+  height: 10%;
   font-size: 8pt;
 }
 #header #search-title {

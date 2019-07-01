@@ -1,7 +1,8 @@
 <?php  
-
+require('argparser.class.php');
 require 'templates.class.php';
 require 'mysql.class.php';
+require_once('config.class.php');
 
 
 class Main
@@ -11,9 +12,11 @@ class Main
 	private $args;
 	private $result = false;
 
-	public function __construct($args=NULL)
+	public function __construct()
 	{
-		$this->args = $args;
+		$ap = new ArgParser($_GET);
+		$this->args = $ap->get_args();
+		unset($ap);
 		//$this->template = new Templates($args['view']);
 		$this->db = new mysql();
 	}
@@ -24,21 +27,28 @@ class Main
 		unset($this->template);
 	}
 
+
+	public function get_args()
+	{
+		return $this->args;
+	}
+
+
 	public function get_results()
 	{
 		if(!$this->args)
 		{
-			$this->result = $this->db->categories();
+			$this->results = $this->db->categories();
 		}
 		else if($this->args['category'])
 		{
-			$this->results = $this->db->query_category($this->args['category'],$this->args['offset'], $this->args['limit']);
+			$this->results = $this->db->query_category($this->args);
 		}
 		else
 		{
 			$this->results = $this->db->do_custom_query($this->args);
 		}
-		return $this->result;
+		return $this->results;
 	}
 }
 ?>

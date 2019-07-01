@@ -1,14 +1,12 @@
 <?php  
-require 'config.class.php';
-
-
+require 'sql_credentials.class.php';
 
 class mysql
 {
 	static $category_queries = [
-		'artists' => 'SELECT CONCAT(a.artist_fname,\' \', a.artist_lname) AS title, MAX(i.original) AS original, a.id AS id FROM artists a JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) WHERE i.featured = \'1\' GROUP BY a.id ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC LIMIT ? OFFSET ?',
-		'institutions' => 'SELECT DISTINCT * FROM organizations ORDER BY organizations.name ASC LIMIT ? OFFSET ?',
-		/*'images' => 'SELECT CONCAT(i.artist_fname, \' \', i.artist_lname) AS artist, i.title AS title, MAX(i.original) AS original 
+		'artists' => 'SELECT CONCAT(a.artist_fname,\' \', a.artist_lname) AS title, MAX(i.original) AS src, a.id AS id FROM artists a JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) WHERE i.featured = \'1\' GROUP BY a.id ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC LIMIT ? OFFSET ?',
+		'institutions' => 'SELECT name as title, image_path as src, CONCAT(address1,\' \',city,\' \',state) as info FROM organizations ORDER BY organizations.name ASC LIMIT ? OFFSET ?',
+		/*'images' => 'SELECT CONCAT(i.artist_fname, \' \', i.artist_lname) AS artist, i.title AS title, MAX(i.original) AS src 
 			FROM images i 
 			WHERE i.active = \'yes\' 
 			AND i.artist_fname IS NOT NULL 
@@ -18,30 +16,30 @@ class mysql
 		'glazings' => 'SELECT COUNT(i.id) AS count, 
 							  g.glazing AS title, 
 							  m.glazing_id AS id, 
-							  i.original AS original 
+							  i.original AS src 
 			FROM glazing g 
 			JOIN glazing_match m ON g.id = m.glazing_id 
 			JOIN images i ON m.image_id = i.id AND i.active = \'yes\' 
 			GROUP BY g.glazing ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
-		'materials' => 'SELECT COUNT(i.id) as count, m.material AS title, mm.material_id as id, i.original as original
+		'materials' => 'SELECT COUNT(i.id) as count, m.material AS title, mm.material_id as id, i.original as src
 			FROM material m 
 			JOIN material_match mm ON m.id = mm.material_id 
 			JOIN images i ON mm.image_id = i.id AND i.active =\'yes\' 
 			GROUP BY m.material ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
 	
-		'objects' => 'SELECT COUNT(i.id) as count, o.object_type as title, om.object_type_id as id, i.original AS original 
+		'objects' => 'SELECT COUNT(i.id) as count, o.object_type as title, om.object_type_id as id, i.original AS src 
 			FROM object_type o
 			JOIN object_type_match om ON o.id = om.object_type_id 
 			JOIN images i ON om.image_id = i.id AND i.active = \'yes\' 
 			GROUP BY o.object_type ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
 
-		'techniques' => 'SELECT COUNT(i.id) as count, t.technique as title, tm.technique_id as id, i.original AS original 
+		'techniques' => 'SELECT COUNT(i.id) as count, t.technique as title, tm.technique_id as id, i.original AS src 
 			FROM techniques t 
 			JOIN technique_match tm ON t.id = tm.technique_id 
 			JOIN images i ON tm.image_id = i.id AND i.active = \'yes\' 
 			GROUP BY t.technique ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
 
-		'temperatures' => 'SELECT COUNT(i.id) as count, te.temperature as title, tem.temperature_id as id, i.original AS original 
+		'temperatures' => 'SELECT COUNT(i.id) as count, te.temperature as title, tem.temperature_id as id, i.original AS src 
 			FROM temperature te 
 			JOIN temperature_match tem ON te.id = tem.temperature_id 
 			JOIN images i ON tem.image_id = i.id AND i.active = \'yes\' 
@@ -94,7 +92,7 @@ class mysql
 		'created' => ' i.date1 BETWEEN :year_s and :year_e'
 	];
 
-	static $default_category = 'artists';
+	
 
 	static $category_overview = 
 	[
@@ -106,17 +104,16 @@ class mysql
 		'technique'=>'SELECT COUNT(t.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM techniques t;',
 		'temperature'=>'SELECT COUNT(t.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM temperature t;'
 	];
-	const DEFAULT_QUERY_LIM = 20;
-	const DEFAULT_QUERY_OFFSET = 0;
+	
 
 
 	public function __construct()
 	{
-		$config = new config();
-		$server = $config->server;
-		$dbname = $config->dbname;
-		$user = $config->user;
-		$password = $config->password;
+		$creds = new Credentials();
+		$server = $creds->server;
+		$dbname = $creds->dbname;
+		$user = $creds->user;
+		$password = $creds->password;
 		try 
 		{
 			$this->db = new PDO("mysql:host=$server;dbname=$dbname", $user, $password);
@@ -138,31 +135,29 @@ class mysql
 		}
 		return $categories;
 	}
+	
 
-	public function query_category($query_key, $offset=self::DEFAULT_QUERY_OFFSET, $limit=self::DEFAULT_QUERY_LIM, $arg_dict=NULL)//TEST
+	public function query_category($args)
 	{
-		if(!isset($query_key) or !isset(self::$category_queries[$query_key]))
-		{
-			printf('no value matching key: |%s| found, using default',$query_key);
-			$query_key = self::$default_category;
-		}
+		$query_key = $args['category'];
+		$limit = $args['limit'];
+		$offset = $args['offset'];
 
 		$stmt = $this->db->prepare(self::$category_queries[$query_key]);
 		$stmt->bindValue(1,$limit,PDO::PARAM_INT);
 		$stmt->bindValue(2,$offset,PDO::PARAM_INT);
-
 		$result = $stmt->execute();
 		if(!$result)
 		{
 			printf('no results from query: %s',self::$category_queries[$query_key]);
 			return false;
 		}
-		
+	
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	// Used to create custom queries based on user entered parameters
-	public function do_custom_query($args, $ofs=self::DEFAULT_QUERY_OFFSET, $lim=self::DEFAULT_QUERY_LIM)
+	public function do_custom_query($args)
 	{
 		$constructed_query = self::$custom_query_strings['base'];
 		/*
@@ -236,8 +231,8 @@ class mysql
 		}
 		
 		//limit and offset are always included, so they are handled at the end
-		if($args['limit'] !== '') $lim = $args['limit'];
-		if($args['offset'] !== '') $ofs = $args['offset'];
+		$lim = $args['limit'];
+		$ofs = $args['offset'];
 
 		$stmt->bindValue(':lim',$lim, PDO::PARAM_INT);
 		$stmt->bindValue(':ofs', $ofs, PDO::PARAM_INT);

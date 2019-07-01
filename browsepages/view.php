@@ -1,13 +1,11 @@
 <?php
   require('../classes/navbar.class.php');
   require('../classes/browsemain.class.php');
-  require('../classes/argparser.class.php');
-
-  $argparser = new ArgParser($_GET);
-  $args = $argparser->get_args();
+  
   
   $navbar = new navbar('classic');
-  $main = new Main($args);
+  $main = new Main();
+  $args = $main->get_args();
 
   
   $results = $main->get_results();
@@ -84,6 +82,7 @@
 <div id="content" class="container-fluid">
   <div id="results">
     <div class="container-fluid span-all-cols" id="header">
+      <p>
         <span id="search-title"><?=$search_title?></span>
       <br/>
       View Mode: 
@@ -96,7 +95,8 @@
       <span class="limit-choice pressable">50</span>, 
       <span class="limit-choice pressable">100</span>, 
       <span class="limit-choice pressable active">all</span>)
-      <br/>      
+      <br/>
+      </p> 
   </div>
   <div class="navigate span-all-cols">< Prev 1 2 3 4 5 Next ></div>
     <?php
@@ -105,10 +105,12 @@
     foreach ($results as $res) {
       $ind++;
       ?>
-      <div class="result" value=<?=$ind?>><!-- result skeleton -->
-        <img class="result-img" src=<?=$res['original']?>>
+      <!-- result skeleton -->
+      <div class="result" value=<?=$ind?>>
+        <img class="result-img" src=<?=$res['src']?>>
         <p class="result-title"><?=$res['title']?></p>
-      </div><!-- end -->
+      </div>
+      <!-- end -->
       <?php
     }
     ?>

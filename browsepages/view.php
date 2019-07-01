@@ -1,13 +1,11 @@
 <?php
   require('../classes/navbar.class.php');
   require('../classes/browsemain.class.php');
-  require('../classes/argparser.class.php');
-
-  $argparser = new ArgParser($_GET);
-  $args = $argparser->get_args();
+  
   
   $navbar = new navbar('classic');
-  $main = new Main($args);
+  $main = new Main();
+  $args = $main->get_args();
 
   
   $results = $main->get_results();
@@ -106,7 +104,7 @@
       $ind++;
       ?>
       <div class="result" value=<?=$ind?>><!-- result skeleton -->
-        <img class="result-img" src=<?=$res['original']?>>
+        <img class="result-img" src=<?=$res['src']?>>
         <p class="result-title"><?=$res['title']?></p>
       </div><!-- end -->
       <?php

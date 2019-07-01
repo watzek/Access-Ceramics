@@ -7,7 +7,7 @@ class ArgParser
 	{
 		$this->original = $args;
 		$this->args = [
-			'category' => (isset($args['c']) and in_array($args['c'],CATEGORY_NAMES)) ? $args['c'] : DEFAULT_CATEGORY,
+			'category' => isset($args['c']) ? $args['c'] : '',
 		    'artist_fn' => isset($args['af']) ? $args['af'] : '',
 		    'artist_ln' => isset($args['al']) ? $args['al'] : '',
 		    'glazing' => isset($args['g']) ? $args['g'] : '',
@@ -27,6 +27,8 @@ class ArgParser
 			echo ($key .'=>'. $value);
 			echo ("<br\>");
   		}*/
+  		if(!in_array($this->args['category'],CATEGORY_NAMES)) 
+  			$this->args['category']=DEFAULT_CATEGORY;
 	}
 	public function get_args()
 	{

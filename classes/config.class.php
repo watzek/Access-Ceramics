@@ -15,6 +15,7 @@
 		'materials',
 		'objects',
 		'techniques',
-		'temperatures'
+		'temperatures',
+		''
 	];
 ?>

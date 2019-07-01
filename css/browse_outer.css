@@ -9925,11 +9925,20 @@ html, body {
   text-align: center;
 }
 
-.limit-choice {
-  font-size: 85%;
+.pressable {
+  cursor: pointer;
 }
 
-.limit-choice.active {
+.limit-choice {
+  font-size: 85%;
+  color: #7f4c38;
+}
+
+.limit-choice:hover {
+  color: #96935f;
+}
+
+.limit-choice .active {
   color: #7f4c38;
   text-decoration: underline;
 }

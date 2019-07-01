@@ -14,9 +14,8 @@
 
   /* need to change below, but for now its fine */ 
   $res_count = $results ? count($results) : 0;
-  $res_count = ($res_count > 0 ? '('.$res_count.')' : '');
 
-  $search_title = !isset($args['category']) ? 'No search specified' : ucfirst($args['category']).' '.$res_count;
+  $search_title = !isset($args['category']) ? 'No search specified' : ucfirst($args['category']).' ('.$res_count.')';
 ?>
 
 
@@ -76,9 +75,8 @@
      
 </script>
 
-<script src="../js/view.js">
+<script src="../js/view.js"></script>
 
-</script>
 </head>
 <body>
 <?php $navbar->show()?>
@@ -89,15 +87,15 @@
         <span id="search-title"><?=$search_title?></span>
       <br/>
       View Mode: 
-      (<span class="view-mode active" id="comfortable">Comfortable</span>) 
-      (<span class="view-mode" id="lost">List</span>) 
-      (<span class="view-mode" id="compact">Compact</span>)
+      (<span class="view-mode pressable active" id="comfortable">Comfortable</span>) 
+      (<span class="view-mode pressable" id="lost">List</span>) 
+      (<span class="view-mode pressable" id="compact">Compact</span>)
       <br/>
       Results Per Page: 
-      (<span class="limit-choice" value="0">20</span>, 
-      <span class="limit-choice" value="1">50</span>, 
-      <span class="limit-choice" value="2">100</span>, 
-      <span class="limit-choice active" value="3">all</span>)
+      (<span class="limit-choice pressable">20</span>, 
+      <span class="limit-choice pressable">50</span>, 
+      <span class="limit-choice pressable">100</span>, 
+      <span class="limit-choice pressable active">all</span>)
       <br/>      
   </div>
   <div class="navigate span-all-cols">< Prev 1 2 3 4 5 Next ></div>

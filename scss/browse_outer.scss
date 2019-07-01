@@ -160,11 +160,24 @@ html, body
 	text-align: center;
 }
 
+.pressable
+{
+	cursor: pointer;
+}
+
 .limit-choice
 {
 	font-size: 85%;	
+	color: $ceramicstext;
 }
-.limit-choice.active
+
+.limit-choice:hover
+{
+	color: $ceramicstextalt;
+}
+
+
+.limit-choice .active
 {
 	color: $ceramicstext;
 	text-decoration: underline;

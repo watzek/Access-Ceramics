@@ -23,11 +23,12 @@ window.onload = function()
 			license : document.getElementById('meta-license')
 		};
 
-	view.img.src = q_results[0].original;
+	view.img.src = q_results[0].src;
 	for (var i = 0; i < results.length; i++) {
 		results[i].childNodes[0].src = q_results[i].src;
 		results[i].onclick = makeShow(i);
 	}
+	PLM = new PageLimitManager(LIMIT_CHOICES);
 }
 
 function makeShow(id)
@@ -48,56 +49,65 @@ function showImage(id)
 	Set arg, repartition pages, add new elements/remove old elements
 
 */
-function PageLimitManager()
+class PageLimitManager
 {
-	this.init = function(limit_choices)
+	constructor(limit_choices)
 	{
 		this.choices = limit_choices;
 		this.current = 1;
 		this.children = document.getElementsByClassName("limit-choice");
-		for (var i = 0; i < choice.length; i++) {
-			if(choice.classList.contains('active'))
+		var parent = this;
+		for (var i = 0; i < this.choices.length; i++) {
+			var child = this.children[i];
+
+			if(child.classList.contains('active'))
 				this.current = i;
-			choice[i].onclick = () =>
+
+			child.value = i;
+			child.innerHTML = this.choices[i];
+
+			child.addEventListener('click', function()
 			{
-				set_limit(this.value);
-			}
+				console.log(this.value);
+			});
 		}
+		this.set_limit(this.current);
 	}
 
-	this.set_limit = function(ind)
+	set_limit(ind)
 	{
 		console.log(ind);
 		if(ind >= 0 && ind < this.choices.length)
 		{
-			this.children[current].classList.remove('active');
+			this.children[this.current].classList.remove('active');
 			this.current = ind;
+			this.children[this.current].classList.add('active');
 		}
 
 	}
 }
 
-function PageViewManager()
+class PageViewManager
 {
-	this.init = function()
+	constructor()
 	{
 		
 	}
 
 }
 
-function AjaxHandler()
+class AjaxHandler
 {
-	this.init = function()
+	constructor()
 	{
 
 	}
 
 }
 
-function PageManager()
+class PageManager
 {
-	this.init = function(q_results)
+	init(q_results)
 	{
 		this.navs = document.getElementsByClassName("navigate");
 		this.partitions = [];
@@ -105,7 +115,7 @@ function PageManager()
 		this.items = q_results;
 	}
 
-	this.partition = function(page_limit)
+	partition(page_limit)
 	{
 		var len = this.items.length/page_limit;
 		for (var i = 0; i < len; i++)
@@ -113,7 +123,7 @@ function PageManager()
 				this.partitions[i] = this.items[k];
 	}
 
-	this.get_page_content = function(page_num)
+	get_page_content(page_num)
 	{
 		if(page_num >= this.partitions.length || page_num < 0)
 			return false;

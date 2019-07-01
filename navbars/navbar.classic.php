@@ -17,15 +17,15 @@
               Browse
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="./institutions">Institutions</a>
-                <a class="dropdown-item" href="./result_table/collection/1/1">Collection</a>
+                <a class="dropdown-item" href="../browsepages/view.php?c=institutions">Institutions</a>
+                <a class="dropdown-item" href="../browsepages/view.php?">Collection</a>
                 <!-- <div class="dropdown-divider"></div> -->
-                <a class="dropdown-item" href="./artists">Artists</a>
-                <a class="dropdown-item" href="./glazing">Glazing/Surface</a>
-                <a class="dropdown-item" href="./material">Material</a>
-                <a class="dropdown-item" href="./object">Object Type</a>
-                <a class="dropdown-item" href="./technique">Technique</a>
-                <a class="dropdown-item" href="./temperature">Temperature</a>
+                <a class="dropdown-item" href="../browsepages/view.php?c=artists">Artists</a>
+                <a class="dropdown-item" href="../browsepages/view.php?c=glazing">Glazing/Surface</a>
+                <a class="dropdown-item" href="../browsepages/view.php?c=materials">Material</a>
+                <a class="dropdown-item" href="../browsepages/view.php?c=objects">Object Type</a>
+                <a class="dropdown-item" href="../browsepages/view.php?c=techniques">Technique</a>
+                <a class="dropdown-item" href="../browsepages/view.php?c=temperatures">Temperature</a>
               </div>
             </li>
             <li class="nav-item">

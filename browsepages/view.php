@@ -108,7 +108,7 @@
       <!-- result skeleton -->
       <div class="result" value=<?=$ind?>>
         <img class="result-img" src=<?=$res['src']?>>
-        <p class="result-title"><?=$res['title']?></p>
+        <p class="result-title"><?=ucfirst($res['title'])?></p>
       </div>
       <!-- end -->
       <?php

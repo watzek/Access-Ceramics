@@ -2,9 +2,11 @@
 	$num_rows = 10;
 	$main_squares = 16;
 	$NUM_IMG = $num_rows*$num_rows*2;
-	require('../classes/mysql.class.php');
-	$mydb = new mysql();
-	$images = $mydb->query_db('images',0,$NUM_IMG*2); 
+	$_GET['l'] = $NUM_IMG;
+	require('../classes/browsemain.class.php');
+	$main = new Main();
+	$images = $main->get_results();
+	//$images = $mydb->query_db('images',0,$NUM_IMG*2); 
 	$len = count($images);
 	$imgs = [];
 	$temp;
@@ -65,21 +67,22 @@
 			<div class="bordertile flip-container">
 				<div class="flipper" style="animation-play-state: paused;">
 					<div class="bt-front">
-						<img class="borderimg" src=<?=$imgs[$_i]['original']?>>
+						<img class="borderimg" src=<?=$imgs[$i]['src']?>>
 					</div>
-					<div class="bt-back">
-						<img class="borderimg" src=<?=$imgs[$_i]['original']?>>
-					</div>
+					<!-- <div class="bt-back">
+						<img class="borderimg" src=<?=$imgs[$_i]['src']?>>
+					</div> -->
 				</div>
 			</div>
-		<?php	
-		$_i += 2;		
+		<?php			
 		}
 		?>
 			<div id="main">
 				<img class="mt-2" src="../img/accessCeramics_logo2.png">
-				<hr class="invisible my-5" style="max-width:5rem;">
+				<hr class="invisible my-3" style="max-width:5rem;">
 				<p>accessCeramics is a growing collection of contemporary ceramics images by recognized artists enhancing ceramics education worldwide.</p>
+				<a class="btn btn-primary" href="../browsepages/browse.php">Browse</a>
+				<a class="btn btn-secondary" href="../infopages/info.php">Info</a>
 			</div>
 	</div>
 

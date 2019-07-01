@@ -4,3 +4,4 @@ package-lock.json
 .*
 classes/sql_credentials.class.php
 /index*
+css/*

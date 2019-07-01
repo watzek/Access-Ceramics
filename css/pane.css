@@ -9658,6 +9658,60 @@ h3 {
     border-color: #dee2e6;
   }
 }
+html, body {
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+.span-all-cols {
+  grid-column: 1/4;
+}
+@media (min-width: 768px) {
+  .span-all-cols {
+    grid-column: 1/5;
+  }
+}
+@media (min-width: 992px) {
+  .span-all-cols {
+    grid-column: 1/6;
+  }
+}
+
+.navigate {
+  height: 3vh;
+  text-align: center;
+}
+
+.pressable {
+  cursor: pointer;
+}
+
+.limit-choice {
+  font-size: 85%;
+  color: #96935f;
+}
+
+.limit-choice:hover {
+  color: #96935f;
+}
+
+.active {
+  color: #7f4c38;
+  text-decoration: underline;
+}
+
+.view-mode {
+  text-decoration: underline;
+  color: #96935f;
+  font-size: 85%;
+}
+
+.view-mode.active {
+  color: #7f4c38;
+}
+
 .accessText {
   color: #7f4c38;
 }
@@ -9704,6 +9758,7 @@ hr.light {
 }
 
 #mainNav {
+  max-height: 9vh;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   background-color: #fff;
   transition: background-color 0.2s ease;
@@ -9801,13 +9856,6 @@ hr.light {
   opacity: 1;
 }
 
-html, body {
-  margin: 0;
-  height: 100vh;
-  width: 100vw;
-  overflow-x: hidden;
-}
-
 #content {
   padding: 0;
   grid-row-gap: 0;
@@ -9845,18 +9893,18 @@ html, body {
   display: block;
   object-fit: cover;
   margin: auto;
-  max-width: 90%;
-  max-height: 75%;
+  width: 100%;
+  height: 100%;
   padding: 2px;
 }
 
 .result-title {
   text-align: center;
-  font-size: 12pt;
+  font-size: 0;
 }
 @media (min-width: 992px) {
   .result-title {
-    font-size: 14pt;
+    font-size: 0;
   }
 }
 
@@ -9892,62 +9940,9 @@ html, body {
   font-weight: initial;
 }
 
-/* 
-
-
-
-.paneview
-{
-
-	@include media-breakpoint-up(sm) {
-		height: calc( 50vh - ( 72px / 2 ) );
-	}
-	@include media-breakpoint-up(lg) {
-		//height: calc(100vh - 72px );
-		height: 100%;
-	}
-
+#meta-other {
+  display: grid;
+  grid-template-columns: auto auto;
 }
-
-#panedisplay
-{
-	position:absolute;
-	width:95%;
-	height: auto;
-	object-fit: contain;
-}
-
-.panepic
-{
-	display: flex;
-	display:inline-block;
-	height: auto;
-	max-height: 70%;
-	width: auto;
-	object-fit: contain;
-}
-.paneobj
-{	
-	display:inline-block;
-	margin-left: .5rem;
-	margin-top: 1rem;
-	border-radius: 5px;
-	text-align: center;
-	height: calc( ( 50vh - 72px ) / 5 );
-
-
-	@include media-breakpoint-up(lg) {
-		height: calc( ( 100vh - 72px ) / 5 );
-	}
-	p.mdata
-	{
-		text-align:center;
-		font-size: 8pt;
-		color: white;
-		@include media-breakpoint-up(lg) {
-			font-size: 12pt;
-		}	
-	}
-} */
 
 /*# sourceMappingURL=pane.css.map */

@@ -127,12 +127,7 @@ body
 	@include media-breakpoint-up(sm)
 	{
 		height: calc(40vh - 72px);	
-		border-right: 2px solid black;
-		border-left: 2px solid black;
 	}
-		
-	
-	
 }
 
 .divider

@@ -1,11 +1,10 @@
 @import "./variables.scss";
 
-
 $primary: $ceramicstext !default;
 $secondary: $ceramicstextalt !default;
 $light: #F4F8E7 !default;
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
-
+@import "./browse_shared.scss";
 
 
 //new theme
@@ -30,27 +29,9 @@ $light: #F4F8E7 !default;
 @import "./portfolio.scss";
 
 
-html, body
-{
-	margin: 0;
-	height: 100vh;
-	width: 100vw;
-	overflow-x: hidden;
-}
 
-.span-all-cols
-{
-	grid-column: 1 / 4;
-	@include media-breakpoint-up(md)
-	{
-		grid-column: 1 / 5;
-	}
-	@include media-breakpoint-up(lg)
-	{
-		grid-column: 1 / 6;
-	}
 
-}
+
 #header
 {
 	font-size: 8pt;
@@ -153,46 +134,7 @@ html, body
 		padding: 0 3vw 0 3vw;
 	}
 }
-.navigate
-{
-	height: 3vh;
-	text-align: center;
-}
 
-.pressable
-{
-	cursor: pointer;
-}
-
-.limit-choice
-{
-	font-size: 85%;	
-	color: $ceramicstext;
-}
-
-.limit-choice:hover
-{
-	color: $ceramicstextalt;
-}
-
-
-.limit-choice .active
-{
-	color: $ceramicstext;
-	text-decoration: underline;
-}
-
-
-.view-mode
-{
-	text-decoration: underline;
-	color: $ceramicstextalt;
-	font-size: 85%;
-}
-.view-mode.active
-{
-	color: $ceramicstext;
-}
 
 #view
 {

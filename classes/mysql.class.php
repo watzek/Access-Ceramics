@@ -4,7 +4,7 @@ require 'sql_credentials.class.php';
 class mysql
 {
 	static $category_queries = [
-		'artists' => 'SELECT CONCAT(a.artist_fname,\' \', a.artist_lname) AS title, MAX(i.original) AS src, a.id AS id FROM artists a JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) WHERE i.featured = \'1\' GROUP BY a.id ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC LIMIT ? OFFSET ?',
+		'artists' => 'SELECT CONCAT(a.artist_fname,\' \', a.artist_lname) AS title, CONCAT(\'af=\',a.artist_fname,\'&al=\',a.artist_lname) as urlargs, MAX(i.original) AS src, a.id AS id FROM artists a JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) WHERE i.featured = \'1\' GROUP BY a.id ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC LIMIT ? OFFSET ?',
 		'institutions' => 'SELECT name as title, image_path as src, CONCAT(address1,\' \',city,\' \',state) as info FROM organizations ORDER BY organizations.name ASC LIMIT ? OFFSET ?',
 		/*'images' => 'SELECT CONCAT(i.artist_fname, \' \', i.artist_lname) AS artist, i.title AS title, MAX(i.original) AS src 
 			FROM images i 

@@ -41,9 +41,19 @@ function makeShow(id)
 
 function showImage(id)
 {
-	view.img.src = q_results[id].original;
+	view.img.src = q_results[id].src;
 	view.title.innerHTML = q_results[id].title;
-	view.title.artist = q_results[id].artist;
+	view.stitle.innerHTML = q_results[id].stitle;
+	view.artist.innerHTML = q_results[id].artist;
+	view.date.innerHTML = q_results[id].date;
+	view.technique.innerHTML = q_results[id].technique;
+	view.temperature.innerHTML = q_results[id].temperature;
+	view.glazing.innerHTML = q_results[id].glazing;
+	view.material.innerHTML = q_results[id].material;
+	view.height.innerHTML = q_results[id].height;
+	view.width.innerHTML = q_results[id].width;
+	view.depth.innerHTML = q_results[id].depth;
+	view.license.innerHTML = q_results[id].license;
 }
 /*
 	Set arg, repartition pages, add new elements/remove old elements

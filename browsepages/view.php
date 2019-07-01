@@ -104,12 +104,13 @@
     if($results)
     foreach ($results as $res) {
       $ind++;
+      $link = isset($res['args']) ? $res['args'] : '#';
       ?>
       <!-- result skeleton -->
-      <div class="result" value=<?=$ind?>>
+      <a class="result" href=<?=$link?> value=<?=$ind?>>
         <img class="result-img" src=<?=$res['src']?>>
         <p class="result-title"><?=ucfirst($res['title'])?></p>
-      </div>
+      </a>
       <!-- end -->
       <?php
     }
@@ -119,18 +120,22 @@
   <div id="view">
     <img id="view-img" src="../img/default.jpg">
     <div id=view-meta>
-      <p>Title:<span id="meta-title" class="meta-data"></span></p>
-      <p>Artist:<span id="meta-artist" class="meta-data"></span></p>
-      <p>Series Title:<span id="meta-stitle" class="meta-data"> </span></p>
-      <p>Date:<span id="meta-date" class="meta-data"></span></p>
-      <p>Technique:<span id="meta-technique" class="meta-data"></span></p>
-      <p>Temperature:<span id="meta-temperature" class="meta-data"></span></p>
-      <p>Glazing / Surface Treatment:<span id="meta-glazing" class="meta-data"></span></p>
-      <p>Material:<span id="meta-material" class="meta-data"></span></p>
-      <p>Height:<span id="meta-height" class="meta-data"></span>|
+      <p>
+        <span id="meta-title" class="meta-data"></span>, from
+        <span id="meta-stitle" class="meta-data"> </span> by
+        <span id="meta-artist" class="meta-data"></span>
+        (<span id="meta-date" class="meta-data"></span>)
+      </p>
+      <div id="meta-other">
+      <div>Technique:<span id="meta-technique" class="meta-data"></span></div>
+      <div>Temperature:<span id="meta-temperature" class="meta-data"></span></div>
+      <div>Glazing / Surface Treatment:<span id="meta-glazing" class="meta-data"></span></div>
+      <div>Material:<span id="meta-material" class="meta-data"></span></div>
+      <div>Height:<span id="meta-height" class="meta-data"></span>|
       Width:<span id="meta-width" class="meta-data"></span>| 
-      Depth:<span id="meta-depth" class="meta-data"></span></p>
-      <p>License:<span id="meta-liscense" class="meta-data"></span></p> 
+      Depth:<span id="meta-depth" class="meta-data"></span></div>
+      <div>License:<span id="meta-liscense" class="meta-data"></span></div>
+      </div>
     </div>
   </div> <!-- end view -->
 </div> <!-- end content -->

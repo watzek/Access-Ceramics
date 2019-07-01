@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="../css/classic.css">
-
+<!-- change this to just be navbar style -->
 
 <nav class="navbar navbar-expand-xl navbar-light bg-white">
   <a id="nbar-brand" class="navbar-brand" href="#"><img class="d-inline logo-img" src="../img/accessCeramics_logo.png" alt="Access Ceramics Logo"></a></a>
@@ -9,9 +9,6 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
            <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Browse
@@ -28,12 +25,9 @@
                 <a class="dropdown-item" href="../browsepages/view.php?c=temperatures">Temperature</a>
               </div>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Artists</a>
-            </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Information
+              Info
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="./about">About</a>
@@ -48,7 +42,7 @@
       <form class="form-inline my-2 my-lg-0">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           <input class="form-control mr-sm-2" type="search" placeholder="" aria-label="Search">
-          
       </form>
+      <button class="btn btn-outline my-2 my-sm-0" type="submit">Login/Signup</button>
     </div>
 </nav>

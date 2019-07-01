@@ -2,5 +2,5 @@ vendor
 node_modules 
 package-lock.json 
 .*
-classes/config.class.php
+classes/sql_credentials.class.php
 /index*

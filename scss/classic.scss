@@ -1,68 +1,12 @@
-$ceramicstext: #7f4c38;
-$ceramicstextalt: #96935f;
-$light: #F4F8E7;
+/* ---Stylesheet for Browse Classic--- */
 
-$primary:$ceramicstext;
-$secondary:$ceramicstextalt;
+
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
-.navbar-toggler
-{
-	visibility:visible;
-	
-	@include media-breakpoint-up(xl)
-	{
-		visibility:hidden;
-	}	
-}
-
-html
-{
-	font-size: 12pt;
-	@include media-breakpoint-up(md)
-	{
-		font-size: 14pt;
-	}
-	@include media-breakpoint-up(lg)
-	{
-		font-size: 16pt;
-	}
-	@include media-breakpoint-up(xl)
-	{
-		font-size: 16pt;
-	}
-}
-
-body,html 
-{
-	height:100%;
-	width:100%;
-	margin:0;
-	overflow-x: hidden;
-	overflow-y: auto;
-	@include media-breakpoint-up(sm)
-	{
-	overflow: hidden;
-	}
-}
-
-body
-{
-
-}
-
-.accessText
-{
-
-	font-weight: bolder;
-    color: $ceramicstext;
-}
-
-.ceramicsText
-{
-	font-weight: bolder;
-	color: $ceramicstextalt;
-}
+/*Global Imports*/
+@import "../navbar.scss"
+@import "../variables.scss"
+@import "../global.scss"
 
 #news-container
 {
@@ -73,26 +17,6 @@ body
 {
 	background-color: $light;
 	font-size: 1rem;	
-}
-
-
-#nbar-brand
-{
-	width: 60%;
-	margin-right: 0;
-	@include media-breakpoint-up(md)
-	{
-		width:initial;
-	}	
-}
-
-.logo-img
-{
-	width: 80%;
-	@include media-breakpoint-up(sm)
-	{
-		width:initial;
-	}
 }
 
 #masthead
@@ -118,6 +42,9 @@ body
   	
 }
 
+$bot-height: 20vh;
+$card-height: calc((100vh - #{$bot-height}) / 3);
+
 #info
 {
 	//height: 35vh;	
@@ -129,42 +56,6 @@ body
 		height: calc(40vh - 72px);	
 	}
 }
-
-.divider
-{
-	max-width: 7rem;
-	border-radius:2px;
-}
-
-
-//for searchbar
-form
-{
-	@include media-breakpoint-up(lg)
-	{
-		input
-		{
-			width: 65% !important;
-			
-			margin-left: 0;
-			padding-left: 0;
-		}
-		button
-		{
-			width: 30% !important;
-			margin-right: 0;
-			padding-right: 0;
-			font-size: 10pt;
-		}
-	}
-}
-
-
-/* ---For Browse Classic--- */
-@import "../node_modules/bootstrap/scss/bootstrap.scss";
-
-$bot-height: 20vh;
-$card-height: calc((100vh - #{$bot-height}) / 3);
 
 .bg-browse
 {

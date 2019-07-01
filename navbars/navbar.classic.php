@@ -16,7 +16,6 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="../browsepages/view.php?c=institutions">Institutions</a>
                 <a class="dropdown-item" href="../browsepages/view.php?">Collection</a>
-                <!-- <div class="dropdown-divider"></div> -->
                 <a class="dropdown-item" href="../browsepages/view.php?c=artists">Artists</a>
                 <a class="dropdown-item" href="../browsepages/view.php?c=glazing">Glazing/Surface</a>
                 <a class="dropdown-item" href="../browsepages/view.php?c=materials">Material</a>

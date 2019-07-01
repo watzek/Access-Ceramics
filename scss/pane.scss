@@ -1,34 +1,13 @@
-@import "./variables.scss";
+/* Stlyesheet for the 'pane' view of view.php */
 
 
-$primary: $ceramicstext !default;
-$secondary: $ceramicstextalt !default;
-$light: #F4F8E7 !default;
-@import "../node_modules/bootstrap/scss/bootstrap.scss";
+/*Global Imports*/
+@import "../navbar.scss"
+@import "../variables.scss"
+@import "../global.scss"
+
 @import "./browse_shared.scss";
-
-
-
-//new theme
-//$primary: $ceramicspurple; 
-//$secondary: $ceramicsblue; 
-.accessText
-{
-    color: $primary;
-}
-
-.ceramicsText
-{
-	color: $secondary;
-}
-
-// Import Bootstrap
-
-
-// Import custom styles
-@import "./global.scss";
-@import "./navbar.scss";
-@import "./portfolio.scss";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 
 #content
@@ -93,16 +72,7 @@ $light: #F4F8E7 !default;
 {
 	overflow-y: auto;
 	height: 100%;	
-	//background: linear-gradient(to right, $primary 0% , $primary 40% , white 50%, $secondary 60%, $secondary 100% );	
 	background-color: $primary;
-	/* min-height: 50vh;
-	min-width: 100vh;
-	
-	@include media-breakpoint-up(lg)
-	{
-		min-height: 100vh;
-		min-width: 50vh;
-	} */
 	text-align: center;
 }
 

@@ -1,11 +1,3 @@
-// Variables
-
-// Color overrides
-
-// Set a custom color
-//$orange: #f4623a !default;
-//$brown: #5c4d42 !default;
-$browse-cardbacks : rgba(25,0,40,.5);
 
 $lightpurple: #6400a0;
 $purple: #190028;
@@ -30,8 +22,6 @@ $ceramicstextalt: #96935f;
 $ceramicsblue: #6666B1;
 $ceramicspurple: #63397c;
 
-$body-height: 91vh;
-
 // Set primary color in next abstraction level
 /* $primary: $ceramicsblue;
 $secondary: $ceramicspurple; */
@@ -48,3 +38,25 @@ $headings-font-family: $font-family-sans-serif !default;
 
 // Custom variables
 $navbar-height: 72px;
+$body-height: 91vh;
+
+
+
+/* Classic */ 
+$ceramicstext: #7f4c38;
+$ceramicstextalt: #96935f;
+$light: #F4F8E7;
+
+$primary:$ceramicstext;
+$secondary:$ceramicstextalt;
+
+/* Pane */
+$primary: $ceramicstext !default;
+$secondary: $ceramicstextalt !default;
+$light: #F4F8E7 !default;
+
+
+/* Browse Outer */
+$primary: $ceramicstext !default;
+$secondary: $ceramicstextalt !default;
+$light: #F4F8E7 !default;

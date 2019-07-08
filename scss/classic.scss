@@ -1,12 +1,14 @@
 /* ---Stylesheet for Browse Classic--- */
 
 
+/*Bootstrap style*/
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 /*Global Imports*/
-@import "../navbar.scss"
-@import "../variables.scss"
-@import "../global.scss"
+@import "./variables.scss";
+@import "./global.scss";
+@import "./navbar.scss";
+
 
 #news-container
 {
@@ -22,7 +24,7 @@
 #masthead
 {
 	
-	background: linear-gradient(to bottom, #{fade-out($secondary, .2)} 0%,#{fade-out($primary,.9)} 100%), url(../img/acpics/Lauren-Sandler.jpg);
+	background: linear-gradient(to bottom, #{fade-out($l_light, .2)} 0%,#{fade-out($l_background,.9)} 100%), url(../img/acpics/Lauren-Sandler.jpg);
 	background-position: center;
 	background-repeat: no-repeat;
 	background-attachment: scroll;
@@ -32,7 +34,7 @@
 
 	@include media-breakpoint-up(sm)
 	{
-		background: linear-gradient(to bottom, #{fade-out($secondary, .2)} 0%,#{fade-out($primary,.9)} 100%), url(../img/collection.jpg);	
+		background: linear-gradient(to bottom, #{fade-out($l_light, .2)} 0%,#{fade-out($l_background,.9)} 100%), url(../img/collection.jpg);	
 		background-position: center;
 		background-repeat: no-repeat;
 		background-attachment: scroll;

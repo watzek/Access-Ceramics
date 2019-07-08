@@ -1,12 +1,22 @@
 /* Stylesheet for outer, catigorical browsing for view.php */
 
-/*Global Imports*/
-@import "../navbar.scss"
-@import "../variables.scss"
-@import "../global.scss"
 
+/*Bootstrap style*/
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+/*Global Imports*/
+@import "./variables.scss";
+@import "./global.scss";
+@import "./navbar.scss";
+
+
+
 @import "./browse_shared.scss";
+
+body
+{
+	overflow-y: auto;
+}
 
 #header
 {
@@ -46,49 +56,52 @@
 
 #results
 {
-	border: 2px $primary solid;
 	background: $light;
 	width: 100%;
-	height: 100%;
 	display: inline-grid;
 
-	grid-template-columns: auto auto auto;
-	grid-row-gap: 5px;
+	grid-template-columns: auto auto auto auto;
+	grid-row-gap: 2em;
 
+	overflow-x: hidden;
+	overflow-y: hidden;
 	@include media-breakpoint-up(md)
 	{
-		grid-template-columns: auto auto auto auto;
-		grid-row-gap: 5px;
+		grid-template-columns: auto auto auto auto auto;
+		grid-row-gap: 1.5em;
+
 	}
 	@include media-breakpoint-up(lg)
 	{
-		grid-template-columns: auto auto auto auto auto;
-		grid-row-gap: 5px;
+		grid-template-columns: auto auto auto auto auto auto;
+		grid-row-gap: 1em;
 	}
-
-	overflow-x: hidden;
 }
+/* 
+overflow: -moz-scrollbars-none;
+	-ms-overflow-style: none;
+#results::-webkit-scrollbar { width: 0 !important } */
 
 .result
 {
 	margin: auto;
-	width: 30vw;
-	height: 30vw;
+	width: 20vw;
+	height: 20vw;
 	text-align: center;
 	@include media-breakpoint-up(md)
 	{
-		width: 18vw;
-		height: 18vw;
+		width: 15vw;
+		height: 15vw;
 	}
 }
 
 .result-img
 {
 	margin: auto;
-	width: 20vw;
-	height: 20vw;
+	width: 80%;
+	height: 80%;
 
-	@include media-breakpoint-up(sm)
+	/* @include media-breakpoint-up(sm)
 	{
 		margin:0;
 	}
@@ -97,18 +110,24 @@
 	{
 		width: 12vw;
 		height: 12vw;
-	}	
+	}	 */
 }
 
 .result-title
 {
+	color: $ceramicstext;
 	margin: 0;
 	padding: 0 2px 0 2px;
-	font-size: 85%;
+	font-size: 65%;
+	text-overflow: wrap;
 	@include media-breakpoint-up(md)
 	{
 		padding: 0 3vw 0 3vw;
 	}
+}
+.result:hover
+{
+	text-decoration: none;
 }
 
 

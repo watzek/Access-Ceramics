@@ -55,14 +55,14 @@
             <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['collection']['ct']?> Images</h2></div>
         </div>
         <div class="back tile w-100">
-          <!-- <a class="selection-btn btn btn-primary btn-xl" href="view.php?c=images"></a> -->
+          <!-- <a class="selection-btn btn btn-primary btn-xl" href="category.php?c=images"></a> -->
         </div>
 
       </div>
           </a>
     </div>
     <div class="col-xl-3 col-6 flip-container px-0">
-      <a href="view.php?c=artists">
+      <a href="category.php?c=artists">
       <div class="flipper w-100">
         <div class="front w-100 tile">
           <img src=<?="{$categories['artists']['src']}"?>/>
@@ -70,7 +70,7 @@
             <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['artists']['ct']?> Artists</h2></div>
         </div>
         <div class="back tile w-100">
-          <!-- <a class="selection-btn btn btn-primary btn-xl" href="view.php?c=artists"></a> -->
+          <!-- <a class="selection-btn btn btn-primary btn-xl" href="category.php?c=artists"></a> -->
         </div>
 
       </div>
@@ -78,7 +78,7 @@
     </div>
 
     <div class="col-xl-3 col-6 flip-container px-0">
-      <a href="view.php?c=glazings">
+      <a href="category.php?c=glazings">
       <div class="flipper w-100">
         <div class="front w-100 tile">
           <img src=<?="{$categories['glazing']['src']}"?>/>
@@ -86,7 +86,7 @@
             <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['glazing']['ct']?> Glazing/Surfaces</h2></div>
         </div>
         <div class="back tile w-100">
-          <!-- <a class="selection-btn btn btn-primary btn-xl" href="view.php?c=glazings"></a> -->
+          <!-- <a class="selection-btn btn btn-primary btn-xl" href="category.php?c=glazings"></a> -->
         </div>
 
       </div>
@@ -95,7 +95,7 @@
     </div>
 
     <div class="col-xl-3 col-6 flip-container px-0">
-      <a href="view.php?c=materials">
+      <a href="category.php?c=materials">
       <div class="flipper w-100">
         <div class="front w-100 tile">
           <img src=<?="{$categories['material']['src']}"?>/>
@@ -103,7 +103,7 @@
             <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['material']['ct']?> Materials</h2></div>
         </div>
         <div class="back tile w-100">
-          <!-- <a class="selection-btn btn btn-primary btn-xl" href="view.php?c=materials"></a> -->
+          <!-- <a class="selection-btn btn btn-primary btn-xl" href="category.php?c=materials"></a> -->
         </div>
 
       </div>
@@ -112,7 +112,7 @@
     </div>
 
     <div class="col-xl-3 col-6 flip-container px-0">
-      <a href="view.php?c=objects">
+      <a href="category.php?c=objects">
       <div class="flipper w-100">
         <div class="front w-100 tile">
           <img src=<?="{$categories['object']['src']}"?>/>
@@ -120,7 +120,7 @@
             <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['object']['ct']?> Object Types</h2></div>
         </div>
         <div class="back tile w-100">
-          <!-- <a class="selection-btn btn btn-primary btn-xl" href="view.php?c=objects"></a> -->
+          <!-- <a class="selection-btn btn btn-primary btn-xl" href="category.php?c=objects"></a> -->
         </div>
 
       </div>
@@ -129,7 +129,7 @@
     </div>
 
     <div class="col-xl-3 col-6 flip-container px-0">
-      <a href="view.php?c=techniques">
+      <a href="category.php?c=techniques">
       <div class="flipper w-100">
         <div class="front w-100 tile">
           <img src=<?="{$categories['technique']['src']}"?>/>
@@ -137,7 +137,7 @@
             <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['technique']['ct']?> Techniques</h2></div>
         </div>
         <div class="back tile w-100">
-          <!-- <a class="selection-btn btn btn-primary btn-xl" href="view.php?c=techniques"></a> -->
+          <!-- <a class="selection-btn btn btn-primary btn-xl" href="category.php?c=techniques"></a> -->
         </div>
 
       </div>
@@ -146,7 +146,7 @@
     </div>
 
     <div class="col-xl-3 col-6 flip-container px-0 ">
-      <a href="view.php?c=temperatures">
+      <a href="category.php?c=temperatures">
       <div class="flipper w-100">
         <div class="front w-100 tile">
           <img src=<?="{$categories['temperature']['src']}"?>/>
@@ -154,14 +154,14 @@
             <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['temperature']['ct']?> Temperatures</h2></div>
         </div>
         <div class="back tile w-100">
-          <!-- <a class="selection-btn btn btn-primary btn-xl" href="view.php?c=temperatures"></a> -->
+          <!-- <a class="selection-btn btn btn-primary btn-xl" href="category.php?c=temperatures"></a> -->
         </div>
       </div>  
     </div>
           </a>
 
     <div class="col-xl-3 col-6 flip-container px-0 ">
-      <a href="view.php?v=search">
+      <a href="category.php?v=search">
       <div class="flipper w-100">
         <div class="front w-100 tile search-tile">
           

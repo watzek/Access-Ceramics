@@ -42,20 +42,8 @@
   <!-- Icon -->
   <link href="../img/a.gif" rel="shortcut icon">
 
-  <?php
-    switch($args['view'])
-    {
-      case 'pane':
-  echo "<link rel='stylesheet' type='text/css' href='../css/pane.css'>";
-        break;
-      case 'grid':
-  echo "<link rel='stylesheet' type='text/css' href='../css/grid.css'>";
-        break;
-      case 'list':
-  echo "<link rel='stylesheet' type='text/css' href='../css/list.css'>";
-        break;
-    }
-  ?>
+  <link rel="stylesheet" type="text/css" href="../css/category.css">
+
 <script>
     
     <?='var q_results ='. json_encode($results) .';'?>
@@ -94,12 +82,13 @@
     if($results)
     foreach ($results as $res) {
       $ind++;
+      $link = '#';//$res['args'];
       ?>
       <!-- result skeleton -->
-      <div class="result pressable" value=<?=$ind?>>
+      <a class="result" href=<?=$link?> value=<?=$ind?>>
         <img class="result-img" src=<?=$res['src']?>>
         <p class="result-title"><?=ucfirst($res['title'])?></p>
-      </div>
+      </a>
       <!-- end -->
       <?php
     }

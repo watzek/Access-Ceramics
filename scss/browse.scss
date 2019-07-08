@@ -1,11 +1,15 @@
 /*Stylesheet for browse.php*/
 
+
+/*Bootstrap style*/
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
 /* Global imports */
 @import "./variables.scss";
 @import "./global.scss";
 @import "./navbar.scss";
 
-@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
 
 .bg-pic
 {
@@ -86,14 +90,15 @@
   		bottom: 0;
   		text-align: center;
   		width: 100%;
-  		
+  		h2
+  		{
+  			font-size:1rem;
+			color: $black !important;
+			font-weight: bolder;
+			display: inline-block;
+			background-color: rgba(255,255,255,.5);
+  		}	
   	}
-  	h2
-	{
-		font-size:1rem;
-		color: $ceramicstextalt !important;
-		font-weight: bolder;
-	}
 	img
 	{
 		width: 100%;

@@ -1,8 +1,5 @@
-<link rel="stylesheet" type="text/css" href="../css/classic.css">
-<!-- change this to just be navbar style -->
-
 <nav class="navbar navbar-expand-xl navbar-light bg-white">
-  <a id="nbar-brand" class="navbar-brand" href="#"><img class="d-inline logo-img" src="../img/accessCeramics_logo.png" alt="Access Ceramics Logo"></a></a>
+  <a id="nbar-brand" class="navbar-brand" href="/homepages/index.classic.php"><img class="d-inline logo-img" src="../img/accessCeramics_logo.png" alt="Access Ceramics Logo"></a></a>
   <button class="d-inline navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -14,19 +11,19 @@
               Browse
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="../browsepages/view.php?c=institutions">Institutions</a>
+                <a class="dropdown-item" href="../browsepages/category.php?c=institutions">Institutions</a>
                 <a class="dropdown-item" href="../browsepages/view.php?">Collection</a>
-                <a class="dropdown-item" href="../browsepages/view.php?c=artists">Artists</a>
-                <a class="dropdown-item" href="../browsepages/view.php?c=glazing">Glazing/Surface</a>
-                <a class="dropdown-item" href="../browsepages/view.php?c=materials">Material</a>
-                <a class="dropdown-item" href="../browsepages/view.php?c=objects">Object Type</a>
-                <a class="dropdown-item" href="../browsepages/view.php?c=techniques">Technique</a>
-                <a class="dropdown-item" href="../browsepages/view.php?c=temperatures">Temperature</a>
+                <a class="dropdown-item" href="../browsepages/category.php?c=artists">Artists</a>
+                <a class="dropdown-item" href="../browsepages/category.php?c=glazing">Glazing/Surface</a>
+                <a class="dropdown-item" href="../browsepages/category.php?c=materials">Material</a>
+                <a class="dropdown-item" href="../browsepages/category.php?c=objects">Object Type</a>
+                <a class="dropdown-item" href="../browsepages/category.php?c=techniques">Technique</a>
+                <a class="dropdown-item" href="../browsepages/category.php?c=temperatures">Temperature</a>
               </div>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Info
+              Information
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="./about">About</a>
@@ -38,10 +35,10 @@
               </div>
             </li>
         </ul>
-      <form class="form-inline my-2 my-lg-0">
+      <form id="search" class="form-inline my-2 my-lg-0">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           <input class="form-control mr-sm-2" type="search" placeholder="" aria-label="Search">
       </form>
-      <button class="btn btn-outline my-2 my-sm-0" type="submit">Login/Signup</button>
+      <button id="login" class="btn btn-outline my-2 my-sm-0" type="submit">Login/Signup</button>
     </div>
 </nav>

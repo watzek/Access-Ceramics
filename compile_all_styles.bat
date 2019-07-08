@@ -1,0 +1,1 @@
+sass scss\browse.scss css\browse.css && sass scss\category.scss css\category.css && sass scss\classic.scss css\classic.css && sass scss\grid.scss css\grid.css && sass scss\list.scss css\list.css && sass scss\mosaic.scss css\mosaic.css && sass scss\pane.scss css\pane.css

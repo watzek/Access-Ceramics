@@ -1,6 +1,9 @@
 /* Stylesheet for the 'list' view of view.php */
 
+/*Bootstrap style*/
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
 /*Global Imports*/
-@import "../navbar.scss"
-@import "../variables.scss"
-@import "../global.scss"
+@import "./variables.scss";
+@import "./global.scss";
+@import "./navbar.scss";

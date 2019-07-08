@@ -12,28 +12,23 @@
 	<link rel="shortcut icon" href="../img/a.gif">
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<title>Access Ceramics</title>
 
 	<link rel="stylesheet" type="text/css" href="../css/classic.css">
 </head>
 
-<body class="bg-light">
+<body class="bg-white">
 <?php $navbar->show() ?> <!--read corresponding navbar file -->
 
 <div id="masthead" class="container-fluid py-1"></div>
 
-<div class="container-fluid bg-light text-center">
+<div class="container-fluid bg-white text-center">
 	<div class="row">
 		<div id="info" class="my-md-0 py-pd-0 pb-5 mb-5 mx-auto col-sm-4 order-sm-2 lead text-center mx-auto">
-
-			<div id="info-blurb" class="mx-auto">
 			<h3 class="h4 mb-0 mt-4">Access Ceramics</h3>
 			<hr class="pb-1 mt-4 divider bg-primary">
 				<span class="accessText">access</span><span class="ceramicsText">Ceramics</span>
 				is a growing collection of contemporary ceramics images by recognized artists enhancing ceramics education worldwide.
-			</div>	
-
 		</div> <!-- end info section -->
 
 		<div class="col-12 col-sm-4 order-sm-1">
@@ -70,10 +65,5 @@
   <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
   <script src="../vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
   <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script>
-
-  <!-- Custom scripts for this template -->
-  <script src="../js/creative.min.js"></script>
-
-
 </body>
 </html>

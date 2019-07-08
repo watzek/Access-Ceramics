@@ -16,11 +16,13 @@
 body
 {
 	overflow-y: auto;
+	background-color: $l_background;
 }
 
 #header
 {
 	font-size: 8pt;
+	margin-bottom: 0;
 	#search-title
 	{
 		font-size: 12pt;
@@ -56,15 +58,18 @@ body
 
 #results
 {
-	background: $light;
+	background: $white;
 	width: 100%;
+	padding-bottom: 1em;
 	display: inline-grid;
 
 	grid-template-columns: auto auto auto auto;
-	grid-row-gap: 2em;
+	grid-row-gap: 1.5em;
 
 	overflow-x: hidden;
 	overflow-y: hidden;
+
+
 	@include media-breakpoint-up(md)
 	{
 		grid-template-columns: auto auto auto auto auto;

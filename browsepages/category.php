@@ -56,7 +56,6 @@
 </head>
 <body>
 <?php $navbar->show()?>
-<hr class="my-1" />
 <div id="content" class="container-fluid">
   <div id="results">
     <div class="container-fluid span-all-cols" id="header">

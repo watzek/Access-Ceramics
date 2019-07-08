@@ -1,11 +1,14 @@
 /* ---Stylesheet for Browse Classic--- */
 
 
-/*Bootstrap style*/
-@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+
 
 /*Global Imports*/
 @import "./variables.scss";
+
+/*Bootstrap style*/
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import "./global.scss";
 @import "./navbar.scss";
 
@@ -17,14 +20,14 @@
 
 #news span
 {
-	background-color: $light;
+	background-color: $white;
 	font-size: 1rem;	
 }
 
 #masthead
 {
 	
-	background: linear-gradient(to bottom, #{fade-out($l_light, .2)} 0%,#{fade-out($l_background,.9)} 100%), url(../img/acpics/Lauren-Sandler.jpg);
+	background: linear-gradient(to bottom, rgba(150, 147, 95, 0.8) 0%, rgba(127, 76, 56, 0.1) 100%), url(../img/acpics/Lauren-Sandler.jpg);
 	background-position: center;
 	background-repeat: no-repeat;
 	background-attachment: scroll;
@@ -34,7 +37,7 @@
 
 	@include media-breakpoint-up(sm)
 	{
-		background: linear-gradient(to bottom, #{fade-out($l_light, .2)} 0%,#{fade-out($l_background,.9)} 100%), url(../img/collection.jpg);	
+		background: linear-gradient(to bottom, rgba(150, 147, 95, 0.8) 0%, rgba(127, 76, 56, 0.1) 100%), url(../img/collection.jpg); 
 		background-position: center;
 		background-repeat: no-repeat;
 		background-attachment: scroll;
@@ -49,14 +52,14 @@ $card-height: calc((100vh - #{$bot-height}) / 3);
 
 #info
 {
-	//height: 35vh;	
 	overflow-y: hidden;
-	height: 1%;	
+	height: 1%;
 	border-bottom: 2px solid black;
 	@include media-breakpoint-up(sm)
 	{
-		height: calc(40vh - 72px);	
+		border-bottom: none;
 	}
+	padding-bottom: 1em;
 }
 
 .bg-browse

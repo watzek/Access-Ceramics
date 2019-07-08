@@ -25,15 +25,20 @@ $l_ceramicstext:#96935f;
 /* $ceramicstext: #7f4c38;
 $ceramicstextalt: #96935f; */
 
-$ceramicstext: $black;//#6666B1;
+$ceramicstext: #000000;//#6666B1;
 $ceramicstextalt: $dark-purple; //R: 99 G: 57 B: 124
 //analogous blue: R: 66 G: 57 B: 124;
 //analogous maroonish:R: 124 G: 57 B: 115;
 
 
-$primary: rgb(66,57,124);
-$secondary: #63397c;
+$primary: $l_accesstext !default;//rgb(66,57,124);
+$secondary: $l_ceramicstext !default;//#63397c;
 $light: rgba(124,57,115,.4);
+
+.bg-primary
+{
+	background-color: $primary !important;
+}
 
 
 // Set primary color in next abstraction level

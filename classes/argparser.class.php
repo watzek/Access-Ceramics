@@ -10,6 +10,7 @@ class ArgParser
 			'category' => isset($args['c']) ? $args['c'] : '',
 		    'artist_fn' => isset($args['af']) ? $args['af'] : '',
 		    'artist_ln' => isset($args['al']) ? $args['al'] : '',
+		    'artist_id' => isset($args['id']) ? $args['id'] : '',
 		    'glazing' => isset($args['g']) ? $args['g'] : '',
 		    'material' => isset($args['m']) ? $args['m'] : '',
 		    'object' => isset($args['o']) ? $args['o'] : '',
@@ -21,7 +22,10 @@ class ArgParser
 		    'offset'=>isset($args['of']) ? $args['of'] : DEFAULT_OFFSET,
 		    'orderby'=>isset($args['ob']) ? $args['ob'] : '',
 		    'order'=>isset($args['or']) ? $args['or'] : DEFAULT_ORDER,
-		    'view' => isset($args['v']) ? $args['v'] : DEFAULT_VIEW 
+		    'view' => isset($args['v']) ? $args['v'] : DEFAULT_VIEW,
+		    'elaborate' => isset($args['e']) ? $args['e'] : 0,
+		    'id' => isset($args['id']) ? $args['id'] : ''
+
   		];
   		/*foreach ($this->args as $key => $value) {;
 			echo ($key .'=>'. $value);

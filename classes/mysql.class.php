@@ -4,8 +4,20 @@ require 'sql_credentials.class.php';
 class mysql
 {
 	static $category_queries = [
-		'artists' => 'SELECT CONCAT(a.artist_fname,\' \', a.artist_lname) AS title, CONCAT(\'af=\',a.artist_fname,\'&al=\',a.artist_lname) as urlargs, MAX(i.original) AS src, a.id AS id FROM artists a JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) WHERE i.featured = \'1\' GROUP BY a.id ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC LIMIT ? OFFSET ?',
-		'institutions' => 'SELECT name as title, image_path as src, CONCAT(address1,\' \',city,\' \',state) as info FROM organizations ORDER BY organizations.name ASC LIMIT ? OFFSET ?',
+		'artists' => 'SELECT CONCAT(a.artist_fname,\' \', a.artist_lname) AS title,
+							 MAX(i.original) AS src,
+							 a.id AS id 
+			FROM artists a 
+			JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) 
+			WHERE i.featured = \'1\' 
+			GROUP BY a.id ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC LIMIT ? OFFSET ?',
+
+		'institutions' => 'SELECT name as title,
+								  image_path as src,
+								  CONCAT(address1,\' \',city,\' \',state) as info 
+			FROM organizations 
+			ORDER BY organizations.name ASC LIMIT ? OFFSET ?',
+
 		/*'images' => 'SELECT CONCAT(i.artist_fname, \' \', i.artist_lname) AS artist, i.title AS title, MAX(i.original) AS src 
 			FROM images i 
 			WHERE i.active = \'yes\' 
@@ -74,22 +86,29 @@ class mysql
 	];
 	
 	static $custom_query_strings = [
-		'base' =>  'SELECT i.original as src, CONCAT(i.artist_fname,\' \',i.artist_lname,\' \',i.title,\' \') as title, i.id as id FROM images i',
+		'base' =>  'SELECT i.original as src,
+						   CONCAT(i.artist_fname,\' \',i.artist_lname,\' \',i.title,\' \') as title, i.id as id FROM images i',
 		'end' => ' i.active = \'yes\' GROUP BY i.original LIMIT :lim OFFSET :ofs',
-		'artist' => ' i.artist_fname LIKE (:first) 
-					AND i.artist_lname LIKE (:last)',
+
 		'glazing' => ' JOIN glazing_match gm ON gm.image_id = i.id
 					JOIN glazing g ON g.id = gm.glazing_id AND g.glazing LIKE (:glaze)',
+
 		'material' => ' JOIN material_match mm ON mm.image_id = i.id
 					JOIN material m ON m.id = mm.material_id AND m.material LIKE (:mat)',
+
 		'object' => ' JOIN object_type_match om ON om.image_id = i.id
 					JOIN object_type o ON o.id = om.object_type_id AND o.object_type LIKE (:obj)',
+
 		'technique' => ' JOIN technique_match tm ON tm.image_id = i.id
 					JOIN techniques t ON t.id = tm.technique_id AND t.technique LIKE (:tech)',
+
 		'temperature' => ' JOIN temperature_match tem ON tem.image_id = i.id
 					JOIN temperature te ON te.id = tem.temperature_id AND te.temperature LIKE (:temp)',
-		'added' => ' i.timestamp BETWEEN :time_s and :time_e',
-		'created' => ' i.date1 BETWEEN :year_s and :year_e'
+
+		'artist' => 'WHERE i.artist_fname LIKE (:first) AND i.artist_lname LIKE (:last)',
+		'artist_id' => ' JOIN artist_match am ON am.image_id = i.id and am.artist_id = :id',
+		'added' =>' i.timestamp BETWEEN :time_s and :time_e',
+		'created' =>' i.date1 BETWEEN :year_s and :year_e'
 	];
 
 	
@@ -104,8 +123,16 @@ class mysql
 		'technique'=>'SELECT COUNT(t.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM techniques t;',
 		'temperature'=>'SELECT COUNT(t.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM temperature t;'
 	];
+	static $arg_associations =
+	[
+		'artists'=> 'id',
+		'glazings'=> 'g',
+		'materials'=> 'm',
+		'objects'=> 'o',
+		'techniques'=> 't',
+		'temperatures'=> 'tem',
+	];
 	
-
 
 	public function __construct()
 	{
@@ -135,7 +162,6 @@ class mysql
 		}
 		return $categories;
 	}
-	
 
 	public function query_category($args)
 	{
@@ -152,18 +178,88 @@ class mysql
 			printf('no results from query: %s',self::$category_queries[$query_key]);
 			return false;
 		}
-	
-		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		foreach ($result as &$res) $res['args'] = self::$arg_associations[$query_key].'='.$res['id'];
+
+		unset($res);
+		return $result;
 	}
 
-	// Used to create custom queries based on user entered parameters
-	public function do_custom_query($args)
+	
+
+	//Takes a array of image ids and returns elaborated information about the image
+	public function elaborate($ids)
+	{
+		//since the query requires an array, we have to construct count($id) place holders (?) to be filled by ids
+		if (gettype($ids) != 'array')
+		{
+			$ids = [$ids];
+		}
+
+		$inQuery = implode(',', array_fill(0,  count($ids), '?'));
+
+		$query = self::$elaborate_queries['elaborate']." ($inQuery) GROUP BY src";
+
+		$stmt = $this->db->prepare($query);
+		
+		// echo 'Query String: '.$stmt->queryString; //query string (without bound arguments)
+		
+		foreach ($ids as $k => $id)
+    		$stmt->bindValue(($k+1), $id, PDO::PARAM_INT);
+
+    	$stmt->execute();
+		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		/* 
+			Images can have multiple glazings and materials, so for each result we issue
+			another query and construct an array of the form id => name.
+			This functionality could probably be added to the above query, but I was having trouble with that.
+		*/
+		foreach ($result as &$res) {
+
+			$glazing = $this->db->prepare(self::$elaborate_queries['elab_g']);
+			$glazing->execute(array($res['id']));
+			$res['glazing'] = [];
+
+			foreach ($glazing->fetchAll(PDO::FETCH_ASSOC) as $value)
+				$res['glazing'][$value['id']] = $value['glazing'];
+
+			$material = $this->db->prepare(self::$elaborate_queries['elab_m']);
+			$material->execute(array($res['id']));
+			$res['material'] = [];
+
+			foreach ($material->fetchAll(PDO::FETCH_ASSOC) as $value)
+				$res['material'][$value['id']] = $value['material'];
+
+		} unset($res);
+
+		return $result;
+	}
+
+
+public function do_custom_query($args)
 	{
 		$constructed_query = self::$custom_query_strings['base'];
 		/*
 			For each of the possible query arguments, we check if it is set in passed $args array (created by ArgParser)
 			if set, add the corresponding string to the query and construct the parameter (to be inserted after the query is entirely built)
 		*/
+
+		$flag = false; //flag is used for query segments that require WHERE or AND clauses
+
+		if($args['artist_fn'] or $args['artist_ln'])
+		{
+			$first = '%'.$args['artist_fn'].'%';
+			$last = '%'.$args['artist_ln'].'%';
+			$constructed_query .= self::$custom_query_strings['artist'];
+			$flag = true;
+		}
+		else if($args['artist_id'])
+		{
+			$id = $args['artist_id'];
+			$constructed_query .= self::$custom_query_strings['artist_id'];
+		}
 
 		if($args['glazing'])
 		{
@@ -190,15 +286,122 @@ class mysql
 			$temperature = '%'.$args['temperature'].'%';
 			$constructed_query .= self::$custom_query_strings['temperature'];
 		}
+		
+
+		if($args['date_s'])
+		{
+			$date_s = $args['date_s'];
+			if($args['date_e'] == '') $args['date_e'] = date('Y');//if the end date isnt specified, use current year
+			else $date_e = $args['date_e'];
+			
+			$constructed_query .= ($flag ? ' AND' : ' WHERE').self::$custom_query_strings['created'];
+			$flag = true;
+		}
+
+
+		$constructed_query .= ($flag ? ' AND' : ' WHERE').self::$custom_query_strings['end'];
+		$stmt = $this->db->prepare($constructed_query);
+
+		//now that the query is built we bind all the parameters
+		if (isset($glazing)) $stmt->bindParam(':glaze',$glazing);
+		if (isset($material)) $stmt->bindParam(':mat',$material);
+		if (isset($object)) $stmt->bindParam(':obj',$object);
+		if (isset($technique)) $stmt->bindParam(':tech',$technique);
+		if (isset($temperature)) $stmt->bindParam(':temp',$temperature);
+		
+		if(isset($id))
+		{
+			$stmt->bindParam(':id',$id);
+		}
+		else if(isset($first) or isset($last))
+		{
+			$stmt->bindParam(':first',$first);
+			$stmt->bindParam(':last',$last);
+		}
+		if(isset($date_s))
+		{
+			$stmt->bindParam(':year_s',$date_s);
+			$stmt->bindParam(':year_e',$date_e);
+		}
+		
+		//limit and offset are always included, so they are handled at the end
+		$lim = $args['limit'];
+		$ofs = $args['offset'];
+
+		$stmt->bindValue(':lim',$lim, PDO::PARAM_INT);
+		$stmt->bindValue(':ofs', $ofs, PDO::PARAM_INT);
+		
+		//echo 'Query String: '.$stmt->queryString; //query string (without bound arguments)
+
+		$querystart = microtime(true);
+		try
+		{
+			$result = $stmt->execute();
+		}catch(PDOException $e)//FIXTHIS for end
+		{
+			//deal with error, dont echo it 
+			?>
+			<h3><?=$e?></h3> 
+			<?php
+		}
+		
+		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		
+		$result['time'] = microtime(true) - $querystart; //time taken for query
+		return $result;
+	}
+
+
+public function do_custom_query_new($args)
+	{
+		$constructed_query = self::$custom_query_strings['base'];
+		/*
+			For each of the possible query arguments, we check if it is set in passed $args array (created by ArgParser)
+			if set, add the corresponding string to the query and construct the parameter (to be inserted after the query is entirely built)
+		*/
+
+		if($args['glazing'])
+		{
+			$glazing = $args['glazing'];
+			$constructed_query .= self::$custom_query_strings['glazing'];
+		}
+		if($args['material'])
+		{
+			$glazing = '%'.$args['glazing'].'%';
+			$material = $args['material'];
+			$constructed_query .= self::$custom_query_strings['material'];
+		}
+		if($args['object'])
+		{
+			$material = '%'.$args['material'].'%';
+			$object = $args['object'];
+			$constructed_query .= self::$custom_query_strings['object'];
+		}
+		if($args['technique'])
+		{
+			$object = '%'.$args['object'].'%';
+			$technique = $args['technique'];
+			$constructed_query .= self::$custom_query_strings['technique'];
+		}
+		if($args['temperature'])
+		{
+			$technique = '%'.$args['technique'].'%';
+			$temperature = $args['temperature'];
+			$constructed_query .= self::$custom_query_strings['temperature'];
+		}
 		$flag = false; //flag is used for query segments that require WHERE or AND clauses
 		if($args['artist_fn'] or $args['artist_ln'])
+			$temperature = '%'.$args['temperature'].'%';
 		{
-			$first = '%'.$args['artist_fn'].'%';
-			$last = '%'.$args['artist_ln'].'%';
+			$first = $args['artist_fn'];
 			$constructed_query .= ($flag ? ' AND' : ' WHERE').self::$custom_query_strings['artist'];//$flag use here is for consistency
+			$last = $args['artist_ln'];
 			$flag = true;
 		}
 		if($args['date_s'])
+			$first = '%'.$args['artist_fn'].'%';
+			$last = '%'.$args['artist_ln'].'%';
 		{
 			$date_s = $args['date_s'];
 			if($args['date_e'] == '') $args['date_e'] = date('Y');//if the end date isnt specified, use current year
@@ -258,51 +461,6 @@ class mysql
 		return $result;
 	}
 
-	//Takes a array of image ids and returns elaborated information about the image
-	public function elaborate($ids)
-	{
-		//since the query requires an array, we have to construct count($id) place holders (?) to be filled by ids
-		$inQuery = implode(',', array_fill(0, count($ids), '?'));
-
-		$query = self::$elaborate_queries['elaborate']." ($inQuery) GROUP BY src";
-
-		$stmt = $this->db->prepare($query);
-		
-		//echo 'Query String: '.$stmt->queryString; //query string (without bound arguments)
-		
-		foreach ($ids as $k => $id)
-    		$stmt->bindValue(($k+1), $id, PDO::PARAM_INT);
-
-    	$stmt->execute();
-		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-		/* 
-			Images can have multiple glazings and materials, so for each result we issue
-			another query and construct an array of the form id => name.
-			This functionality could probably be added to the above query, but I was having trouble with that.
-		*/
-		foreach ($result as &$res) {
-
-			$glazing = $this->db->prepare(self::$elaborate_queries['elab_g']);
-			$glazing->execute(array($res['id']));
-			$res['glazing'] = [];
-
-			foreach ($glazing->fetchAll(PDO::FETCH_ASSOC) as $value)
-				$res['glazing'][$value['id']] = $value['glazing'];
-
-			$material = $this->db->prepare(self::$elaborate_queries['elab_m']);
-			$material->execute(array($res['id']));
-			$res['material'] = [];
-
-			foreach ($material->fetchAll(PDO::FETCH_ASSOC) as $value)
-				$res['material'][$value['id']] = $value['material'];
-
-		} unset($res);
-
-		return $result;
-	}
-
 }
-
 
 ?>

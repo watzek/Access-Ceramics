@@ -9662,6 +9662,10 @@ h3 {
 /* Legacy Colors */
 /* $ceramicstext: #7f4c38;
 $ceramicstextalt: #96935f; */
+.bg-primary {
+  background-color: #007bff !important;
+}
+
 /* $primary: $ceramicsblue;
 $secondary: $ceramicspurple; */
 body,
@@ -9686,7 +9690,7 @@ html {
 
 .accessText {
   font-weight: bolder;
-  color: #000;
+  color: #000000;
 }
 
 .ceramicsText {
@@ -9794,24 +9798,6 @@ html, body {
   overflow-x: hidden;
 }
 
-.span-all-cols {
-  /*
-  	column-span all doenst seem to work, so I have to manually 
-  	set the number of columns on each breakpoint
-  */
-  grid-column: 1/5;
-}
-@media (min-width: 768px) {
-  .span-all-cols {
-    grid-column: 1/6;
-  }
-}
-@media (min-width: 992px) {
-  .span-all-cols {
-    grid-column: 1/7;
-  }
-}
-
 .navigate {
   height: 3vh;
   text-align: center;
@@ -9827,7 +9813,7 @@ html, body {
 }
 
 .active {
-  color: #000;
+  color: #000000;
   text-decoration: underline;
 }
 
@@ -9838,7 +9824,21 @@ html, body {
 }
 
 .view-mode.active {
-  color: #000;
+  color: #000000;
+}
+
+.span-all-cols {
+  grid-column: 1/6;
+}
+@media (min-width: 768px) {
+  .span-all-cols {
+    grid-column: 1/6;
+  }
+}
+@media (min-width: 992px) {
+  .span-all-cols {
+    grid-column: 1/6;
+  }
 }
 
 #content {
@@ -9860,6 +9860,7 @@ html, body {
   display: inline-grid;
   grid-template-columns: auto auto auto auto auto;
   grid-row-gap: 5px;
+  grid-auto-rows: min-content;
   overflow-x: hidden;
 }
 
@@ -9896,7 +9897,7 @@ html, body {
 #view {
   overflow-y: auto;
   height: 100%;
-  background-color: #42397c;
+  background-color: #007bff;
   text-align: center;
 }
 

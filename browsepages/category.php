@@ -81,7 +81,7 @@
     if($results)
     foreach ($results as $res) {
       $ind++;
-      $link = '#';//$res['args'];
+      $link = 'view.php?'.$res['args'];
       ?>
       <!-- result skeleton -->
       <a class="result" href=<?=$link?> value=<?=$ind?>>

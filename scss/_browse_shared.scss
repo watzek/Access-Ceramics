@@ -6,25 +6,7 @@ html, body
 	overflow-x: hidden;
 }
 
-.span-all-cols
-{
-	/*
-		column-span all doenst seem to work, so I have to manually 
-		set the number of columns on each breakpoint
-	*/
-	//column-span: all;
-	grid-column: 1 / 5;
-	
-	@include media-breakpoint-up(md)
-	{
-		grid-column: 1 / 6;
-	}
-	@include media-breakpoint-up(lg)
-	{
-		grid-column: 1 / 7;
-	}
 
-}
 
 .navigate
 {

@@ -9662,6 +9662,10 @@ h3 {
 /* Legacy Colors */
 /* $ceramicstext: #7f4c38;
 $ceramicstextalt: #96935f; */
+.bg-primary {
+  background-color: #007bff !important;
+}
+
 /* $primary: $ceramicsblue;
 $secondary: $ceramicspurple; */
 body,
@@ -9686,7 +9690,7 @@ html {
 
 .accessText {
   font-weight: bolder;
-  color: #000;
+  color: #000000;
 }
 
 .ceramicsText {

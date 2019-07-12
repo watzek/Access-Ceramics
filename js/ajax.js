@@ -13,7 +13,6 @@ export function elaborate(image_id, responseFunction)
 
 export function get_range(offset, limit, resFunc)
 {
-	console.log(offset, limit);
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = ()=>
 	{
@@ -21,7 +20,6 @@ export function get_range(offset, limit, resFunc)
 			resFunc(xhttp.responseText);
 	}
 	var str = "./php/ajax_backend.php"+window.location.search+"&of="+offset+"&l="+limit;
-	console.log(str);
 	xhttp.open("GET", str, true);
 	xhttp.send();	
 }

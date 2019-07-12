@@ -27,14 +27,14 @@ import {elaborate, get_range} from "./ajax.js";
 		{
 			document.getElementById('elab').addEventListener('click', 
 				() => {
-					var val = document.getElementById('artistnum');
+					var val = document.getElementById('artistnum').value;
 					elaborate(val, function(resText)
 					{
 						console.log(resText);
 						var obj = JSON.parse(resText)[0];
 						if (obj !== undefined && obj.length != 0)
 						{
-							artist_img.innerHTML = obj['src'];
+							artist_img.src = obj['src'];
 							artist_name.innerHTML = obj['title'];
 							artist_id.innerHTML = obj['id'];
 							artist_args.innerHTML = obj['args'];

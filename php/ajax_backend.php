@@ -20,6 +20,10 @@
 		{
 			$results = $db->elaborate($args['id']);
 		}
+		else
+		{
+			$results = ["info"=>'no id'];
+		}
 	}
 	else if($args['category'])
 	{

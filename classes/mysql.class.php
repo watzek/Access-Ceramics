@@ -206,11 +206,11 @@ class mysql
 		// echo 'Query String: '.$stmt->queryString; //query string (without bound arguments)
 		
 		foreach ($ids as $k => $id)
-    		$stmt->bindValue(($k+1), $id, PDO::PARAM_INT);
+    		$stmt->bindValue(($k+1), intval($id), PDO::PARAM_INT);
 
     	$stmt->execute();
 		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		
+
 		/* 
 			Images can have multiple glazings and materials, so for each result we issue
 			another query and construct an array of the form id => name.

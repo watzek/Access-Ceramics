@@ -12,6 +12,18 @@ html, body
 {
 	height: 3vh;
 	text-align: center;
+	span
+	{
+		margin-left: .5em;
+		margin-right: .5em;
+
+		.active
+		{
+			font-weight: bold;
+			font-size: 14pt;
+			background-color: lightyellow;
+		}
+	}
 }
 
 
@@ -41,4 +53,10 @@ html, body
 .view-mode.active
 {
 	color: $ceramicstext;
+}
+
+.meta-data
+{
+	font-weight: initial;
+	text-transform: capitalize;
 }

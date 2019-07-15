@@ -66,7 +66,7 @@ class mysql
 					i.id,
 					i.title AS title,
 					CONCAT(i.artist_fname,\' \',i.artist_lname) AS artist,
-					i.date1 AS date1,
+					i.date1 AS date,
 					t.technique AS tech,
 					tt.temperature AS temp,
 					i.height AS h,
@@ -86,9 +86,9 @@ class mysql
 	];
 	
 	static $custom_query_strings = [
-		'base' =>  'SELECT i.original as src,
+		'base' =>  'SELECT SQL_CALC_FOUND_ROWS i.original as src,
 						   CONCAT(i.artist_fname,\' \',i.artist_lname,\' \',i.title,\' \') as title, i.id as id FROM images i',
-		'end' => ' i.active = \'yes\' GROUP BY i.original LIMIT :lim OFFSET :ofs',
+		'end' => ' i.active = \'yes\' GROUP BY i.original ORDER BY i.artist_image_order LIMIT :lim OFFSET :ofs',
 
 		'glazing' => ' JOIN glazing_match gm ON gm.image_id = i.id
 					JOIN glazing g ON g.id = gm.glazing_id AND g.glazing LIKE (:glaze)',
@@ -151,6 +151,12 @@ class mysql
 		  	echo $e->getMessage();//FIXTHIS AT END
 		}
 		
+	}
+
+	public function get_found_rows()
+	{
+		$res = $this->db->query("SELECT FOUND_ROWS()");
+		return intval($res->fetch(PDO::FETCH_ASSOC)['FOUND_ROWS()']);
 	}
 
 	public function categories()
@@ -344,123 +350,14 @@ public function do_custom_query($args)
 			<h3><?=$e?></h3> 
 			<?php
 		}
+		$result = [];
+		$result['res'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		
-		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-		
-		$result['time'] = microtime(true) - $querystart; //time taken for query
-		return $result;
-	}
-
-
-public function do_custom_query_new($args)
-	{
-		$constructed_query = self::$custom_query_strings['base'];
-		/*
-			For each of the possible query arguments, we check if it is set in passed $args array (created by ArgParser)
-			if set, add the corresponding string to the query and construct the parameter (to be inserted after the query is entirely built)
-		*/
-
-		if($args['glazing'])
-		{
-			$glazing = $args['glazing'];
-			$constructed_query .= self::$custom_query_strings['glazing'];
-		}
-		if($args['material'])
-		{
-			$glazing = '%'.$args['glazing'].'%';
-			$material = $args['material'];
-			$constructed_query .= self::$custom_query_strings['material'];
-		}
-		if($args['object'])
-		{
-			$material = '%'.$args['material'].'%';
-			$object = $args['object'];
-			$constructed_query .= self::$custom_query_strings['object'];
-		}
-		if($args['technique'])
-		{
-			$object = '%'.$args['object'].'%';
-			$technique = $args['technique'];
-			$constructed_query .= self::$custom_query_strings['technique'];
-		}
-		if($args['temperature'])
-		{
-			$technique = '%'.$args['technique'].'%';
-			$temperature = $args['temperature'];
-			$constructed_query .= self::$custom_query_strings['temperature'];
-		}
-		$flag = false; //flag is used for query segments that require WHERE or AND clauses
-		if($args['artist_fn'] or $args['artist_ln'])
-			$temperature = '%'.$args['temperature'].'%';
-		{
-			$first = $args['artist_fn'];
-			$constructed_query .= ($flag ? ' AND' : ' WHERE').self::$custom_query_strings['artist'];//$flag use here is for consistency
-			$last = $args['artist_ln'];
-			$flag = true;
-		}
-		if($args['date_s'])
-			$first = '%'.$args['artist_fn'].'%';
-			$last = '%'.$args['artist_ln'].'%';
-		{
-			$date_s = $args['date_s'];
-			if($args['date_e'] == '') $args['date_e'] = date('Y');//if the end date isnt specified, use current year
-			else $date_e = $args['date_e'];
-			
-			$constructed_query .= ($flag ? ' AND' : ' WHERE').self::$custom_query_strings['created'];
-			$flag = true;
-		}
-
-
-		$constructed_query .= ($flag ? ' AND' : ' WHERE').self::$custom_query_strings['end'];
-		$stmt = $this->db->prepare($constructed_query);
-
-		//now that the query is built we bind all the parameters
-		if (isset($glazing)) $stmt->bindParam(':glaze',$glazing);
-		if (isset($material)) $stmt->bindParam(':mat',$material);
-		if (isset($object)) $stmt->bindParam(':obj',$object);
-		if (isset($technique)) $stmt->bindParam(':tech',$technique);
-		if (isset($temperature)) $stmt->bindParam(':temp',$temperature);
-		
-		if(isset($first) or isset($last))
-		{
-			$stmt->bindParam(':first',$first);
-			$stmt->bindParam(':last',$last);
-		}
-		if(isset($date_s))
-		{
-			$stmt->bindParam(':year_s',$date_s);
-			$stmt->bindParam(':year_e',$date_e);
-		}
-		
-		//limit and offset are always included, so they are handled at the end
-		$lim = $args['limit'];
-		$ofs = $args['offset'];
-
-		$stmt->bindValue(':lim',$lim, PDO::PARAM_INT);
-		$stmt->bindValue(':ofs', $ofs, PDO::PARAM_INT);
-		
-		//echo 'Query String: '.$stmt->queryString; //query string (without bound arguments)
-
-		$querystart = microtime(true);
-		try
-		{
-			$result = $stmt->execute();
-		}catch(PDOException $e)//FIXTHIS for end
-		{
-			//deal with error, dont echo it 
-			?>
-			<h3><?=$e?></h3> 
-			<?php
-		}
-		
-		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 		
 		$result['time'] = microtime(true) - $querystart; //time taken for query
+		$result['count'] = $this->get_found_rows();
 		return $result;
 	}
-
 }
 
 ?>

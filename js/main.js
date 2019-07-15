@@ -1,22 +1,6 @@
 import {elaborate, get_range} from "./ajax.js";
 		var details = [];
-		function printResponse(json) 
-		{
-			let res = JSON.parse(json)[0];/*
-			let final = '';
-			for (var i = 0; i < arr.length; i++) {
-				
-				let keys = Object.keys(arr[i]);
-				for (var k = 0; k < keys.length; k++) {
-					final += keys[k] + ' => ';
-					final += arr[i][keys[k]] + '<br>';
 
-				}
-			}*/
-			
-
-
-		}
 		var artist_img = document.getElementById('artist_img');
 		var artist_name = document.getElementById('artist_name');
 		var artist_id = document.getElementById('artist_id');

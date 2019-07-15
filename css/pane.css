@@ -9802,6 +9802,14 @@ html, body {
   height: 3vh;
   text-align: center;
 }
+.navigate span {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+.navigate span .active {
+  font-weight: bold;
+  font-size: 14pt;
+}
 
 .limit-choice {
   font-size: 85%;
@@ -9825,6 +9833,11 @@ html, body {
 
 .view-mode.active {
   color: #000000;
+}
+
+.meta-data {
+  font-weight: initial;
+  text-transform: capitalize;
 }
 
 .span-all-cols {
@@ -9912,10 +9925,6 @@ html, body {
 #view-meta p {
   font-weight: bold;
   color: #190028;
-}
-
-.meta-data {
-  font-weight: initial;
 }
 
 #meta-other {

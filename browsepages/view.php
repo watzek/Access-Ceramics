@@ -10,8 +10,8 @@
   
   $results = $main->get_results();
 
-  /* need to change below, but for now its fine */ 
-  $res_count = $results ? count($results) : 0;
+  /* subtract 2 for time and count */ 
+  $res_count = $results ? count($results)-2 : 0;
 
   $search_title = !isset($args['category']) ? 'No search specified' : ucfirst($args['category']).' ('.$res_count.')';
 ?>
@@ -62,13 +62,12 @@
     <?='var get_args  ='. json_encode($args).';'?>
      
 </script>
-
-<script src="../js/view.js"></script>
+<script type="module" src="../js/ajax.js"></script>
+<script type="module" src="../js/view.js"></script>
 
 </head>
 <body>
 <?php $navbar->show()?>
-<hr class="my-1" />
 <div id="content" class="container-fluid">
   <div id="results">
     <div class="container-fluid span-all-cols" id="header">
@@ -81,49 +80,34 @@
       (<span class="view-mode pressable" id="compact">Compact</span>)
       <br/>
       Results Per Page: 
-      (<span class="limit-choice pressable">20</span>, 
+      (<span class="limit-choice pressable active">20</span>, 
       <span class="limit-choice pressable">50</span>, 
       <span class="limit-choice pressable">100</span>, 
-      <span class="limit-choice pressable active">all</span>)
+      <span class="limit-choice pressable">all</span>)
       <br/>
       </p> 
   </div>
-  <div class="navigate span-all-cols">< Prev 1 2 3 4 5 Next ></div>
-    <?php
-    $ind = -1;
-    if($results)
-    foreach ($results as $res) {
-      $ind++;
-      ?>
-      <!-- result skeleton -->
-      <div class="result pressable" value=<?=$ind?>>
-        <img class="result-img" src=<?=$res['src']?>>
-        <p class="result-title"><?=ucfirst($res['title'])?></p>
-      </div>
-      <!-- end -->
-      <?php
-    }
-    ?>
-    <div class="navigate span-all-cols">< Prev 1 2 3 4 5 Next ></div>
+  <div class="navigate span-all-cols"></div>
+    <div class="navigate span-all-cols"></div>
   </div> <!-- end results -->
   <div id="view">
     <img id="view-img" src="../img/default.jpg">
     <div id=view-meta>
       <p>
-        <span id="meta-title" class="meta-data"></span>, from
-        <span id="meta-stitle" class="meta-data"> </span> by
-        <span id="meta-artist" class="meta-data"></span>
-        (<span id="meta-date" class="meta-data"></span>)
+        <span id="meta-artist" class="meta-data"></span> ,
+        <span id="meta-title" class="meta-data"></span>
+        <span id="meta-stitle" class="meta-data"> </span> ,
+        <span id="meta-date" class="meta-data"></span>
       </p>
       <div id="meta-other">
-      <div>Technique:<span id="meta-technique" class="meta-data"></span></div>
-      <div>Temperature:<span id="meta-temperature" class="meta-data"></span></div>
-      <div>Glazing / Surface Treatment:<span id="meta-glazing" class="meta-data"></span></div>
-      <div>Material:<span id="meta-material" class="meta-data"></span></div>
-      <div>Height:<span id="meta-height" class="meta-data"></span>|
-      Width:<span id="meta-width" class="meta-data"></span>| 
-      Depth:<span id="meta-depth" class="meta-data"></span></div>
-      <div>License:<span id="meta-liscense" class="meta-data"></span></div>
+      <div>Technique: <span id="meta-technique" class="meta-data"></span></div>
+      <div>Temperature: <span id="meta-temperature" class="meta-data"></span></div>
+      <div>Glazing / Surface Treatment: <span id="meta-glazing" class="meta-data"></span></div>
+      <div>Material: <span id="meta-material" class="meta-data"></span></div>
+      <div>Height: <span id="meta-height" class="meta-data"></span>|
+      Width: <span id="meta-width" class="meta-data"></span>| 
+      Depth: <span id="meta-depth" class="meta-data"></span></div>
+      <div>License: <span id="meta-license" class="meta-data"></span></div>
       </div>
     </div>
   </div> <!-- end view -->

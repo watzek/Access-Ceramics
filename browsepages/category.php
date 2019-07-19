@@ -51,7 +51,9 @@
      
 </script>
 
-<script src="../js/view.js"></script>
+<script type="module" src="../js/PageManagement.js"></script>
+<script type="module" src="../js/ajax.js"></script>
+<script type="module" src="../js/categories.js"></script>
 
 </head>
 <body>
@@ -75,24 +77,8 @@
       <br/>
       </p> 
   </div>
-  <div class="navigate span-all-cols">< Prev 1 2 3 4 5 Next ></div>
-    <?php
-    $ind = -1;
-    if($results)
-    foreach ($results as $res) {
-      $ind++;
-      $link = 'view.php?'.$res['args'];
-      ?>
-      <!-- result skeleton -->
-      <a class="result" href=<?=$link?> value=<?=$ind?>>
-        <img class="result-img" src=<?=$res['src']?>>
-        <p class="result-title"><?=ucfirst($res['title'])?></p>
-      </a>
-      <!-- end -->
-      <?php
-    }
-    ?>
-    <div class="navigate span-all-cols">< Prev 1 2 3 4 5 Next ></div>
+  <div class="navigate span-all-cols"></div>
+    <div class="navigate span-all-cols"></div>
   </div> <!-- end results -->
   <div id="view">
     <img id="view-img" src="../img/default.jpg">

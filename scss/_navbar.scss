@@ -35,6 +35,12 @@
     }
 }
 
+.btn-outline-theme
+{
+  border: 1px solid $l_background;
+  color: $l_background;
+}
+
 #login 
 {
   margin-left: 0 !important;
@@ -46,6 +52,16 @@
   }
 }
 
+.browse-dropdown
+{
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+.browse
+{
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+}
 
 .navbar-toggler
 {

@@ -109,6 +109,12 @@ body
 }
 #meta-other
 {
+	color: $l_background;
 	display: grid;
 	grid-template-columns: auto auto;
+}
+
+.navigate.bottom 
+{
+	margin-bottom: 2em;
 }

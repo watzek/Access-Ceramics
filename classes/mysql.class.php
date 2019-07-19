@@ -4,58 +4,52 @@ require 'sql_credentials.class.php';
 class mysql
 {
 	static $category_queries = [
-		'artists' => 'SELECT CONCAT(a.artist_fname,\' \', a.artist_lname) AS title,
+		'artists' => 'SELECT SQL_CALC_FOUND_ROWS CONCAT(a.artist_fname,\' \', a.artist_lname) AS title,
 							 MAX(i.original) AS src,
 							 a.id AS id 
 			FROM artists a 
 			JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) 
 			WHERE i.featured = \'1\' 
-			GROUP BY a.id ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC LIMIT ? OFFSET ?',
+			GROUP BY a.id ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC LIMIT ? OFFSET ?;',
 
-		'institutions' => 'SELECT name as title,
+		'institutions' => 'SELECT SQL_CALC_FOUND_ROWS name as title,
 								  image_path as src,
 								  CONCAT(address1,\' \',city,\' \',state) as info 
 			FROM organizations 
-			ORDER BY organizations.name ASC LIMIT ? OFFSET ?',
+			ORDER BY organizations.name ASC LIMIT ? OFFSET ?;',
 
-		/*'images' => 'SELECT CONCAT(i.artist_fname, \' \', i.artist_lname) AS artist, i.title AS title, MAX(i.original) AS src 
-			FROM images i 
-			WHERE i.active = \'yes\' 
-			AND i.artist_fname IS NOT NULL 
-			AND i.artist_fname != \'\' 
-			AND i.title IS NOT NULL 
-			AND i.title != \'\' GROUP BY i.original order by i.timestamp DESC LIMIT ? OFFSET ?',*/
-		'glazings' => 'SELECT COUNT(i.id) AS count, 
+		'glazings' => 'SELECT SQL_CALC_FOUND_ROWS COUNT(i.id) AS count, 
 							  g.glazing AS title, 
 							  m.glazing_id AS id, 
 							  i.original AS src 
 			FROM glazing g 
 			JOIN glazing_match m ON g.id = m.glazing_id 
 			JOIN images i ON m.image_id = i.id AND i.active = \'yes\' 
-			GROUP BY g.glazing ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
-		'materials' => 'SELECT COUNT(i.id) as count, m.material AS title, mm.material_id as id, i.original as src
+			GROUP BY g.glazing ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?;',
+
+		'materials' => 'SELECT SQL_CALC_FOUND_ROWS COUNT(i.id) as count, m.material AS title, mm.material_id as id, i.original as src
 			FROM material m 
 			JOIN material_match mm ON m.id = mm.material_id 
 			JOIN images i ON mm.image_id = i.id AND i.active =\'yes\' 
-			GROUP BY m.material ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
-	
-		'objects' => 'SELECT COUNT(i.id) as count, o.object_type as title, om.object_type_id as id, i.original AS src 
+			GROUP BY m.material ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?;',
+
+		'objects' => 'SELECT SQL_CALC_FOUND_ROWS COUNT(i.id) as count, o.object_type as title, om.object_type_id as id, i.original AS src 
 			FROM object_type o
 			JOIN object_type_match om ON o.id = om.object_type_id 
 			JOIN images i ON om.image_id = i.id AND i.active = \'yes\' 
-			GROUP BY o.object_type ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
+			GROUP BY o.object_type ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?;',
 
-		'techniques' => 'SELECT COUNT(i.id) as count, t.technique as title, tm.technique_id as id, i.original AS src 
+		'techniques' => 'SELECT SQL_CALC_FOUND_ROWS COUNT(i.id) as count, t.technique as title, tm.technique_id as id, i.original AS src 
 			FROM techniques t 
 			JOIN technique_match tm ON t.id = tm.technique_id 
 			JOIN images i ON tm.image_id = i.id AND i.active = \'yes\' 
-			GROUP BY t.technique ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?',
+			GROUP BY t.technique ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?;',
 
-		'temperatures' => 'SELECT COUNT(i.id) as count, te.temperature as title, tem.temperature_id as id, i.original AS src 
+		'temperatures' => 'SELECT SQL_CALC_FOUND_ROWS COUNT(i.id) as count, te.temperature as title, tem.temperature_id as id, i.original AS src 
 			FROM temperature te 
 			JOIN temperature_match tem ON te.id = tem.temperature_id 
 			JOIN images i ON tem.image_id = i.id AND i.active = \'yes\' 
-			GROUP BY te.temperature ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?'
+			GROUP BY te.temperature ORDER BY COUNT(i.id) DESC LIMIT ? OFFSET ?;'
 		];
 
 	
@@ -71,33 +65,11 @@ class mysql
 					i.depth AS d,
 					i.license AS license 
 			FROM images i WHERE i.active = \'yes\' AND i.id = ? ',
-		'object' => 'SELECT o.object_type as object_type FROM object_type_match om JOIN object_type o ON o.id = om.object_type_id WHERE om.image_id = ?',
+		'object' => 'SELECT o.object_type as object FROM object_type_match om JOIN object_type o ON o.id = om.object_type_id WHERE om.image_id = ?',
 		'techniques' => 'SELECT t.technique AS technique FROM technique_match tm JOIN techniques t ON tm.technique_id = t.id WHERE tm.image_id = ?',
 		'temp' => 'SELECT tt.temperature AS temperature FROM temperature_match ttm JOIN temperature tt ON tt.id = ttm.temperature_id WHERE ttm.image_id = ?',
 		'glazing'=>'SELECT glazing, g.id from glazing_match gm join glazing g on gm.glazing_id = g.id where gm.image_id = ?',
 		'material'=>'SELECT material, m.id from material_match mm join material m on mm.material_id = m.id where mm.image_id = ?'
-/*
-		'elaborate' => '
-			SELECT  i.original AS src,
-					i.id,
-					i.title AS title,
-					CONCAT(i.artist_fname,\' \',i.artist_lname) AS artist,
-					i.date1 AS date,
-					t.technique AS tech,
-					tt.temperature AS temp,
-					i.height AS h,
-					i.width AS w,
-					i.depth AS d,
-					i.license AS lic 
-			FROM images i JOIN technique_match tm ON i.id = tm.image_id 
-			      JOIN techniques t ON tm.technique_id = t.id 
-			      JOIN temperature_match ttm ON ttm.image_id = i.id 
-			      JOIN temperature tt ON tt.id = ttm.temperature_id
-			      JOIN object_type_match om ON om.image_id = i.id
-			      JOIN object_type o ON o.id = om.object_type_id
-			WHERE i.active = \'yes\' and i.id in',
-			
-		*/
 	];
 	
 	static $custom_query_strings = [
@@ -117,7 +89,11 @@ class mysql
 		'artist' => 'WHERE i.artist_fname LIKE (:first) AND i.artist_lname LIKE (:last)',
 		'artist_id' => ' JOIN artist_match am ON am.image_id = i.id and am.artist_id = :id',
 		'added' =>' i.timestamp BETWEEN :time_s and :time_e',
-		'created' =>' i.date1 BETWEEN :year_s and :year_e'
+		'created' =>' i.date1 BETWEEN :year_s and :year_e',
+	];
+	static $custom_order = [
+		'added' => 'ORDER BY i.timestamp',
+		'artist' => 'ORDER BY i.artist_image_order' 
 	];
 
 	
@@ -125,12 +101,12 @@ class mysql
 	static $category_overview = 
 	[
 		'collection'=>'SELECT COUNT(i.original) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM images i WHERE i.active = \'yes\';',
-		'artists'=>'SELECT COUNT(a.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM artists a;',
-		'glazing'=>'SELECT COUNT(g.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM glazing g;',
-		'material'=>'SELECT COUNT(m.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM material m;',
-		'object'=>'SELECT COUNT(o.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM object_type o;',
-		'technique'=>'SELECT COUNT(t.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM techniques t;',
-		'temperature'=>'SELECT COUNT(t.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' ORDER BY RAND() LIMIT 1) AS src FROM temperature t;'
+		'artists'=>'SELECT COUNT(a.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' AND i2.featured = 1   ORDER BY RAND() LIMIT 1) AS src FROM artists a;',
+		'glazing'=>'SELECT COUNT(g.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' AND i2.featured = 1   ORDER BY RAND() LIMIT 1) AS src FROM glazing g;',
+		'material'=>'SELECT COUNT(m.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' AND i2.featured = 1   ORDER BY RAND() LIMIT 1) AS src FROM material m;',
+		'object'=>'SELECT COUNT(o.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' AND i2.featured = 1   ORDER BY RAND() LIMIT 1) AS src FROM object_type o;',
+		'technique'=>'SELECT COUNT(t.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' AND i2.featured = 1   ORDER BY RAND() LIMIT 1) AS src FROM techniques t;',
+		'temperature'=>'SELECT COUNT(t.id) AS ct, (SELECT i2.original FROM images i2 WHERE i2.active = \'yes\' AND i2.featured = 1   ORDER BY RAND() LIMIT 1) AS src FROM temperature t;'
 	];
 	static $arg_associations =
 	[
@@ -185,23 +161,27 @@ class mysql
 		$offset = $args['offset'];
 
 		$stmt = $this->db->prepare(self::$category_queries[$query_key]);
-		$stmt->bindValue(1,$limit,PDO::PARAM_INT);
-		$stmt->bindValue(2,$offset,PDO::PARAM_INT);
-		$result = $stmt->execute();
-		if(!$result)
+		$stmt->bindValue(1,intval($limit),PDO::PARAM_INT);
+		$stmt->bindValue(2,intval($offset),PDO::PARAM_INT);
+		$querystart = microtime(true);
+		$res = $stmt->execute();
+		if(!$res)
 		{
 			printf('no results from query: %s',self::$category_queries[$query_key]);
 			return false;
 		}
 		
-		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		foreach ($result as &$res) $res['args'] = self::$arg_associations[$query_key].'='.$res['id'];
+		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		foreach ($res as &$r) $r['args'] = self::$arg_associations[$query_key].'='.$r['id'];
 
-		unset($res);
+		unset($r);
+
+		$result['res'] = $res;
+		$result['time'] = microtime(true) - $querystart; //time taken for query
+		$result['count'] = $this->get_found_rows();
 		return $result;
 	}
 
-	
 
 	//Takes an image id and returns elaborated information about the image
 	public function elaborate($id)
@@ -217,12 +197,11 @@ class mysql
 
     		$stmt->execute();
 			$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-			
-			foreach ($res as $r)
-				foreach ($r as $key => $value) 
-				{
-					$result[$key][] = $value;
-				}
+			if (count($res) == 0) $result[$key] = [];
+			else
+				foreach ($res as $r)
+					foreach ($r as $key => $value) 
+						$result[$key][] = $value;
 		}
 		return $result;
 	}
@@ -340,7 +319,6 @@ public function do_custom_query($args)
 		
 		$result['time'] = microtime(true) - $querystart; //time taken for query
 		$result['count'] = $this->get_found_rows();
-		$result['query'] = $stmt->queryString;//FIX THIS
 		return $result;
 	}
 }

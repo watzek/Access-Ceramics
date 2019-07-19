@@ -9678,6 +9678,8 @@ html {
 .divider {
   max-width: 7rem;
   border-radius: 2px;
+  background-color: #7A6451;
+  border-radius: 5px;
 }
 
 .logo-img {
@@ -9762,6 +9764,11 @@ html {
   }
 }
 
+.btn-outline-theme {
+  border: 1px solid #7A6451;
+  color: #7A6451;
+}
+
 #login {
   margin-left: 0 !important;
   padding-left: 0 !important;
@@ -9771,6 +9778,16 @@ html {
     margin-left: auto;
     padding-left: 0 !important;
   }
+}
+
+.browse-dropdown {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.browse {
+  margin-right: 0 !important;
+  padding-right: 0 !important;
 }
 
 .navbar-toggler {
@@ -9808,7 +9825,7 @@ html, body {
 }
 
 #results::-webkit-scrollbar-thumb {
-  background-color: #7f4c38;
+  background-color: #7A6451;
   outline: 1px solid slategrey;
 }
 
@@ -9836,8 +9853,9 @@ html, body {
 }
 
 .active {
+  font-weight: bold;
   color: #000000;
-  text-decoration: underline;
+  text-decoration: overline;
 }
 
 .view-mode {
@@ -9851,7 +9869,7 @@ html, body {
 }
 
 .meta-data {
-  font-weight: bolder;
+  color: black;
   text-transform: capitalize;
 }
 
@@ -9862,6 +9880,15 @@ html, body {
   height: 80%;
   object-fit: cover;
   padding: 2px;
+}
+
+#header > p {
+  color: #7A6451;
+}
+
+.active-res {
+  background-color: #F4F8E7;
+  border: 1px solid #7A6451;
 }
 
 .span-all-cols {
@@ -9949,8 +9976,13 @@ body {
 }
 
 #meta-other {
+  color: #7A6451;
   display: grid;
   grid-template-columns: auto auto;
+}
+
+.navigate.bottom {
+  margin-bottom: 2em;
 }
 
 /*# sourceMappingURL=pane.css.map */

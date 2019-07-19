@@ -18,7 +18,7 @@ html, body
  
 #results::-webkit-scrollbar-thumb 
 {
-  background-color: $primary;
+  background-color: $l_background;
   outline: 1px solid slategrey;
 }
 
@@ -55,8 +55,9 @@ html, body
 
 .active
 {
+	font-weight: bold;
 	color: $ceramicstext;
-	text-decoration: underline;
+	text-decoration: overline;
 }
 
 .view-mode
@@ -72,7 +73,7 @@ html, body
 
 .meta-data
 {
-	font-weight: bolder;
+	color: black;
 	text-transform: capitalize;
 }
 
@@ -84,4 +85,15 @@ html, body
 	height: 80%;
 	object-fit: cover;
 	padding:2px;
+}
+
+#header>p
+{
+	color: $l_background;
+}
+
+.active-res
+{
+	background-color: $l_light;
+	border: 1px solid $l_background;
 }

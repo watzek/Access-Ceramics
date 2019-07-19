@@ -26,3 +26,28 @@ export function get_range(offset, limit, resFunc)
 	xhttp.open("GET", str, true);
 	xhttp.send();	
 }
+
+export function ajax_take_the_wheel(array, current_amount, target, chunk_size)
+{
+	let current = current_amount;
+
+	for (current; current < target; current += chunk_size) 
+	{
+		get_range(current, chunk_size, (resText) => {
+				if(resText !== '')
+				{
+					let obj;
+					try 
+					{
+						obj = Object.values(JSON.parse(resText)['res']);
+						array.push.apply(array, obj);
+					} catch(e) 
+					{
+						console.log(resText, e);
+					}
+				}
+			});
+	}
+	//might instead have callback function just call this function again
+	//incase queries will arrive out of order
+}

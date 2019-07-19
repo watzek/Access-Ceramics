@@ -6,8 +6,10 @@ export function elaborate(image_id, responseFunction)
 		if(xhttp.readyState == 4 && xhttp.status == 200)
 			responseFunction(xhttp.responseText);
 	}
+	let str = "../php/ajax_backend.php?e=1&id="+image_id;
+	//console.log(str);
 
-	xhttp.open("GET","../php/ajax_backend.php?e=1&id="+image_id, true);
+	xhttp.open("GET",str, true);
 	xhttp.send();
 }
 

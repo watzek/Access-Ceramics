@@ -1,10 +1,10 @@
 /*Stylesheet for mosaic.php*/
 
+@import "./variables.scss";
 /*Bootstrap style*/
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 /* Global imports */
-@import "./variables.scss";
 @import "./global.scss";
 @import "./navbar.scss";
 

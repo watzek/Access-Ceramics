@@ -61,6 +61,22 @@ class mysql
 	
 
 	static $elaborate_queries = [
+		'image' =>'SELECT i.original AS src,
+					i.id,
+					i.title AS title,
+					CONCAT(i.artist_fname,\' \',i.artist_lname) AS artist,
+					i.date1 AS date,
+					i.height AS h,
+					i.width AS w,
+					i.depth AS d,
+					i.license AS license 
+			FROM images i WHERE i.active = \'yes\' AND i.id = ? ',
+		'object' => 'SELECT o.object_type as object_type FROM object_type_match om JOIN object_type o ON o.id = om.object_type_id WHERE om.image_id = ?',
+		'techniques' => 'SELECT t.technique AS technique FROM technique_match tm JOIN techniques t ON tm.technique_id = t.id WHERE tm.image_id = ?',
+		'temp' => 'SELECT tt.temperature AS temperature FROM temperature_match ttm JOIN temperature tt ON tt.id = ttm.temperature_id WHERE ttm.image_id = ?',
+		'glazing'=>'SELECT glazing, g.id from glazing_match gm join glazing g on gm.glazing_id = g.id where gm.image_id = ?',
+		'material'=>'SELECT material, m.id from material_match mm join material m on mm.material_id = m.id where mm.image_id = ?'
+/*
 		'elaborate' => '
 			SELECT  i.original AS src,
 					i.id,
@@ -81,29 +97,22 @@ class mysql
 			      JOIN object_type o ON o.id = om.object_type_id
 			WHERE i.active = \'yes\' and i.id in',
 			
-		'elab_g'=>'SELECT glazing, g.id from glazing_match gm join glazing g on gm.glazing_id = g.id where gm.image_id = ?;',
-		'elab_m'=>'SELECT material, m.id from material_match mm join material m on mm.material_id = m.id where mm.image_id = ?;'
+		*/
 	];
 	
 	static $custom_query_strings = [
-		'base' =>  'SELECT SQL_CALC_FOUND_ROWS i.original as src,
-						   CONCAT(i.artist_fname,\' \',i.artist_lname,\' \',i.title,\' \') as title, i.id as id FROM images i',
+		'base' =>  'SELECT SQL_CALC_FOUND_ROWS i.original as src, CONCAT(i.artist_fname,\' \',i.artist_lname,\' \',i.title,\' \') as title, i.id as id FROM images i',
 		'end' => ' i.active = \'yes\' GROUP BY i.original ORDER BY i.artist_image_order LIMIT :lim OFFSET :ofs',
 
-		'glazing' => ' JOIN glazing_match gm ON gm.image_id = i.id
-					JOIN glazing g ON g.id = gm.glazing_id AND g.glazing LIKE (:glaze)',
+		'glazing' => ' JOIN glazing_match gm ON gm.image_id = i.id JOIN glazing g ON g.id = gm.glazing_id AND g.glazing LIKE (:glaze)',
 
-		'material' => ' JOIN material_match mm ON mm.image_id = i.id
-					JOIN material m ON m.id = mm.material_id AND m.material LIKE (:mat)',
+		'material' => ' JOIN material_match mm ON mm.image_id = i.id JOIN material m ON m.id = mm.material_id AND m.material LIKE (:mat)',
 
-		'object' => ' JOIN object_type_match om ON om.image_id = i.id
-					JOIN object_type o ON o.id = om.object_type_id AND o.object_type LIKE (:obj)',
+		'object' => ' JOIN object_type_match om ON om.image_id = i.id JOIN object_type o ON o.id = om.object_type_id AND o.object_type LIKE (:obj)',
 
-		'technique' => ' JOIN technique_match tm ON tm.image_id = i.id
-					JOIN techniques t ON t.id = tm.technique_id AND t.technique LIKE (:tech)',
+		'technique' => ' JOIN technique_match tm ON tm.image_id = i.id JOIN techniques t ON t.id = tm.technique_id AND t.technique LIKE (:tech)',
 
-		'temperature' => ' JOIN temperature_match tem ON tem.image_id = i.id
-					JOIN temperature te ON te.id = tem.temperature_id AND te.temperature LIKE (:temp)',
+		'temperature' => ' JOIN temperature_match tem ON tem.image_id = i.id JOIN temperature te ON te.id = tem.temperature_id AND te.temperature LIKE (:temp)',
 
 		'artist' => 'WHERE i.artist_fname LIKE (:first) AND i.artist_lname LIKE (:last)',
 		'artist_id' => ' JOIN artist_match am ON am.image_id = i.id and am.artist_id = :id',
@@ -194,52 +203,27 @@ class mysql
 
 	
 
-	//Takes a array of image ids and returns elaborated information about the image
-	public function elaborate($ids)
+	//Takes an image id and returns elaborated information about the image
+	public function elaborate($id)
 	{
-		//since the query requires an array, we have to construct count($id) place holders (?) to be filled by ids
-		if (gettype($ids) != 'array')
+		$id = $id;
+		$result = [];
+
+		foreach (self::$elaborate_queries as $key => $query) 
 		{
-			$ids = [$ids];
+			$query = $query;
+			$stmt = $this->db->prepare($query);
+    		$stmt->bindValue(1,intval($id));
+
+    		$stmt->execute();
+			$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			
+			foreach ($res as $r)
+				foreach ($r as $key => $value) 
+				{
+					$result[$key][] = $value;
+				}
 		}
-
-		$inQuery = implode(',', array_fill(0,  count($ids), '?'));
-
-		$query = self::$elaborate_queries['elaborate']." ($inQuery) GROUP BY src";
-
-		$stmt = $this->db->prepare($query);
-		
-		// echo 'Query String: '.$stmt->queryString; //query string (without bound arguments)
-		
-		foreach ($ids as $k => $id)
-    		$stmt->bindValue(($k+1), intval($id), PDO::PARAM_INT);
-
-    	$stmt->execute();
-		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-		/* 
-			Images can have multiple glazings and materials, so for each result we issue
-			another query and construct an array of the form id => name.
-			This functionality could probably be added to the above query, but I was having trouble with that.
-		*/
-		foreach ($result as &$res) {
-
-			$glazing = $this->db->prepare(self::$elaborate_queries['elab_g']);
-			$glazing->execute(array($res['id']));
-			$res['glazing'] = [];
-
-			foreach ($glazing->fetchAll(PDO::FETCH_ASSOC) as $value)
-				$res['glazing'][$value['id']] = $value['glazing'];
-
-			$material = $this->db->prepare(self::$elaborate_queries['elab_m']);
-			$material->execute(array($res['id']));
-			$res['material'] = [];
-
-			foreach ($material->fetchAll(PDO::FETCH_ASSOC) as $value)
-				$res['material'][$value['id']] = $value['material'];
-
-		} unset($res);
-
 		return $result;
 	}
 
@@ -331,8 +315,8 @@ public function do_custom_query($args)
 		}
 		
 		//limit and offset are always included, so they are handled at the end
-		$lim = $args['limit'];
-		$ofs = $args['offset'];
+		$lim = intval($args['limit']);
+		$ofs = intval($args['offset']);
 
 		$stmt->bindValue(':lim',$lim, PDO::PARAM_INT);
 		$stmt->bindValue(':ofs', $ofs, PDO::PARAM_INT);
@@ -356,6 +340,7 @@ public function do_custom_query($args)
 		
 		$result['time'] = microtime(true) - $querystart; //time taken for query
 		$result['count'] = $this->get_found_rows();
+		$result['query'] = $stmt->queryString;//FIX THIS
 		return $result;
 	}
 }

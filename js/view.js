@@ -1,6 +1,7 @@
 import {elaborate, get_range} from "./ajax.js";
 
 var view;
+var meta_info = {};
 //var q_results passed by PHP
 //var get_args passed by PHP
 var LIMIT_CHOICES = [20,50,100,'all'];
@@ -33,10 +34,6 @@ window.onload = function()
 			depth : document.getElementById('meta-depth'),
 			license : document.getElementById('meta-license')
 		};
-	//show_image(0); //initialize viewpane with first image
-
-	/*for (var i = 0; i < q_results.length; i++) {
-	}*/
 
 	let query_time = q_results['time'];
 	let count = q_results['count'];
@@ -52,14 +49,22 @@ window.onload = function()
 
 function ajax_take_the_wheel(current_amount, target, chunk_size)
 {
+	return;
 	let current = current_amount;
 
 	for (current; current+chunk_size < target; current += chunk_size) {
 		get_range(current, chunk_size, (resText) => {
 				if(resText !== '')
 				{
-					let obj = Object.values(JSON.parse(resText)['res']);
-					q_results.push.apply(q_results, obj);
+					let obj;
+					try 
+					{
+						obj = Object.values(JSON.parse(resText)['res']);
+						q_results.push.apply(q_results, obj);
+					} catch(e) 
+					{
+						console.log(resText, e);
+					}
 				}
 			});
 	}
@@ -83,23 +88,56 @@ function show_image(id)
 		console.log('invalid id: '+id);
 		return;
 	}
-
 	/*
 		If we dont have meta-data for the given image yet,
 		query db using ajax and upon retrieval store the information and call the function again
 	*/
-	if (q_results[id]['info'] === undefined)
+	/*if(q_results[id]['info'] == -1)
 	{
-		let real_id = q_results[id]['id'];
-		elaborate(real_id, (resText) =>{
-			q_results[id]['info'] = JSON.parse(resText)[0];
-			show_image(id);
+		console.log('got one');
+		return;
+	}
+	else */
+	let real_id = q_results[id]['id'];
+
+	if (meta_info[real_id] === undefined)
+	{	
+		meta_info[real_id] = 1;
+		elaborate(real_id, (resText) =>
+		{
+			try
+			{
+				meta_info[real_id] = JSON.parse(resText);
+				show_image(id);
+				console.log(meta_info[real_id]);
+			}
+			catch(e)
+			{
+				console.log(resText,e);
+			}
+				
 		});
 		return;
 	}
+	if (0 == meta_info[real_id])
+	{
+		console.log('here ', meta_info[real_id]);
+		console.log('no elab possible', meta_info[real_id], q_results[id]);
+		return;
+	}
+/*	else if(q_results[id]['info'] < 3)
+	{
+		q_results[id]['info']++;
+		return;
+	}
+	else if(q_results[id]['info'] == 3)
+	{
+		q_results[id]['info'] = -1;
+		return;	
+	}*/
 
 
-	let info = q_results[id]['info'];
+	let info = meta_info[real_id];
 	view.img.src = info['src'];
 	view.title.innerHTML = info['title'];
 	view.artist.innerHTML = info['artist'];
@@ -355,8 +393,9 @@ class PageManager
 		let self = this;
 		this.lm.limit_changed = function()
 		{
-			self.current_page = 0;
 			self.set_page(self.current_page);
+			this.n_pages = Math.ceil(this.total_items/this.lm.limit())
+			pnm.n_pages = this.n_pages;			
 		};
 
 		this.results_body = document.getElementById('results');
@@ -417,7 +456,7 @@ class PageManager
 			res.value = page_offset+i;
 		}
 
-		show_image(0);
+		show_image(page_offset);
 	}
 }
 

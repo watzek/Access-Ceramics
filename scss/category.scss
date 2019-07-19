@@ -1,11 +1,11 @@
 /* Stylesheet for outer, catigorical browsing for view.php */
 
 
+@import "./variables.scss";
 /*Bootstrap style*/
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 /*Global Imports*/
-@import "./variables.scss";
 @import "./global.scss";
 @import "./navbar.scss";
 
@@ -117,23 +117,12 @@ overflow: -moz-scrollbars-none;
 	}
 }
 
-.result-img
+/* .result-img
 {
 	margin: auto;
 	width: 80%;
 	height: 80%;
-
-	/* @include media-breakpoint-up(sm)
-	{
-		margin:0;
-	}
-
-	@include media-breakpoint-up(md)
-	{
-		width: 12vw;
-		height: 12vw;
-	}	 */
-}
+} */
 
 .result-title
 {

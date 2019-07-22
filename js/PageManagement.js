@@ -92,7 +92,7 @@ export default class PageManager
 			populate the results with with their corresponding pictures and values
 		*/
 		let page_offset = this.current_page * this.lm.limit();
-		let try_count = 0
+		console.log(page_offset, this.items.length, this.total_items);
 		for (var i = 0; (i < lim) && (page_offset+i < this.items.length); i++) 
 		{	
 			let res = results[i+this.res_elm_offs[0]];
@@ -245,7 +245,6 @@ class PageNumberManager
 
 		while (cp < mid) mid--;
 		while (this.n_pages - cp < mid) mid++;
-		console.log(cp);
 		for (var i = 0; i < this.navs.length; i++) 
 		{
 			var children = this.navs[i].children;
@@ -265,12 +264,12 @@ class PageNumberManager
 				}
 				else
 				{
-					console.log(ch, val, cp);
 					ch.innerHTML = val+1;
 					ch.value = val;	
 				}
 				if (val != cp)
 					ch.classList.remove('active');
+			}
 		}
 	}
 }

@@ -1,7 +1,7 @@
 <?php
-	require('../classes/navbar.class.php');
+	require('classes/snippits.class.php');
 
-	$navbar = new navbar('classic');
+	$navbar = new Snippits('classic-navbar');
 ?>
 
 
@@ -9,12 +9,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<link rel="shortcut icon" href="../img/a.gif">
+	<link rel="shortcut icon" href="img/a.gif">
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Access Ceramics</title>
 
-	<link rel="stylesheet" type="text/css" href="../css/classic.css">
+	<link rel="stylesheet" type="text/css" href="css/classic.css">
 </head>
 
 <body class="bg-white">
@@ -58,12 +58,12 @@
 </div>
 	
 
-	<script src="../vendor/jquery/jquery.min.js"></script>
-  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Plugin JavaScript -->
-  <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-  <script src="../vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
   <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script>
 </body>
 </html>

@@ -1,10 +1,12 @@
 <?php
 	
-class Navbar
+class Snippits
 {
 	static $templates = [
-		'classic' => '../navbars/navbar.classic.php'
+		'classic-navbar' => 'extras/navbar.classic.html',
+		'header-search' => 'extras/search-header.html'
 	];
+
 	static $default = 'classic';
 	
 	public function __construct($type)
@@ -20,7 +22,6 @@ class Navbar
 		readfile($this->template);
 		unset($this->template);
 	}
-
 }
 
 ?>

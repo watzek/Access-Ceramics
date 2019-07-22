@@ -9976,6 +9976,8 @@ body {
 }
 
 #meta-other {
+  text-align: left;
+  font-size: 13pt;
   color: #7A6451;
   display: grid;
   grid-template-columns: auto auto;

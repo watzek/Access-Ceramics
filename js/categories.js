@@ -3,7 +3,6 @@ import PageManager from "./PageManagement.js";
 
 var LIMIT_CHOICES = [20,50,100,'all'];
 var results_offset = [2,1];
-var url_prefix = "view.php?";
 
 window.onload = function()
 {
@@ -24,7 +23,7 @@ window.onload = function()
 function navigate(dom_elm)
 {
 	let id = dom_elm.value;
-	let link = url_prefix+q_results[id]['args'];
+	let link = q_results[id]['id'];
 	console.log(link);
-	window.location.href = link;
+	window.location.href += link;
 }

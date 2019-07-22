@@ -1,6 +1,6 @@
 <?php
-	require '../classes/argparser.class.php';
-	require '../classes/mysql.class.php';
+	require 'classes/argparser.class.php';
+	require 'classes/mysql.class.php';
 
 	$ap = new ArgParser($_GET);
 	$db = new mysql();

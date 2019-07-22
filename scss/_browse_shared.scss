@@ -23,21 +23,45 @@ html, body
 }
 
 
-.navigate
+#header
 {
+	color: $l_background;
+	#search-header
+	{
+		margin: 0;
+	}
+	#search-title
+	{
+		text-transform: capitalize;
+		margin:0;
+		padding-bottom: .5em;
+		padding-top: .5em;
+		font-size: 1.5rem;
+	}
+}
+
+
+
+.navigate
+{	
+	margin: 0;
+	@include media-breakpoint-up(sm)
+	{
+		margin-bottom: 2em;
+	}
+
 	height: 3vh;
 	text-align: center;
 	span
 	{
 		margin-left: .5em;
 		margin-right: .5em;
-
-		.active
-		{
-			font-weight: bold;
-			font-size: 14pt;
-			background-color: lightyellow;
-		}
+	}
+	span.active
+	{
+		font-weight: bold;
+		font-size: 14pt;
+		text-decoration: overline;
 	}
 }
 
@@ -57,18 +81,18 @@ html, body
 {
 	font-weight: bold;
 	color: $ceramicstext;
-	text-decoration: overline;
 }
 
 .view-mode
 {
-	text-decoration: underline;
 	color: $ceramicstextalt;
 	font-size: 85%;
 }
-.view-mode.active
+.active-view
 {
 	color: $ceramicstext;
+	font-weight: bold;
+	font-size: 90%;
 }
 
 .meta-data

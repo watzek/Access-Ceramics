@@ -2,11 +2,14 @@
   require('classes/snippits.class.php');
   require('classes/browsemain.class.php');
   
-  
+  $style = 1;
+
   $navbar = new Snippits('classic-navbar');
   $header = new Snippits('header-search');
-  $main = new Main();
+  $main = new Main($style);
   $args = $main->get_args();
+
+  $style = $main->style_pack;
   
   $results = $main->get_results();
 
@@ -26,6 +29,9 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
+  <!-- Icon -->
+  <link href="/img/a.gif" rel="shortcut icon">
+
   <title>accessCeramics</title>
 
   <!-- Font Awesome Icons -->
@@ -35,19 +41,16 @@
   <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
 
-  <!-- Plugin CSS -->
-  <link href="/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 
-  <!-- Icon -->
-  <link href="/img/a.gif" rel="shortcut icon">
-
-  <link rel="stylesheet" type="text/css" href="/css/category.css">
+  <link id='pagestyle' rel='stylesheet' type='text/css' href=<?=$main->active_style?>>
 
 <script>
     
     <?='var q_results ='. json_encode($results) .';'?>
     <?='var get_args  ='. json_encode($args).';'?>
     <?='var _get  ='. json_encode($_GET).';'?>
+    <?='var style_pack  ='. json_encode($style).';'?>
+
      
 </script>
 

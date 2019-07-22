@@ -34,7 +34,7 @@
   <!-- Icon -->
   <link href="img/a.gif" rel="shortcut icon">
 
-  <link rel="stylesheet" type="text/css" href="css\browse.css">
+  <link id='pagestyle' rel="stylesheet" type="text/css" href="css\browse.css">
   
 </head>
 

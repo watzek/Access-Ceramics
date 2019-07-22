@@ -2,18 +2,23 @@
   require('classes/snippits.class.php');
   require('classes/browsemain.class.php');
   
+  $style = 0;
   
   $navbar = new Snippits('classic-navbar');
   $header = new Snippits('header-search');
-  $main = new Main();
+  $main = new Main($style);
   $args = $main->get_args();
 
+  $style = $main->style_pack;
   
   $results = $main->get_results();
+  $artist_info = $main->artist_info();
 
   $res_count = $results['res'] ? count($results['res']) : 0;
 
   $search_title = !isset($args['category']) ? 'No search specified' : ucfirst($args['category']).' ('.$res_count.')';
+
+  $artist_name = $artist_info['res']['artist_fname'].' '.$artist_info['res']['artist_lname'];
 ?>
 
 
@@ -30,7 +35,7 @@
   <title>accessCeramics</title>
 
   <!-- Font Awesome Icons -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
@@ -39,34 +44,25 @@
 
 
   <!-- Plugin CSS -->
-  <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+  <link href="/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 
   <!-- Icon -->
-  <link href="img/a.gif" rel="shortcut icon">
+  <link href="/img/a.gif" rel="shortcut icon">
 
-  <?php
-    switch($args['view'])
-    {
-      case 'pane':
-  echo "<link rel='stylesheet' type='text/css' href='css/pane.css'>";
-        break;
-      case 'grid':
-  echo "<link rel='stylesheet' type='text/css' href='css/grid.css'>";
-        break;
-      case 'list':
-  echo "<link rel='stylesheet' type='text/css' href='css/list.css'>";
-        break;
-    }
-  ?>
+  <link id='pagestyle' rel='stylesheet' type='text/css' href=<?=$main->active_style?>>
+
 <script>
     
     <?='var q_results ='. json_encode($results) .';'?>
+    <?='var artist_info ='. json_encode($artist_info) .';'?>
     <?='var get_args  ='. json_encode($args).';'?>
+    <?='var style_pack  ='. json_encode($style).';'?>
+     
      
 </script>
-<script type="module" src="js/PageManagement.js"></script>
-<script type="module" src="js/ajax.js"></script>
-<script type="module" src="js/view.js"></script>
+<script type="module" src="/js/PageManagement.js"></script>
+<script type="module" src="/js/ajax.js"></script>
+<script type="module" src="/js/view.js"></script>
 
 </head>
 <body>
@@ -75,8 +71,16 @@
   <div id="results">
     <div class="container-fluid span-all-cols" id="header">
       <div id='header-statement'>
-        <h1><?php ?></h1>
-
+        <h1 class="h3 text-center"><span id="meta-artist" class="meta-data"></span></h1>
+        <hr class="divider pt-1">
+        <p id='artist-statement' class="text-center">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
 
       </div>
       <?php $header->show()?>
@@ -85,10 +89,9 @@
     <div class="navigate bottom span-all-cols"></div>
   </div> <!-- end results -->
   <div id="view">
-    <img id="view-img" src="img/default.jpg">
+    <img id="view-img" src="/img/default.jpg">
     <div id=view-meta>
       <p>
-        <span id="meta-artist" class="meta-data"></span> ,
         <span id="meta-title" class="meta-data"></span>
         <span id="meta-stitle" class="meta-data"></span> ,
         <span id="meta-date" class="meta-data"></span>
@@ -111,12 +114,12 @@
 
 
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Plugin JavaScript -->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-  <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
   <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script>
 
 </body>

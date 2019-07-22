@@ -7,18 +7,21 @@ function create_result()
 
 var MAX_PAGES = 5; //keep as an odd number
 var page_num = "<span class=\"clickable pagenum\"></span>";
-
+var view_mode = "<span class=\"view-mode pressable\"></span>";
+var default_sheets = style_pack; //provided from php
 
 export default class PageManager
 {
-	constructor(q_results, results_total, res_elm_offs = [0,0], limit_choices, show_callback, call_on_page=true, selected_limit=false)
+	constructor(q_results, results_total, res_elm_offs = [0,0], limit_choices, show_callback, call_on_page=true, selected_limit=false, sheets=default_sheets)
 	{
 		this.current_page = 0;
 		this.items = q_results; 
 		this.total_items = results_total; 
 		this.lm = new LimitManager(limit_choices, selected_limit);
-		
 		this.n_pages = Math.ceil(this.total_items/this.lm.limit());
+
+		console.log(sheets);
+		this.st = new StyleChangeManager(sheets);
 
 		this.pnm = new PageNumberManager(this.n_pages);
 		this.pnm.page_selected = this.set_page.bind(this);
@@ -274,60 +277,79 @@ class PageNumberManager
 	}
 }
 
+class StyleChangeManager
+{
+	constructor(style_sheets)
+	{
+		this.sheets = style_sheets;
+		this.children = Array.from(document.getElementsByClassName('view-mode'));
+		if (this.sheets === undefined)
+		{
+			console.log('no sheet provided');
+			return;
+		}
 
-/*
-PageManager outer info
-	- nagivate dom-elms
-	- q_results
-	- total results
-	- limit-choices
-	- ajax calls for missing results
+		let active = this.sheets['active'];
+		delete this.sheets['active'];
 
+		{ let chlen = this.children.length, shlen = Object.keys(this.sheets).length;
+			parent = document.getElementById('views');
+			var cnt = 0;
+			while (chlen != shlen && cnt < 10)
+			{
+				if (chlen > shlen)
+				{
+					parent.removeChild(this.children[chlen-1]);
+					chlen--;
+				}
+				else
+				{
+					let cp = document.createElement('template');
+					cp.innerHTML = view_mode;
+					parent.appendChild(cp.content.children[0]);
+					chlen++;
+				}
+				cnt++;
+			}
+		}
 
-ViewManager
-	- results dom-elm
-	- results start offset
+		let keys = Object.keys(this.sheets);
+		let self = this;
+		for (var i = 0; i < this.children.length; i++) 
+		{
+			let key = keys[i];
+			
+			this.children[i].addEventListener('click', function()
+			{
+				self.set_style(this.value);
+			});
+			this.children[i].value = i;
+			this.children[i].innerHTML = key;
+			if (key == active) this.children[i].classList.add('active-view');
+		}
+		this.sheets = Object.values(this.sheets);
+	}
 
--set_limit-
-*upon button press*
-set the limit, and call partition
-
--partition-
-see how many results there are, and what the current
-results per page is to determine page count,
-create partition indicators (page numbers),
-populate page (page view manager)
-
--switch page-
-have ViewManager remove existing elements
-get next 'page' of results and feed to ViewManager
-
--set page(lim, items)-
-	change # of results to match lim, then fill in results
-
--clear page-
-remove all results
-
--populate page(array)-
-populate the page with given array of results
-
--set rpp (int)-
-sets the results per page to the given int,
-repartitions pages
-resets page index to page 1
-then populates page
-*/
-
-/*
-	partition, switch page, set rpp
-*/
-
-/*
-	handles the DOM elements and event handlers for 
-	settting the limit.
+	set_style(index)
+	{
+		if (index < 0 || index >= this.sheets.length)
+			console.log('no style sheet at invalid index:',index);
 	
-	*changes to limit fire the event LimitManger.limit_changed*
-*/
+		document.getElementById("pagestyle").setAttribute("href", this.sheets[index]);
+		this.children.forEach( function(element, ind) 
+		{
+			if (index == ind)
+				element.classList.add('active-view');
+			else
+				element.classList.remove('active-view');
+		});
+	}
+
+
+}
+
+
+
 class LimitManager
 {
 	constructor(limit_choices, selected_limit = false)

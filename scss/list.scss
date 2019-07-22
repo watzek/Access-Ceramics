@@ -1,4 +1,5 @@
-/* Stylesheet for the 'list' view of view.php */
+/* Stlyesheet for the 'list' view of view.php */
+
 
 @import "./variables.scss";
 /*Bootstrap style*/
@@ -7,3 +8,177 @@
 /*Global Imports*/
 @import "./global.scss";
 @import "./navbar.scss";
+
+@import "./browse_shared.scss";
+
+
+#header-statement
+{
+	h1
+	{
+		margin-top: 1em;
+	}
+}
+
+
+.span-all-cols
+{
+	grid-column: 1 / 6;
+	
+	@include media-breakpoint-up(md)
+	{
+		grid-column: 1 / 6;
+	}
+	@include media-breakpoint-up(lg)
+	{
+		grid-column: 1 / 6;
+	}
+
+}
+
+body
+{
+	overflow-y: hidden;
+	background-color: $l_background;
+}
+
+
+#content
+{
+	padding: 0;
+	grid-row-gap: 0;
+	grid-column-gap: 0;
+	display: grid;
+	grid-template-rows: calc(50vh - ( #{$navbar-height} / 2 ) ) calc(50vh - ( #{$navbar-height} / 2 ) );
+
+	overflow-y: auto;
+
+	@include media-breakpoint-up(lg)
+	{
+		grid-template-rows: calc(100vh - #{$navbar-height});
+		grid-template-columns: 50vw 50vw;
+	}
+
+}
+
+.result-img
+{
+	height: 0;
+	width: 0;
+}
+
+#results
+{
+	background: $white;
+	
+	display: inline-grid;
+	grid-template-columns: auto auto;
+	grid-auto-rows: min-content;
+
+	overflow-x: hidden;
+}
+
+.result
+{
+	overflow-x: hidden;
+	text-align: center;
+	height:8vw;
+
+	@include media-breakpoint-up(lg)
+	{
+		height:3vw;
+	}
+
+
+	grid-column: 1 / 3;
+	
+	@include media-breakpoint-up(md)
+	{
+		grid-column: 1 / 3;
+	}
+	@include media-breakpoint-up(lg)
+	{
+		grid-column: 1 / 3;
+	}
+	margin: 0;
+	padding: 0; 
+
+}
+
+.active-res
+{
+	border: 2px solid black;
+}
+
+.result-title
+{	
+	text-align: center;
+	font-size: 10pt;
+	@include media-breakpoint-up(sm)
+	{
+		font-size: 12pt;
+	}
+	@include media-breakpoint-up(md)
+	{
+		font-size: 14pt;
+	}
+	@include media-breakpoint-up(lg)
+	{
+		font-size: 18pt;
+	}
+	margin: 0;
+	padding: 0; 
+}
+
+.result:nth-child(even)
+{
+	background: $l_light;
+	
+	grid-column: 3 / 6;
+	
+	@include media-breakpoint-up(md)
+	{
+		grid-column: 3 / 6;
+	}
+	@include media-breakpoint-up(lg)
+	{
+		grid-column: 3 / 6;
+	}
+}
+.active-res
+{
+	background-color: white;
+}
+
+
+
+#view
+{
+	overflow-y: auto;
+	height: 100%;	
+	background-color: $white;
+	text-align: center;
+}
+
+#view-img
+{
+	object-fit: contain;
+	max-height: 70%;
+	max-width:95%;
+	margin-right: auto;
+	margin-left: 0;
+}
+
+#view-meta p
+{
+	font-weight: bold;
+	color: $ceramicstextalt;
+}
+#meta-other
+{
+	text-align: left;
+	font-size: 13pt;
+	color: $l_background;
+	display: grid;
+	grid-template-columns: auto auto;
+}

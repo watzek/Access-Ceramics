@@ -9724,6 +9724,10 @@ html {
   cursor: pointer;
 }
 
+nav {
+  height: 72px;
+}
+
 #search {
   height: calc(72px * .5);
 }

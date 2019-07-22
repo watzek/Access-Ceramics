@@ -1,4 +1,9 @@
 //for searchbar
+
+nav
+{
+  height: $navbar-height;
+}
 #search
 {
   height: calc(#{$navbar-height} * .5);

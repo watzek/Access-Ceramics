@@ -39,29 +39,15 @@ body
 {
 	font-size: 8pt;
 	margin-bottom: 0;
-	#search-title
-	{
-		font-size: 12pt;
-	}
-
 	@include media-breakpoint-up(md)
 	{
 		height: 13vh;
 		font-size: 10pt;
-		#search-title
-		{
-			font-size: 14pt;
-		}
 	}
 	@include media-breakpoint-up(lg)
 	{
 		font-size: 12pt;
-		#search-title
-		{
-			font-size: 16pt;
-		}
-	}
-	
+	}	
 }
 #content
 {

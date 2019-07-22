@@ -14,10 +14,12 @@ window.onload = function()
 
 	q_results = Object.values(q_results['res']);
 	let n_results = q_results.length; 
-
+	
 	var pm = new PageManager(q_results, count, results_offset, LIMIT_CHOICES, navigate, false, false);
 
 	if (n_results < count) ajax_take_the_wheel(q_results, n_results, count, chunk_size);
+
+	document.getElementById('search-title').innerHTML = get_args['category']+' ('+count+')';
 }
 
 function navigate(dom_elm)

@@ -73,7 +73,7 @@ class mysql
 	];
 	
 	static $custom_query_strings = [
-		'base' =>  'SELECT SQL_CALC_FOUND_ROWS i.original as src, CONCAT(i.artist_fname,\' \',i.artist_lname,\' \',i.title,\' \') as title, i.id as id FROM images i',
+		'base' =>  'SELECT SQL_CALC_FOUND_ROWS i.original as src, i.title as title, i.id as id FROM images i',
 		'end' => ' i.active = \'yes\' GROUP BY i.original ORDER BY i.artist_image_order LIMIT :lim OFFSET :ofs',
 
 		'glazing' => ' JOIN glazing_match gm ON gm.image_id = i.id JOIN glazing g ON g.id = gm.glazing_id AND g.glazing LIKE (:glaze)',
@@ -206,6 +206,31 @@ class mysql
 		return $result;
 	}
 
+static $artist_query = "SELECT * from artists a WHERE a.id = ?";
+public function artist_information($args)
+{
+	$stmt = $this->db->prepare(self::$artist_query);
+	$stmt->bindValue(1,$args['artist_id']);
+
+	$querystart = microtime(true);
+		try
+		{
+			$result = $stmt->execute();
+		}catch(PDOException $e)
+		{
+			?>
+			<h3><?=$e?></h3> 
+			<?php
+		}
+
+		$result = [];
+		$result['res'] = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
+		
+		
+		$result['time'] = microtime(true) - $querystart; //time taken for query
+		return $result;
+
+}
 
 public function do_custom_query($args)
 	{

@@ -2,12 +2,14 @@
   require('classes/snippits.class.php');
   require('classes/browsemain.class.php');
   
+  $style = 0;
   
   $navbar = new Snippits('classic-navbar');
   $header = new Snippits('header-search');
-  $main = new Main();
+  $main = new Main($style);
   $args = $main->get_args();
 
+  $style = $main->style_pack;
   
   $results = $main->get_results();
 
@@ -44,25 +46,14 @@
   <!-- Icon -->
   <link href="/img/a.gif" rel="shortcut icon">
 
-  <?php
-    switch($args['view'])
-    {
-      case 'pane':
-  echo "<link rel='stylesheet' type='text/css' href='/css/pane.css'>";
-        break;
-      case 'grid':
-  echo "<link rel='stylesheet' type='text/css' href='/css/grid.css'>";
-        break;
-      case 'list':
-  echo "<link rel='stylesheet' type='text/css' href='/css/list.css'>";
-        break;
-    }
-  ?>
+  <link id='pagestyle' rel='stylesheet' type='text/css' href=<?=$main->active_style?>>
+
 <script>
     
     <?='var q_results ='. json_encode($results) .';'?>
     <?='var get_args  ='. json_encode($args).';'?>
     <?='var _get  ='. json_encode($_GET).';'?>
+    <?='var style_pack  ='. json_encode($style).';'?>
      
 </script>
 <script type="module" src="/js/PageManagement.js"></script>

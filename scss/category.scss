@@ -14,7 +14,7 @@
 .span-all-cols
 {
 	grid-column: 1 / 5;
-	
+
 	@include media-breakpoint-up(md)
 	{
 		grid-column: 1 / 6;
@@ -43,7 +43,7 @@ body
 	@include media-breakpoint-up(lg)
 	{
 		font-size: 12pt;
-	}	
+	}
 }
 #content
 {
@@ -52,6 +52,16 @@ body
 	padding-left: 4vw;
 	padding-bottom:none;
 	height: $body-height;
+}
+
+#result-body
+{
+	background: $white;
+	display: inline-grid;
+	width: 100%;
+	grid-row-gap: 1.5em;
+	overflow-x: hidden;
+	overflow-y: hidden;
 }
 
 #results
@@ -81,7 +91,7 @@ body
 		grid-row-gap: 1em;
 	}
 }
-/* 
+/*
 overflow: -moz-scrollbars-none;
 	-ms-overflow-style: none;
 #results::-webkit-scrollbar { width: 0 !important } */
@@ -129,6 +139,6 @@ overflow: -moz-scrollbars-none;
 {
 	position: fixed;
 	bottom: -5px;
-	height: 0%;	
+	height: 0%;
 	visibility: hidden;
 }

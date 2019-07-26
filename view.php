@@ -1,16 +1,16 @@
 <?php
   require('classes/snippits.class.php');
   require('classes/browsemain.class.php');
-  
+
   $style = 0;
-  
+
   $navbar = new Snippits('classic-navbar');
   $header = new Snippits('header-search');
   $main = new Main($style);
   $args = $main->get_args();
 
   $style = $main->style_pack;
-  
+
   $results = $main->get_results();
 
   $res_count = $results['res'] ? count($results['res']) : 0;
@@ -49,12 +49,12 @@
   <link id='pagestyle' rel='stylesheet' type='text/css' href=<?=$main->active_style?>>
 
 <script>
-    
+
     <?='var q_results ='. json_encode($results) .';'?>
     <?='var get_args  ='. json_encode($args).';'?>
     <?='var _get  ='. json_encode($_GET).';'?>
     <?='var style_pack  ='. json_encode($style).';'?>
-     
+
 </script>
 <script type="module" src="/js/PageManagement.js"></script>
 <script type="module" src="/js/ajax.js?version=1"></script>
@@ -64,12 +64,13 @@
 <body>
 <?php $navbar->show()?>
 <div id="content" class="container-fluid">
-  <div id="results">
-    <div class="container-fluid span-all-cols" id="header">
+  <div id="result-body">
+    <div class="container-fluid" id="header">
       <?php $header->show()?>
   </div>
-  <div class="navigate span-all-cols"></div>
-    <div class="navigate bottom span-all-cols"></div>
+  <div class="navigate"></div>
+  <div id="results"></div>
+    <div class="navigate bottom"></div>
   </div> <!-- end results -->
   <div id="view">
     <img id="view-img" src="/img/default.jpg">
@@ -88,7 +89,7 @@
       <div>Material: <span id="meta-material" class="meta-data"></span></div>
       <div>Object Type: <span id="meta-object" class="meta-data"></span></div>
       <div>Height: <span id="meta-height" class="meta-data"></span>|
-      Width: <span id="meta-width" class="meta-data"></span>| 
+      Width: <span id="meta-width" class="meta-data"></span>|
       Depth: <span id="meta-depth" class="meta-data"></span></div>
       <div>License: <span id="meta-license" class="meta-data"></span></div>
       </div>

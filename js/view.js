@@ -6,7 +6,6 @@ var meta_info = {};
 //var q_results passed by PHP
 //var get_args passed by PHP
 var LIMIT_CHOICES = [20,50,100,'all'];
-var results_offset = [2,1];
 var current_selection;
 // where 'actual' results start and end
 
@@ -37,8 +36,8 @@ window.onload = function()
 	let query_time = q_results['time'];
 	let count = q_results['count'];
 	q_results = Object.values(q_results['res']);
-	let n_results = q_results.length; 
-	var pm = new PageManager(q_results, count, results_offset, LIMIT_CHOICES, show_image, true, false);
+	let n_results = q_results.length;
+	var pm = new PageManager(q_results, count, LIMIT_CHOICES, show_image, true, false);
 	if (n_results < count)
 		ajax_take_the_wheel(q_results, n_results, count, chunk_size);
 }
@@ -58,7 +57,7 @@ function show_image(dom_elm)
 	let real_id = q_results[id]['id'];
 
 	if (meta_info[real_id] === undefined)
-	{	
+	{
 		meta_info[real_id] = 1;
 		elaborate(real_id, (resText) =>
 		{
@@ -71,7 +70,7 @@ function show_image(dom_elm)
 			{
 				console.log(resText,e);
 			}
-				
+
 		});
 		return;
 	}
@@ -99,7 +98,7 @@ function show_image(dom_elm)
 
 	view.glazing.innerHTML = info['glazing'] == [] ? '' : Object.values(info['glazing']).join(', ');
 	view.material.innerHTML = info['material'] == [] ? '' : Object.values(info['material']).join(', ');
-	view.object.innerHTML = info['object'] == [] ? '' : Object.values(info['object']).join(', ');	
+	view.object.innerHTML = info['object'] == [] ? '' : Object.values(info['object']).join(', ');
 
 	if (current_selection !== undefined)
 	{

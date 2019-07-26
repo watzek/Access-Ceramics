@@ -3,7 +3,6 @@ import PageManager from "./PageManagement.js";
 import Alphabet from './alphabet.js';
 
 var LIMIT_CHOICES = [20,50,100,'all'];
-var results_offset = [2,1];
 
 window.onload = function()
 {
@@ -24,7 +23,7 @@ window.onload = function()
 				'<span class=\'alphabet-letter clickable\'></span>'
 				);
 
-	var pm = new PageManager(q_results, count, results_offset, LIMIT_CHOICES, navigate, false, false);
+	var pm = new PageManager(q_results, count, LIMIT_CHOICES, navigate, false, false);
 
 	alp.letter_clicked = (el,st,end) => {pm.set_context(q_results.slice(st,end));};
 

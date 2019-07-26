@@ -14,7 +14,6 @@ export default class PageManager
 {
 	constructor(q_results, //all current results
 							results_total, //total, expected results
-							res_elm_offs = [0,0], //offset in parent element to create children
 							limit_choices, //results per page posibilities
 							show_callback, //function called when a result is clicked
 							call_on_page=true, //determins if show_callback is called on page change
@@ -31,7 +30,6 @@ export default class PageManager
 		this.pnm = new PageNumberManager(this.n_pages);
 		this.pnm.page_selected = this.set_page.bind(this);
 
-		this.res_elm_offs = res_elm_offs;
 		this.show_callback = show_callback;
 		this.call_on_page = call_on_page;
 
@@ -89,7 +87,7 @@ export default class PageManager
 		lim = lim > this.total_items ? this.total_items : lim;
 
 		let results = this.results_body.children;
-		let n_results = this.results_body.childElementCount-(this.res_elm_offs [0] + this.res_elm_offs [1]);
+		let n_results = this.results_body.childElementCount;
 
 		/*
 			if the page limit does not match the amount of results we have currently on the page,
@@ -97,7 +95,7 @@ export default class PageManager
 		*/
 		while (n_results != lim)
 		{
-			let index = n_results - (this.res_elm_offs [1] + 1);
+			let index = n_results-1;
 
 			if (n_results > lim)
 			{
@@ -121,7 +119,7 @@ export default class PageManager
 			let page_offset = this.current_page * this.lm.limit();
 			for (var i = 0; (i < lim) && (page_offset+i < this.items.length); i++)
 			{
-				let res = results[i+this.res_elm_offs[0]];
+				let res = results[i];
 				res.children[0].src = this.items[page_offset + i].src;
 				res.children[1].innerHTML = this.items[page_offset + i].title;
 				res.value = page_offset+i;
@@ -129,7 +127,7 @@ export default class PageManager
 
 		}
 
-		if (this.call_on_page) this.show_callback(results[this.res_elm_offs[0]]);
+		if (this.call_on_page) this.show_callback(results[0]);
 
 	}
 }

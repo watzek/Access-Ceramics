@@ -26,6 +26,7 @@ html, body
 #header
 {
 	color: $l_background;
+	margin-bottom: -2em;
 	#search-header
 	{
 		margin: 0;
@@ -39,9 +40,6 @@ html, body
 		font-size: 1.5rem;
 	}
 }
-
-
-
 .navigate
 {
 	margin: 0;

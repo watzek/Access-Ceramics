@@ -1,7 +1,7 @@
 <?php
   require('classes/snippits.class.php');
   require('classes/browsemain.class.php');
-  
+
   $style = 1;
 
   $navbar = new Snippits('classic-navbar');
@@ -10,7 +10,7 @@
   $args = $main->get_args();
 
   $style = $main->style_pack;
-  
+
   $results = $main->get_results();
 
   $res_count = $results['count'];
@@ -45,13 +45,11 @@
   <link id='pagestyle' rel='stylesheet' type='text/css' href=<?=$main->active_style?>>
 
 <script>
-    
+
     <?='var q_results ='. json_encode($results) .';'?>
     <?='var get_args  ='. json_encode($args).';'?>
     <?='var _get  ='. json_encode($_GET).';'?>
     <?='var style_pack  ='. json_encode($style).';'?>
-
-     
 </script>
 
 <script type="module" src="/js/PageManagement.js"></script>
@@ -59,40 +57,19 @@
 <script type="module" src="/js/alphabet.js"></script>
 <script type="module" src="/js/categories.js"></script>
 
-
 </head>
 <body>
 <?php $navbar->show()?>
 <div id="content" class="container-fluid">
-  <div id="results">
-    <div class="container-fluid span-all-cols" id="header">
+  <div id="result-body">
+    <div class="container-fluid" id="header">
       <?php $header->show()?>
-      
-  </div>
-  <div class="navigate span-all-cols"></div>
-    <div class="navigate span-all-cols"></div>
-  </div> <!-- end results -->
-  <div id="view">
-    <img id="view-img" src="/img/default.jpg">
-    <div id=view-meta>
-      <p>
-        <span id="meta-title" class="meta-data"></span>, from
-        <span id="meta-stitle" class="meta-data"> </span> by
-        <span id="meta-artist" class="meta-data"></span>
-        (<span id="meta-date" class="meta-data"></span>)
-      </p>
-      <div id="meta-other">
-      <div>Technique:<span id="meta-technique" class="meta-data"></span></div>
-      <div>Temperature:<span id="meta-temperature" class="meta-data"></span></div>
-      <div>Glazing / Surface Treatment:<span id="meta-glazing" class="meta-data"></span></div>
-      <div>Material:<span id="meta-material" class="meta-data"></span></div>
-      <div>Height:<span id="meta-height" class="meta-data"></span>|
-      Width:<span id="meta-width" class="meta-data"></span>| 
-      Depth:<span id="meta-depth" class="meta-data"></span></div>
-      <div>License:<span id="meta-liscense" class="meta-data"></span></div>
+
       </div>
-    </div>
-  </div> <!-- end view -->
+      <div class="navigate"></div>
+      <div id="results"></div>
+    <div class="navigate"></div>
+  </div> <!-- end results -->
 </div> <!-- end content -->
 
 

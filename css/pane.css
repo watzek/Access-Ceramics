@@ -9833,12 +9833,19 @@ html, body {
   outline: 1px solid slategrey;
 }
 
-#search-header {
+#header {
+  color: #7A6451;
+  margin-bottom: -2em;
+}
+#header #search-header {
   margin: 0;
 }
-
-#search-title {
+#header #search-title {
   text-transform: capitalize;
+  margin: 0;
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+  font-size: 1.5rem;
 }
 
 .navigate {
@@ -9909,6 +9916,32 @@ html, body {
   border: 1px solid #7A6451;
 }
 
+#alphabet {
+  margin-top: 1em;
+  overflow: wrap;
+}
+
+.alphabet-letter {
+  height: 2em;
+  width: 2em;
+  padding-right: 7px;
+  padding-left: 7px;
+  font-size: 10pt;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid black;
+  display: inline-block;
+}
+@media (min-width: 768px) {
+  .alphabet-letter {
+    font-size: 12pt;
+  }
+}
+
+.alphabet-letter.active {
+  background-color: #F4F8E7;
+}
+
 .span-all-cols {
   grid-column: 1/6;
 }
@@ -9941,6 +9974,13 @@ body {
     grid-template-rows: calc(100vh - 72px);
     grid-template-columns: 50vw 50vw;
   }
+}
+
+#result-body {
+  overflow-y: auto;
+  background: #fff;
+  display: inline-grid;
+  grid-auto-rows: min-content;
 }
 
 #results {

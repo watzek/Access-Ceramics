@@ -9,9 +9,6 @@
 @import "./global.scss";
 @import "./navbar.scss";
 
-
-
-
 @import "./browse_shared.scss";
 
 .span-all-cols
@@ -41,7 +38,6 @@ body
 	margin-bottom: 0;
 	@include media-breakpoint-up(md)
 	{
-		height: 13vh;
 		font-size: 10pt;
 	}
 	@include media-breakpoint-up(lg)

@@ -85,7 +85,9 @@ export default class PageManager
 			{
 				var newnode = create_result();
 				let self = this;
+				
 				newnode.addEventListener('click', function(){self.show_callback(this);});
+
 				this.results_body.insertBefore(newnode,results[results.length-1]);
 				n_results++;
 			}

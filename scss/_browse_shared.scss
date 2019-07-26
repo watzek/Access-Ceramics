@@ -121,3 +121,33 @@ html, body
 	background-color: $l_light;
 	border: 1px solid $l_background;
 }
+
+#alphabet
+{
+	margin-top: 1em;
+	overflow: wrap;
+}
+.alphabet-letter
+{
+
+	@include media-breakpoint-up(md)
+	{
+		font-size: 12pt;	
+	}
+
+	height:2em;
+	width:2em;
+	padding-right:7px;
+	padding-left:7px;
+	font-size: 10pt;	
+
+	text-align: center;
+	background-color: $white;
+	border: 1px solid black;
+	display: inline-block;
+}
+.alphabet-letter.active
+{
+	background-color: $l_light;
+
+}

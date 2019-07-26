@@ -56,7 +56,9 @@
 
 <script type="module" src="/js/PageManagement.js"></script>
 <script type="module" src="/js/ajax.js?version=1"></script>
+<script type="module" src="/js/alphabet.js"></script>
 <script type="module" src="/js/categories.js"></script>
+
 
 </head>
 <body>
@@ -65,6 +67,7 @@
   <div id="results">
     <div class="container-fluid span-all-cols" id="header">
       <?php $header->show()?>
+      
   </div>
   <div class="navigate span-all-cols"></div>
     <div class="navigate span-all-cols"></div>

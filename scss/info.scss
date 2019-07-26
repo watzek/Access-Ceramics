@@ -1,0 +1,28 @@
+/*Global Imports*/
+@import "./variables.scss";
+
+/*Bootstrap style*/
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "./global.scss";
+@import "./navbar.scss";
+
+body
+{
+	background-color: $l_background;
+}
+
+
+#content 
+{
+	padding-top: 5vh;
+	padding-right: 4vw;
+	padding-left: 4vw;
+	padding-bottom:0;
+	height: $body-height;
+	background-color: white;
+	margin: 1em 1em 0 1em;
+	h1
+	{
+		color: $l_background;
+	}
+}

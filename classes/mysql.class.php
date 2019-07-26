@@ -5,16 +5,18 @@ class mysql
 {
 	static $category_queries = [
 		'artists' => 'SELECT SQL_CALC_FOUND_ROWS CONCAT(a.artist_fname,\' \', a.artist_lname) AS title,
-							 MAX(i.original) AS src,
-							 a.id AS id 
+							 i.original AS src,
+							 a.id AS id,
+							 a.artist_lname as lname
 			FROM artists a 
 			JOIN images i ON ((a.artist_fname = i.artist_fname) AND (a.artist_lname = i.artist_lname)) 
 			WHERE i.featured = \'1\' 
-			GROUP BY a.id ORDER BY TRIM(a.artist_lname) ASC, TRIM(a.artist_fname) ASC LIMIT ? OFFSET ?;',
+			GROUP BY a.id ORDER BY LTRIM(a.artist_lname) ASC, LTRIM(a.artist_fname) ASC',
 
 		'institutions' => 'SELECT SQL_CALC_FOUND_ROWS name as title,
 								  image_path as src,
-								  CONCAT(address1,\' \',city,\' \',state) as info 
+								  CONCAT(address1,\' \',city,\' \',state) as info,
+								  id
 			FROM organizations 
 			ORDER BY organizations.name ASC LIMIT ? OFFSET ?;',
 
@@ -92,7 +94,7 @@ class mysql
 		'created' =>' i.date1 BETWEEN :year_s and :year_e',
 	];
 	static $custom_order = [
-		'added' => 'ORDER BY i.timestamp',
+		'added' => 'ORDER BY i.timestamp DESC',
 		'artist' => 'ORDER BY i.artist_image_order' 
 	];
 
@@ -116,6 +118,7 @@ class mysql
 		'objects'=> 'o',
 		'techniques'=> 't',
 		'temperatures'=> 'tem',
+		'institutions' => 'in'
 	];
 	
 

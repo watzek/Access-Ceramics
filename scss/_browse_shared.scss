@@ -6,17 +6,17 @@ html, body
 	overflow-x: hidden;
 }
 
-#results::-webkit-scrollbar 
+#results::-webkit-scrollbar
 {
     width: .5em;
 }
- 
-#results::-webkit-scrollbar-track 
+
+#results::-webkit-scrollbar-track
 {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 }
- 
-#results::-webkit-scrollbar-thumb 
+
+#results::-webkit-scrollbar-thumb
 {
   background-color: $l_background;
   outline: 1px solid slategrey;
@@ -43,7 +43,7 @@ html, body
 
 
 .navigate
-{	
+{
 	margin: 0;
 	@include media-breakpoint-up(sm)
 	{
@@ -68,7 +68,7 @@ html, body
 
 .limit-choice
 {
-	font-size: 85%;	
+	font-size: 85%;
 	color: $ceramicstextalt;
 }
 
@@ -132,14 +132,14 @@ html, body
 
 	@include media-breakpoint-up(md)
 	{
-		font-size: 12pt;	
+		font-size: 12pt;
 	}
 
 	height:2em;
 	width:2em;
 	padding-right:7px;
 	padding-left:7px;
-	font-size: 10pt;	
+	font-size: 10pt;
 
 	text-align: center;
 	background-color: $white;

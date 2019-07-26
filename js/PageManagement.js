@@ -12,16 +12,21 @@ var default_sheets = style_pack; //provided from php
 
 export default class PageManager
 {
-	constructor(q_results, results_total, res_elm_offs = [0,0], limit_choices, show_callback, call_on_page=true, selected_limit=false, sheets=default_sheets)
+	constructor(q_results, //all current results
+							results_total, //total, expected results
+							res_elm_offs = [0,0], //offset in parent element to create children
+							limit_choices, //results per page posibilities
+							show_callback, //function called when a result is clicked
+							call_on_page=true, //determins if show_callback is called on page change
+							selected_limit=false, //limit can be preset
+							sheets=default_sheets) //style sheets for view-mode changes
 	{
 		this.current_page = 0;
-		this.items = q_results; 
-		this.total_items = results_total; 
+		this.items = q_results;
+		this.total_items = results_total;
+
 		this.lm = new LimitManager(limit_choices, selected_limit);
 		this.n_pages = Math.ceil(this.total_items/this.lm.limit());
-
-		console.log(sheets);
-		this.st = new StyleChangeManager(sheets);
 
 		this.pnm = new PageNumberManager(this.n_pages);
 		this.pnm.page_selected = this.set_page.bind(this);
@@ -30,26 +35,29 @@ export default class PageManager
 		this.show_callback = show_callback;
 		this.call_on_page = call_on_page;
 
+
+
 		let self = this;
 		this.lm.limit_changed = function()
 		{
 			self.set_page(self.current_page);
 
 			self.n_pages = Math.ceil(self.total_items/self.lm.limit())
-			self.pnm.n_pages = self.n_pages;	
+			self.pnm.n_pages = self.n_pages;
 			if (self.n_pages == 1)
 			{
-				self.current_page = 0;		
+				self.current_page = 0;
 				self.pnm.current_page = 0;
 			}
 			self.pnm.set_labels();
 		};
 
 		this.results_body = document.getElementById('results');
+		this.st = new StyleChangeManager(sheets);
+
 		this.set_page(0);
-
 	}
-
+	// returns the number of elements on a given page
 	result_count(page)
 	{
 		let lim = this.lm.limit();
@@ -58,11 +66,26 @@ export default class PageManager
 		else return lim;
 	}
 
+
+	// set the context for paging, aka what array results come from
+	// returns the current_context
+	set_context(array)
+	{
+		let current = this.items;
+
+		this.items = array;
+		this.total_items = array.length;
+		this.set_page(0);
+
+		return current;
+	}
+
+	// 'page' to the current page
 	set_page(index)
 	{
 		this.current_page = index;
 		let lim = this.lm.limit();
-		
+
 		lim = lim > this.total_items ? this.total_items : lim;
 
 		let results = this.results_body.children;
@@ -85,7 +108,7 @@ export default class PageManager
 			{
 				var newnode = create_result();
 				let self = this;
-				
+
 				newnode.addEventListener('click', function(){self.show_callback(this);});
 
 				this.results_body.insertBefore(newnode,results[results.length-1]);
@@ -93,19 +116,21 @@ export default class PageManager
 			}
 		}
 
-		/*
-			populate the results with with their corresponding pictures and values
-		*/
-		let page_offset = this.current_page * this.lm.limit();
-		console.log(page_offset, this.items.length, this.total_items);
-		for (var i = 0; (i < lim) && (page_offset+i < this.items.length); i++) 
-		{	
-			let res = results[i+this.res_elm_offs[0]];
-			res.children[0].src = this.items[page_offset + i].src;
-			res.children[1].innerHTML = this.items[page_offset + i].title;
-			res.value = page_offset+i;
+		{ //populate the results with with their corresponding pictures and values
+
+			let page_offset = this.current_page * this.lm.limit();
+			for (var i = 0; (i < lim) && (page_offset+i < this.items.length); i++)
+			{
+				let res = results[i+this.res_elm_offs[0]];
+				res.children[0].src = this.items[page_offset + i].src;
+				res.children[1].innerHTML = this.items[page_offset + i].title;
+				res.value = page_offset+i;
+			}
+
 		}
+
 		if (this.call_on_page) this.show_callback(results[this.res_elm_offs[0]]);
+
 	}
 }
 
@@ -128,9 +153,9 @@ class PageNumberManager
 			if (this.current_page == 0)
 				child.classList.add('invisible');
 			let self = this;
-			for (var k = 0; k < this.n_nums; k++) 
-			{	
-				child = this.create_child(k+1);	
+			for (var k = 0; k < this.n_nums; k++)
+			{
+				child = this.create_child(k+1);
 				child.value = k;
 				child.innerHTML = k+1;
 				if(k == this.current_page)
@@ -166,7 +191,7 @@ class PageNumberManager
 	{
 
 	}
-	
+
 	end()
 	{
 
@@ -215,31 +240,31 @@ class PageNumberManager
 				child1.children[0].classList.add('invisible');
 				child2.children[0].classList.add('invisible');
 			}
-			else 
+			else
 			{
 				child1.children[0].classList.remove('invisible');
-				child2.children[0].classList.remove('invisible');	
+				child2.children[0].classList.remove('invisible');
 			}
 
 			if (this.current_page == this.n_pages-1)
 			{
 				child1.children[child1.childElementCount-1].classList.add('invisible');
 				child2.children[child2.childElementCount-1].classList.add('invisible');
-			}else 
+			}else
 			{
 				child1.children[child1.childElementCount-1].classList.remove('invisible');
-				child2.children[child2.childElementCount-1].classList.remove('invisible');			
+				child2.children[child2.childElementCount-1].classList.remove('invisible');
 			}
 		}
 		/*
 			Consider the labels 1 2 3 4 5
 			We want the current page to be displayed in the middle of the labels
 			ie. 1 2 <3> 4 5 (3 is current). In this case, the index of the middle elm. is length/2.
-			
+
 			However, if we are on page 2, 1 <2> 3 4 5
 				the number 2 cant be in the middle because there arent enough pages to pad it
 				on the left. So, we have to shift the middle over.
-			
+
 			If we are on the 4th page, 1 2 3 <4> 5
 			we have to shift if there's only 5 pages, but if theres more than 5
 			we get 2 3 <4> 5 6, and 4 can be in the middle.
@@ -250,17 +275,17 @@ class PageNumberManager
 
 		while (cp < mid) mid--;
 		while (this.n_pages - cp < mid) mid++;
-		for (var i = 0; i < this.navs.length; i++) 
+		for (var i = 0; i < this.navs.length; i++)
 		{
 			var children = this.navs[i].children;
-			
+
 			children[mid+1].value = cp;
 			children[mid+1].innerHTML = cp+1;
 			children[mid+1].classList.add('active');
 			for (var k = 0; k < this.n_nums; k++)
 			{
 				let val = cp - (mid-k);
-				
+
 				let ch = children[k+1];
 				if (val < 0 || val >= this.n_pages)
 				{
@@ -270,7 +295,7 @@ class PageNumberManager
 				else
 				{
 					ch.innerHTML = val+1;
-					ch.value = val;	
+					ch.value = val;
 				}
 				if (val != cp)
 					ch.classList.remove('active');
@@ -317,10 +342,10 @@ class StyleChangeManager
 
 		let keys = Object.keys(this.sheets);
 		let self = this;
-		for (var i = 0; i < this.children.length; i++) 
+		for (var i = 0; i < this.children.length; i++)
 		{
 			let key = keys[i];
-			
+
 			this.children[i].addEventListener('click', function()
 			{
 				self.set_style(this.value);
@@ -336,9 +361,9 @@ class StyleChangeManager
 	{
 		if (index < 0 || index >= this.sheets.length)
 			console.log('no style sheet at invalid index:',index);
-	
+
 		document.getElementById("pagestyle").setAttribute("href", this.sheets[index]);
-		this.children.forEach( function(element, ind) 
+		this.children.forEach( function(element, ind)
 		{
 			if (index == ind)
 				element.classList.add('active-view');
@@ -362,7 +387,7 @@ class LimitManager
 		this.selected = selected_limit ? selected_limit : 0;
 
 		var parent = this;
-		for (var i = 0; i < this.choices.length; i++) 
+		for (var i = 0; i < this.choices.length; i++)
 		{
 			let child = this.children[i];
 

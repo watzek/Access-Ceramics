@@ -6,3 +6,4 @@ classes/sql_credentials.class.php
 /test*
 css/*
 old/*
+!.htaccess

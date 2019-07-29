@@ -17,7 +17,7 @@ window.onload = function()
 
 // Alphabet sorts the array, so we call it before PageManager loads results
 	let alp = new Alphabet(q_results,
-				'lname',
+				(get_args['category'] == 'artists') ? 'lname' : 'title',
 				false,
 				document.getElementById('alphabet'),
 				'<span class=\'alphabet-letter clickable\'></span>'

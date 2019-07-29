@@ -1,190 +1,222 @@
 <?php
   require('classes/snippits.class.php');
-  require('classes/mysql.class.php');
+  require('classes/main.class.php');
 
+  $style = -1;
+  if (isset($_GET['s']) && $_GET['s'] == 'category') $style = 1; //fix this
+  else if (isset($_GET['s']) && ($_GET['s'] == 'view' || $_GET['s'] == 'artist')) $style = 0; //fix this
+  $main = new Main($style);
+
+  //move these 2 to a snippits function taking a desc_string
   $navbar = new Snippits('classic-navbar');
+  $header = new Snippits('header-search');
 
-  $db = new mysql();
-  $categories = $db->categories();
+  $args = $main->get_args();
+  $results = $main->get_results();
+
+  if ($args['state'] != 'main')
+  {
+    $style = $main->style_pack;
+    $res_count = $results['count'];
+    if ($args['state'] == 'artist')
+    {
+      $artist_info = $main->artist_info();
+      $artist_name = $artist_info['res']['artist_fname'].' '.$artist_info['res']['artist_lname'];
+    }
+  }
+
+
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
+  <meta name="description" content="Access Ceramics">
   <meta name="author" content="">
 
-  <title>accessCeramics</title>
+  <title id='page-title'>accessCeramics</title>
 
   <!-- Font Awesome Icons -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
+  <link href="\vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
-
-  <!-- Plugin CSS -->
-  <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
-
   <!-- Icon -->
-  <link href="img/a.gif" rel="shortcut icon">
+  <link href="\img/a.gif" rel="shortcut icon">
 
-  <link id='pagestyle' rel="stylesheet" type="text/css" href="css\browse.css">
-  
+  <!--<head> Changes according to State-->
+  <?php
+  if ($args['state'] == 'main')
+  { ?>
+    <link rel="stylesheet" type="text/css" href="\css\browse.css">
+  <?php
+  }
+  else
+  { ?>
+    <script>
+        <?='var q_results ='. json_encode($results) .';'?>
+        <?='var get_args  ='. json_encode($args).';'?>
+        <?='var _get  ='. json_encode($_GET).';'?>
+        <?php if(isset($style))echo ('var style_pack  ='. json_encode($style).';');?>
+        console.log(get_args);
+    </script>
+    <script type="module" src="/js/PageManagement.js"></script>
+    <script type="module" src="/js/ajax.js?version=1"></script>
+
+    <link id='pagestyle' rel='stylesheet' type='text/css' href=<?=$main->active_style?>>
+    <?php
+
+    if($args['state'] == 'category')
+    { ?>
+      <script type="module" src="/js/alphabet.js"></script>
+      <script type="module" src="/js/categories.js"></script>
+      <link rel="stylesheet" type="text/css" href="\css\category.css">
+    <?php }
+    else if($args['state'] == 'artist')
+    { ?>
+      <script type="module" src="/js/view.js"></script>
+      <link rel="stylesheet" type="text/css" href="\css\view.css">
+    <?php }
+    else if($args['state'] == 'view')
+    { ?>
+      <script type="module" src="/js/view.js"></script>
+      <link rel="stylesheet" type="text/css" href="\css\view.css">
+    <?php }
+}  ?>
+
 </head>
+<body>
+<?php  $navbar->show()?>
 
-<body id="page-top" class="bg-pic">
-
-<?php $navbar->show()?>
-<hr style="margin: 0;" />
-
+<?php
+if($args['state'] == 'main')
+{ /*<--- Main Browse State --->*/
+  ?>
 <div id="content" class="container" style="overflow-x: hidden;">
   <div class="row h-100">
-    
-    <div class="col-xl-3 col-6 flip-container px-0">
-      <a href="view.php?">
-      <div class="flipper w-100">
-        <div class="front w-100 tile">
-          <img src=<?="{$categories['collection']['src']}"?>/>
-            <!-- <p><?="background: url('{$categories['collection']['src']}')"?></p> -->
-            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['collection']['ct']?> Images</h2></div>
-        </div>
-        <div class="back tile w-100">
-          <!-- <a class="selection-btn btn btn-primary btn-xl" href="category.php?c=images"></a> -->
-        </div>
 
-      </div>
+    <div class="col-xl-3 col-6 flip-container px-0">
+      <a class="w-100 tile" href="/collection/?">
+          <img src=<?="{$results['collection']['src']}"?>/>
+            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$results['collection']['ct']?> Images</h2></div>
           </a>
     </div>
     <div class="col-xl-3 col-6 flip-container px-0">
-      <a href="category.php?c=artists">
-      <div class="flipper w-100">
-        <div class="front w-100 tile">
-          <img src=<?="{$categories['artists']['src']}"?>/>
-            <!-- <p><?="background: url('{$categories['artists']['src']}')"?></p> -->
-            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['artists']['ct']?> Artists</h2></div>
-        </div>
-        <div class="back tile w-100">
-          <!-- <a class="selection-btn btn btn-primary btn-xl" href="category.php?c=artists"></a> -->
-        </div>
-
-      </div>
+      <a class='w-100 tile' href="/artists/">
+          <img src=<?="{$results['artists']['src']}"?>/>
+            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$results['artists']['ct']?> Artists</h2></div>
           </a>
     </div>
 
     <div class="col-xl-3 col-6 flip-container px-0">
-      <a href="category.php?c=glazings">
-      <div class="flipper w-100">
-        <div class="front w-100 tile">
-          <img src=<?="{$categories['glazing']['src']}"?>/>
-            <!-- <p><?="background: url('{$categories['glazing']['src']}')"?></p> -->
-            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['glazing']['ct']?> Glazing/Surfaces</h2></div>
-        </div>
-        <div class="back tile w-100">
-          <!-- <a class="selection-btn btn btn-primary btn-xl" href="category.php?c=glazings"></a> -->
-        </div>
-
-      </div>
+      <a class='w-100 tile' href="/glazings/">
+          <img src=<?="{$results['glazing']['src']}"?>/>
+            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$results['glazing']['ct']?> Glazing/Surfaces</h2></div>
           </a>
-    
     </div>
 
     <div class="col-xl-3 col-6 flip-container px-0">
-      <a href="category.php?c=materials">
-      <div class="flipper w-100">
-        <div class="front w-100 tile">
-          <img src=<?="{$categories['material']['src']}"?>/>
-            <!-- <p><?="background: url('{$categories['material']['src']}')"?></p> -->
-            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['material']['ct']?> Materials</h2></div>
-        </div>
-        <div class="back tile w-100">
-          <!-- <a class="selection-btn btn btn-primary btn-xl" href="category.php?c=materials"></a> -->
-        </div>
-
-      </div>
+      <a class='w-100 tile' href="/materials/">
+          <img src=<?="{$results['material']['src']}"?>/>
+            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$results['material']['ct']?> Materials</h2></div>
           </a>
-    
     </div>
 
     <div class="col-xl-3 col-6 flip-container px-0">
-      <a href="category.php?c=objects">
-      <div class="flipper w-100">
-        <div class="front w-100 tile">
-          <img src=<?="{$categories['object']['src']}"?>/>
-            <!-- <p><?="background: url('{$categories['object']['src']}')"?></p> -->
-            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['object']['ct']?> Object Types</h2></div>
-        </div>
-        <div class="back tile w-100">
-          <!-- <a class="selection-btn btn btn-primary btn-xl" href="category.php?c=objects"></a> -->
-        </div>
-
-      </div>
-          </a>
-    
+      <a class='w-100 tile' href="/objects/">
+          <img src=<?="{$results['object']['src']}"?>/>
+            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$results['object']['ct']?> Object Types</h2></div>
+      </a>
     </div>
 
     <div class="col-xl-3 col-6 flip-container px-0">
-      <a href="category.php?c=techniques">
-      <div class="flipper w-100">
-        <div class="front w-100 tile">
-          <img src=<?="{$categories['technique']['src']}"?>/>
-            <!-- <p><?="background: url('{$categories['technique']['src']}')"?></p> -->
-            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['technique']['ct']?> Techniques</h2></div>
-        </div>
-        <div class="back tile w-100">
-          <!-- <a class="selection-btn btn btn-primary btn-xl" href="category.php?c=techniques"></a> -->
-        </div>
-
-      </div>
-          </a>
-    
+      <a class='w-100 tile' href="/techniques/">
+          <img src=<?="{$results['technique']['src']}"?>/>
+            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$results['technique']['ct']?> Techniques</h2></div>
+      </a>
     </div>
 
     <div class="col-xl-3 col-6 flip-container px-0 ">
-      <a href="category.php?c=temperatures">
-      <div class="flipper w-100">
-        <div class="front w-100 tile">
-          <img src=<?="{$categories['temperature']['src']}"?>/>
-            <!-- <p><?="background: url('{$categories['temperature']['src']}')"?></p> -->
-            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$categories['temperature']['ct']?> Temperatures</h2></div>
-        </div>
-        <div class="back tile w-100">
-          <!-- <a class="selection-btn btn btn-primary btn-xl" href="category.php?c=temperatures"></a> -->
-        </div>
-      </div>  
-    </div>
+      <a class='w-100 tile' href="/temperatures/">
+          <img src=<?="{$results['temperature']['src']}"?>/>
+            <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$results['temperature']['ct']?> Temperatures</h2></div>
           </a>
+    </div>
 
     <div class="col-xl-3 col-6 flip-container px-0 ">
-      <a href="category.php?v=search">
-      <div class="flipper w-100">
-        <div class="front w-100 tile search-tile">
-          
+      <a class='w-100 tile' href="/search/">
+        <img class="search-tile tile"/>
             <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Advanced Search</h2></div>
-        </div>
-        <div class="back tile w-100">
-          <!-- <a class="selection-btn btn btn-primary btn-xl" href="browse.php?v=search"></a> -->
-        </div>
-      </div>  
-    </div>
           </a>
+    </div>
   </div> <!-- end row -->
 </div>
+<?php
+} // <-- End Main Browse State -->
+else
+{ // <-- Begin 'Category' State-->
+  ?>
+  <div id="content" class="container-fluid">
+    <div id="result-body">
+      <div class="container-fluid" id="header">
+        <?php
+          if ($args['state'] == 'artist')
+          { ?>
+            <div id='header-statement'>
+              <h1 class="h3 text-center"><span id="meta-artist" class="meta-data"></span></h1>
+              <hr class="divider pt-1">
+              <p id='artist-statement' class="text-center">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
 
+            </div>
+          <?php }
+        ?>
+        <?php  $header->show()?>
+      </div>
+      <div class="navigate"></div>
+      <div id="results"></div>
+      <div class="navigate"></div>
 
+    </div> <!-- end results-body -->
+      <div id="view">
+        <img id="view-img" src="/img/default.jpg">
+        <div id=view-meta>
+          <p>
+            <?php if($args['state'] != 'artist'){ ?><span id="meta-artist" class="meta-data"></span> ,<?php } ?>
+            <span id="meta-title" class="meta-data"></span>
+            <span id="meta-stitle" class="meta-data"></span> ,
+            <span id="meta-date" class="meta-data"></span>
+          </p>
+          <hr class="divider pt-1">
+          <div id="meta-other">
+          <div>Technique: <span id="meta-technique" class="meta-data"></span></div>
+          <div>Temperature: <span id="meta-temperature" class="meta-data"></span></div>
+          <div>Surface Treatment: <span id="meta-glazing" class="meta-data"></span></div>
+          <div>Material: <span id="meta-material" class="meta-data"></span></div>
+          <div>Object Type: <span id="meta-object" class="meta-data"></span></div>
+          <div>Height: <span id="meta-height" class="meta-data"></span>|
+          Width: <span id="meta-width" class="meta-data"></span>|
+          Depth: <span id="meta-depth" class="meta-data"></span></div>
+          <div>License: <span id="meta-license" class="meta-data"></span></div>
+          </div>
+        </div>
+      </div> <!-- end view -->
+  </div> <!-- end content -->
+ <?php }  // <-- End 'Category' State-->
+ ?>
+
+<!-- Scripts -->
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Plugin JavaScript -->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-  <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-  <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script>
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- End Scripts -->
 </body>
-
 </html>

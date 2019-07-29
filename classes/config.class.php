@@ -6,8 +6,9 @@
 	const DEFAULT_OFFSET = 0;
 	const DEFAULT_VIEW = 'comfort';
 	const DEFAULT_ORDER = '';
+	const DEFAULT_STATE ='main';
 
-	const CATEGORY_NAMES = 
+	const CATEGORY_NAMES =
 	[
 		'artists',
 		'institutions',

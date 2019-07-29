@@ -9813,45 +9813,6 @@ nav {
   }
 }
 
-.bg-pic {
-  background: #fff;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.collection-tile {
-  background: linear-gradient(to top, #6b6bb1 0%, rgba(107, 107, 177, 0.9) 25%, rgba(102, 102, 102, 0.3) 100%), url("../img/acpics/45167486162.jpg");
-}
-
-.search-tile {
-  background: url("../img/acpics/Luciana-Grazia-Menegazzi.jpg");
-}
-
-.artist-tile {
-  background: linear-gradient(to top, #6666b1 0%, rgba(102, 102, 177, 0.9) 25%, rgba(102, 102, 102, 0.3) 100%), url("../img/acpics/23578883568.jpg");
-}
-
-.glazing-tile {
-  background: linear-gradient(to top, #8c66b1 0%, rgba(140, 102, 177, 0.9) 25%, rgba(102, 102, 102, 0.3) 100%), url("../img/acpics/Luciana-Grazia-Menegazzi.Alice-in-Wonderland.jpg");
-}
-
-.material-tile {
-  background: linear-gradient(to top, #66b1b1 0%, rgba(102, 177, 177, 0.9) 25%, rgba(102, 102, 102, 0.3) 100%), url("../img/acpics/45217378221.jpg");
-}
-
-.object-tile {
-  background: linear-gradient(to top, #63397c 0%, rgba(99, 57, 124, 0.9) 25%, rgba(102, 102, 102, 0.3) 100%), url("../img/acpics/Hirotake-Imanishi.shell.jpg");
-}
-
-.technique-tile {
-  background: linear-gradient(to top, #7c3973 0%, rgba(124, 57, 115, 0.9) 25%, rgba(102, 102, 102, 0.3) 100%), url("../img/acpics/Lauren-Sandler.jpg");
-}
-
-.temperature-tile {
-  background: linear-gradient(to top, #42397c 0%, rgba(66, 57, 124, 0.9) 25%, rgba(102, 102, 102, 0.3) 100%), url("../img/acpics/32389990910.jpg");
-}
-
 #content {
   height: 91vh;
   width: 90vw;
@@ -9859,17 +9820,12 @@ nav {
   max-width: none;
 }
 
-.selection-button {
-  display: block;
-  width: 100%;
+.search-tile {
+  content: url("../img/acpics/Luciana-Grazia-Menegazzi.jpg");
 }
 
 .tile {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
   position: absolute;
-  background-size: cover;
   height: 100%;
   margin: 0;
 }

@@ -1,13 +1,13 @@
 <?php
 require_once('config.class.php');
 class ArgParser
-{	
+{
 	private $args;
 	function __construct($args)
 	{
 		$this->original = $args;
 		$this->args = [
-			'category' => isset($args['c']) ? $args['c'] : '',
+			'category' => isset($args['c']) ? $args['c'] : DEFAULT_CATEGORY,
 		    'artist_fn' => isset($args['af']) ? $args['af'] : '',
 		    'artist_ln' => isset($args['al']) ? $args['al'] : '',
 		    'artist_id' => isset($args['id']) ? $args['id'] : '',
@@ -24,14 +24,15 @@ class ArgParser
 		    'order'=>isset($args['or']) ? $args['or'] : DEFAULT_ORDER,
 		    'view' => isset($args['v']) ? $args['v'] : DEFAULT_VIEW,
 		    'elaborate' => isset($args['e']) ? $args['e'] : 0,
-		    'id' => isset($args['id']) ? $args['id'] : ''
+		    'id' => isset($args['id']) ? $args['id'] : '',
+				'state' => isset($args['s']) ? $args['s'] : DEFAULT_STATE
 
   		];
   		/*foreach ($this->args as $key => $value) {;
 			echo ($key .'=>'. $value);
 			echo ("<br\>");
   		}*/
-  		if(!in_array($this->args['category'],CATEGORY_NAMES)) 
+  		if(!in_array($this->args['category'],CATEGORY_NAMES))
   			$this->args['category']=DEFAULT_CATEGORY;
 	}
 	public function get_args()
@@ -41,7 +42,7 @@ class ArgParser
 
 	public function put_args($args)
 	{
-		
+
 	}
 }
 

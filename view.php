@@ -70,7 +70,7 @@
   </div>
   <div class="navigate"></div>
   <div id="results"></div>
-    <div class="navigate bottom"></div>
+    <div class="navigate"></div>
   </div> <!-- end results -->
   <div id="view">
     <img id="view-img" src="/img/default.jpg">

@@ -1,0 +1,48 @@
+Options +FollowSymLinks
+RewriteEngine on
+
+#browse, collection, artists, glazings, materials, objects, techniques, temperatures, search
+
+#add trailing slash
+RewriteRule ^browse$ /browse/ [R]
+RewriteRule ^collection$ /collection/ [R]
+RewriteRule ^artists$ /artists/ [R]
+RewriteRule ^glazings$ /glazings/ [R]
+RewriteRule ^materials$ /materials/ [R]
+RewriteRule ^objects$ /objects/ [R]
+RewriteRule ^techniques$ /techniques/ [R]
+RewriteRule ^temperatures$ /temperatures/ [R]
+RewriteRule ^search$ /search/ [R]
+
+#Handle categorical search params
+RewriteRule ^(\w+)/(\d+)$ /$1/$2/ [R]
+
+#s (state) is either, main, category or artist
+
+RewriteCond $1 =artists
+RewriteRule ^(\w+)/(\d+)/$ browse\.php\?s=artist\&c=$1&id=$2
+
+
+#Redirect (internally) each of the above to the proper page
+RewriteRule ^browse/$ browse\.php\?s=main
+RewriteRule ^collection/$ browse\.php\?s=view
+RewriteRule ^artists/$ browse\.php\?s=category&c=artists
+RewriteRule ^glazings/$ browse\.php\?s=category&c=glazings
+RewriteRule ^materials/$ browse\.php\?s=category&c=materials
+RewriteRule ^objects/$ browse\.php\?s=category&c=objects
+RewriteRule ^techniques/$ browse\.php\?s=category&c=techniques
+RewriteRule ^temperatures/$ browse\.php\?s=category&c=temperatures
+RewriteRule ^search/$ browse\.php\?s=category&c=search
+
+
+
+
+
+#RewriteRule ^(\w+)$  /$1/  [R]
+#RewriteRule ^(\w+)/$ category\.php\?c=$1
+
+
+#RewriteRule ^(\w+)/(\d+)$ /$1/$2/ [R]
+#RewriteRule ^artists/(\d+)/$ artist\.php\?id=$1
+
+#RewriteRule ^(\w+)/(\d+)/$ view\.php\?id=$2

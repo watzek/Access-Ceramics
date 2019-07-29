@@ -22,6 +22,8 @@ RewriteRule ^(\w+)/(\d+)$ /$1/$2/ [R]
 RewriteCond $1 =artists
 RewriteRule ^(\w+)/(\d+)/$ browse\.php\?s=artist\&c=$1&id=$2
 
+RewriteRule ^(\w+)/(\d+)/$ browse\.php\?s=view\&c=$1&id=$2
+
 
 #Redirect (internally) each of the above to the proper page
 RewriteRule ^browse/$ browse\.php\?s=main

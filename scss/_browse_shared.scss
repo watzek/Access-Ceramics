@@ -27,6 +27,15 @@ html, body
 {
 	color: $l_background;
 	margin-bottom: -2em;
+	font-size: 8pt;
+	@include media-breakpoint-up(md)
+	{
+		font-size: 10pt;
+	}
+	@include media-breakpoint-up(lg)
+	{
+		font-size: 12pt;
+	}
 	#search-header
 	{
 		margin: 0;
@@ -91,12 +100,6 @@ html, body
 	color: $ceramicstext;
 	font-weight: bold;
 	font-size: 90%;
-}
-
-.meta-data
-{
-	color: black;
-	text-transform: capitalize;
 }
 
 .result-img

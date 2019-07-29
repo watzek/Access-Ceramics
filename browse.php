@@ -65,6 +65,7 @@
     <script type="module" src="/js/PageManagement.js"></script>
     <script type="module" src="/js/ajax.js?version=1"></script>
 
+    <link rel="stylesheet" type="text/css" href="\css\view.css">
     <link id='pagestyle' rel='stylesheet' type='text/css' href=<?=$main->active_style?>>
     <?php
 
@@ -72,14 +73,9 @@
     { ?>
       <script type="module" src="/js/alphabet.js"></script>
       <script type="module" src="/js/categories.js"></script>
-      <link rel="stylesheet" type="text/css" href="\css\category.css">
+      <!-- <link rel="stylesheet" type="text/css" href="\css\category.css"> -->
     <?php }
-    else if($args['state'] == 'artist')
-    { ?>
-      <script type="module" src="/js/view.js"></script>
-      <link rel="stylesheet" type="text/css" href="\css\view.css">
-    <?php }
-    else if($args['state'] == 'view')
+    else
     { ?>
       <script type="module" src="/js/view.js"></script>
       <link rel="stylesheet" type="text/css" href="\css\view.css">

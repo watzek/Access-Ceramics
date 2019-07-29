@@ -23,10 +23,11 @@
 	const STYLE_PACKS =
 	[
 		[
-			'comfortable' => '/css/comfortable.css',
-			'grid' => '/css/pane.css',
-			'list' => '/css/list.css',
-			'default' => 'comfortable'
+			'comfortable' => '/css/comfortable.css'
+			,'grid' => '/css/grid.css'
+			,'list' => '/css/list.css'
+			//,'full' => '/css/full.css'
+			,'default' => 'comfortable'
 		],
 		[
 			'grid' => '/css/category.css',

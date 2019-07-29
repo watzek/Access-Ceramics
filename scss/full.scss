@@ -15,27 +15,57 @@
 #content
 {
 	height: $body-height;
-	display: block;
-	grid-template-rows: none;
+	display: block !important;
+	grid-template-rows: none !important;
 }
 
 //holds meta-data for images (hidden in category)
 #view
 {
 	position: fixed;
-	bottom: -5px;
-	height: 0%;
-	visibility: hidden;
+	top: $navbar-height;
+	width: 100%;
+	background-color: rgba(10,10,10,.9) !important;
+	padding-left: 0;
+	// border-right: 1em solid rgba(10,10,10,.7);
+	// border-left: 1em solid rgba(10,10,10,.7);
 }
 
 #view-img
 {}
-
+#view-meta
+{
+	background-color: rgba(0,0,0,.9);
+	padding-left: 1em;
+}
+//Artist-name, title, series title, date
 #view-meta p
-{}
+{
+	color: $white !important;
+}
 
+//other meta-data
 #meta-other
-{}
+{
+	color: $white !important;
+}
+
+#view-x
+{
+	pointer-events: all;
+	visibility: visible;
+}
+
+#view-arrow
+{
+	pointer-events: none;
+	visibility: visible;
+}
+
+.meta-data
+{
+		color: $white !important;
+}
 
 //style for the results section which holds all .result elements
 #results

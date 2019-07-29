@@ -1,80 +1,16 @@
 /* Stlyesheet for the 'list' view of view.php */
 
-
 @import "./variables.scss";
-/*Bootstrap style*/
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
-/*Global Imports*/
-@import "./global.scss";
-@import "./navbar.scss";
-
-@import "./browse_shared.scss";
-
-
-#header-statement
-{
-	h1
-	{
-		margin-top: 1em;
-	}
-}
-
-
-.span-all-cols
-{
-	grid-column: 1 / 6;
-
-	@include media-breakpoint-up(md)
-	{
-		grid-column: 1 / 6;
-	}
-	@include media-breakpoint-up(lg)
-	{
-		grid-column: 1 / 6;
-	}
-
-}
-
-body
-{
-	overflow-y: hidden;
-	background-color: $l_background;
-}
-
-
-#content
-{
-	padding: 0;
-	grid-row-gap: 0;
-	grid-column-gap: 0;
-	display: grid;
-	grid-template-rows: calc(50vh - ( #{$navbar-height} / 2 ) ) calc(50vh - ( #{$navbar-height} / 2 ) );
-
-	overflow-y: auto;
-
-	@include media-breakpoint-up(lg)
-	{
-		grid-template-rows: calc(100vh - #{$navbar-height});
-		grid-template-columns: 50vw 50vw;
-	}
-
-}
-
+//style for the image portion of each result (also in _browse_shared)
 .result-img
 {
-	height: 0;
-	width: 0;
+	height: 0 !important;
+	width: 0 !important;
 }
 
-#result-body
-{
-	overflow-y: auto;
-	background: $white;
-	display: inline-grid;
-	grid-auto-rows: min-content;
-}
-
+//style for the results section which holds all .result elements
 #results
 {
 	background: $white;
@@ -97,41 +33,18 @@ body
 		height:3vw;
 	}
 	grid-column: 1 / 2;
-
-	@include media-breakpoint-up(md)
-	{
-		grid-column: 1 / 2;
-	}
-	@include media-breakpoint-up(lg)
-	{
-		grid-column: 1 / 2;
-	}
 	margin: 0;
 	padding: 0;
-
 }
 
+//shade every even result
 .result:nth-child(even)
 {
 	background: $l_light;
-
 	grid-column: 2 / 3;
-
-	@include media-breakpoint-up(md)
-	{
-		grid-column: 2 / 3;
-	}
-	@include media-breakpoint-up(lg)
-	{
-		grid-column: 2 / 3;
-	}
-}
-.active-res
-{
-	background-color: white;
-	border: 2px solid black;
 }
 
+//the text portion of each result
 .result-title
 {
 	text-align: center;
@@ -153,36 +66,8 @@ body
 }
 
 
-
-
-
-#view
+.active-res
 {
-	overflow-y: auto;
-	height: 100%;
-	background-color: $white;
-	text-align: center;
-}
-
-#view-img
-{
-	object-fit: contain;
-	max-height: 70%;
-	max-width:95%;
-	margin-right: auto;
-	margin-left: 0;
-}
-
-#view-meta p
-{
-	font-weight: bold;
-	color: $ceramicstextalt;
-}
-#meta-other
-{
-	text-align: left;
-	font-size: 13pt;
-	color: $l_background;
-	display: grid;
-	grid-template-columns: auto auto;
+	background-color: white;
+	border: 2px solid black;
 }

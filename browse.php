@@ -90,58 +90,58 @@
 if($args['state'] == 'main')
 { /*<--- Main Browse State --->*/
   ?>
-<div id="content" class="container" style="overflow-x: hidden;">
+<div id="content" class="container-fluid" style="overflow-x: hidden;">
   <div class="row h-100">
 
-    <div class="col-xl-3 col-6 flip-container px-0">
+    <div class="col-xl-3 col-6 px-0">
       <a class="w-100 tile" href="/collection/?">
           <img src=<?="{$results['collection']['src']}"?>/>
             <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$results['collection']['ct']?> Images</h2></div>
           </a>
     </div>
-    <div class="col-xl-3 col-6 flip-container px-0">
+    <div class="col-xl-3 col-6 px-0">
       <a class='w-100 tile' href="/artists/">
           <img src=<?="{$results['artists']['src']}"?>/>
             <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$results['artists']['ct']?> Artists</h2></div>
           </a>
     </div>
 
-    <div class="col-xl-3 col-6 flip-container px-0">
+    <div class="col-xl-3 col-6 px-0">
       <a class='w-100 tile' href="/glazings/">
           <img src=<?="{$results['glazing']['src']}"?>/>
             <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$results['glazing']['ct']?> Glazing/Surfaces</h2></div>
           </a>
     </div>
 
-    <div class="col-xl-3 col-6 flip-container px-0">
+    <div class="col-xl-3 col-6 px-0">
       <a class='w-100 tile' href="/materials/">
           <img src=<?="{$results['material']['src']}"?>/>
             <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$results['material']['ct']?> Materials</h2></div>
           </a>
     </div>
 
-    <div class="col-xl-3 col-6 flip-container px-0">
+    <div class="col-xl-3 col-6 px-0">
       <a class='w-100 tile' href="/objects/">
           <img src=<?="{$results['object']['src']}"?>/>
             <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$results['object']['ct']?> Object Types</h2></div>
       </a>
     </div>
 
-    <div class="col-xl-3 col-6 flip-container px-0">
+    <div class="col-xl-3 col-6 px-0">
       <a class='w-100 tile' href="/techniques/">
           <img src=<?="{$results['technique']['src']}"?>/>
             <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$results['technique']['ct']?> Techniques</h2></div>
       </a>
     </div>
 
-    <div class="col-xl-3 col-6 flip-container px-0 ">
+    <div class="col-xl-3 col-6 px-0 ">
       <a class='w-100 tile' href="/temperatures/">
           <img src=<?="{$results['temperature']['src']}"?>/>
             <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Browse <?=$results['temperature']['ct']?> Temperatures</h2></div>
           </a>
     </div>
 
-    <div class="col-xl-3 col-6 flip-container px-0 ">
+    <div class="col-xl-3 col-6 px-0 ">
       <a class='w-100 tile' href="/search/">
         <img class="search-tile tile"/>
             <div class="titlediv"><h2 class="text-light text-center align-text-bottom">Advanced Search</h2></div>
@@ -213,6 +213,8 @@ else
   <!-- Bootstrap core JavaScript -->
   <script src="/vendor/jquery/jquery.min.js"></script>
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 <!-- End Scripts -->
 </body>
 </html>

@@ -10,14 +10,14 @@
 
 	const CATEGORY_NAMES =
 	[
-		'artists',
-		'institutions',
-		'glazings',
-		'materials',
-		'objects',
-		'techniques',
-		'temperatures',
-		''
+		'artists'
+		, 'institutions'
+		, 'glazings'
+		, 'materials'
+		, 'objects'
+		, 'techniques'
+		, 'temperatures'
+		, ''
 	];
 
 	const STYLE_PACKS =

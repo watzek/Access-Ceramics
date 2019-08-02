@@ -9813,6 +9813,20 @@ nav {
   }
 }
 
+nav + hr {
+  background-color: #7A6451;
+  padding: 1px;
+  margin: 0;
+}
+
+.navbar {
+  padding-bottom: 19em;
+}
+
+.navbar.collapsed {
+  padding-bottom: 0;
+}
+
 #news-container {
   overflow-y: scroll;
 }

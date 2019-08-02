@@ -2,7 +2,7 @@
 
 nav
 {
-  height: $navbar-height;
+  min-height: $navbar-height;
 }
 #search
 {
@@ -12,7 +12,7 @@ nav
   {
     max-width: 19%; //for very small widths
     height: 80%;
-    font-size: 8pt; 
+    font-size: 8pt;
     display: inline-block;
   }
 
@@ -46,7 +46,7 @@ nav
   color: $l_background;
 }
 
-#login 
+#login
 {
   margin-left: 0 !important;
   padding-left: 0 !important;
@@ -71,11 +71,11 @@ nav
 .navbar-toggler
 {
   visibility:visible;
-  
+
   @include media-breakpoint-up(xl)
   {
     visibility:hidden;
-  } 
+  }
 }
 
 #nbar-brand
@@ -85,5 +85,11 @@ nav
   @include media-breakpoint-up(md)
   {
     width:initial;
-  } 
+  }
+}
+nav + hr
+{
+  background-color: $l_background;
+  padding:1px;
+  margin:0;
 }

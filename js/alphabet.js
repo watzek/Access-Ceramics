@@ -1,5 +1,5 @@
 /*
-	Handles the creation and events associated with the alphabet sort feature
+	Handles the creation and events associated with the alphabet sort feature.
 	given an array, an attribute present on each element in array, parent element,
 	and a template for creation of new children the class will:
 
@@ -77,9 +77,6 @@ export default class{
 			var p_start = this.letters[val];
 			var p_end = this.letters[val+1];
 		}
-
-
-
 		this.letter_clicked(el, p_start.ind, p_end.ind);
 	}
 

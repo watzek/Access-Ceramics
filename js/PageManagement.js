@@ -23,25 +23,23 @@ export default class PageManager
 		this.current_page = 0;
 		this.items = q_results;
 		this.total_items = results_total;
+		this.show_callback = show_callback;
+		this.call_on_page = call_on_page;
+		this.results_body = document.getElementById('results');
+		this.st = new StyleChangeManager(sheets);
 
 		this.lm = new LimitManager(limit_choices, selected_limit);
-		this.n_pages = Math.ceil(this.total_items/this.lm.limit());
+		this.n_pages = this.calculate_pages();
 
 		this.pnm = new PageNumberManager(this.n_pages);
 		this.pnm.page_selected = this.set_page.bind(this);
 
-		this.show_callback = show_callback;
-		this.call_on_page = call_on_page;
-
-
-
 		let self = this;
-		this.lm.limit_changed = function()
+		this.lm.limit_changed = function() //called when limit is changed
 		{
 			self.set_page(self.current_page);
 
-			self.n_pages = Math.ceil(self.total_items/self.lm.limit())
-			self.pnm.n_pages = self.n_pages;
+			self.pnm.set_pages(self.calculate_pages());//calculate_pages also sets self.n_pages
 			if (self.n_pages == 1)
 			{
 				self.current_page = 0;
@@ -49,9 +47,6 @@ export default class PageManager
 			}
 			self.pnm.set_labels();
 		};
-
-		this.results_body = document.getElementById('results');
-		this.st = new StyleChangeManager(sheets);
 
 		this.set_page(0);
 	}
@@ -64,7 +59,10 @@ export default class PageManager
 		else return lim;
 	}
 
-
+	calculate_pages()
+	{
+		return (this.n_pages = Math.ceil(this.total_items/this.lm.limit()));
+	}
 	// set the context for paging, aka what array results come from
 	// returns the current_context
 	set_context(array)
@@ -73,6 +71,9 @@ export default class PageManager
 
 		this.items = array;
 		this.total_items = array.length;
+
+		this.pnm.set_pages(this.calculate_pages());
+		this.pnm.set_labels();
 		this.set_page(0);
 
 		return current;
@@ -81,10 +82,14 @@ export default class PageManager
 	// 'page' to the current page
 	set_page(index)
 	{
+		console.log('setting page: ',index,this.n_pages);
 		this.current_page = index;
 		let lim = this.lm.limit();
 
-		lim = lim > this.total_items ? this.total_items : lim;
+		{//set limit
+			let res_count = this.result_count(index+1);
+			lim = lim > res_count ? res_count : lim;
+		}
 
 		let results = this.results_body.children;
 		let n_results = this.results_body.childElementCount;
@@ -132,15 +137,13 @@ export default class PageManager
 	}
 }
 
-
 class PageNumberManager
 {
 	constructor(n_pages)
 	{
 		this.navs = document.getElementsByClassName("navigate");
 		this.current_page = 0;
-		this.n_nums = MAX_PAGES < n_pages ? MAX_PAGES : n_pages;
-		this.n_pages = n_pages;
+		this.set_pages(n_pages)
 		this.page_selected = (index) => {};
 		let self = this;
 		for (var i = 0; i < this.navs.length; i++)
@@ -172,7 +175,11 @@ class PageNumberManager
 				child.classList.add('invisible');
 		}
 	}
-
+	set_pages(n_pages)
+	{
+		this.n_nums = MAX_PAGES < n_pages ? MAX_PAGES : n_pages;
+		this.n_pages = n_pages;
+	}
 	valid_then_set(index)
 	{
 		if (index < 0 || index >= this.n_pages)
@@ -264,15 +271,17 @@ class PageNumberManager
 				on the left. So, we have to shift the middle over.
 
 			If we are on the 4th page, 1 2 3 <4> 5
-			we have to shift if there's only 5 pages, but if theres more than 5
-			we get 2 3 <4> 5 6, and 4 can be in the middle.
+			we have to shift the middle one to the right if there's only 5 pages,
+			if theres more than 5 page we get 2 3 <4> 5 6: 4 Can be in the middle.
+
+			The following accounts for these posibilities
 		*/
+
 		let mid = Math.floor(this.n_nums/2);
 		let cp = this.current_page;
-		let end = this.n_pages
 
-		while (cp < mid) mid--;
-		while (this.n_pages - cp < mid) mid++;
+		if (cp < mid || this.n_pages - cp < mid) mid = cp;
+
 		for (var i = 0; i < this.navs.length; i++)
 		{
 			var children = this.navs[i].children;
@@ -280,12 +289,12 @@ class PageNumberManager
 			children[mid+1].value = cp;
 			children[mid+1].innerHTML = cp+1;
 			children[mid+1].classList.add('active');
-			for (var k = 0; k < this.n_nums; k++)
+			for (var k = 0; k < children.length-1; k++)
 			{
 				let val = cp - (mid-k);
 
 				let ch = children[k+1];
-				if (val < 0 || val >= this.n_pages)
+				if (this.n_pages == 1 || val < 0 || val >= this.n_pages)
 				{
 					ch.innerHTML = '';
 					ch.value = -1;
@@ -302,6 +311,10 @@ class PageNumberManager
 	}
 }
 
+/*
+	Handles the dom elements associated with changing style sheets (for result styling)
+	and sets style based on passed array of style paths
+*/
 class StyleChangeManager
 {
 	constructor(style_sheets)
@@ -369,12 +382,14 @@ class StyleChangeManager
 				element.classList.remove('active-view');
 		});
 	}
-
-
 }
 
+/*
 
-
+	Handles the dom elements used to switch limits
+	offers an event (LimitManager.limit_changed), called upon the limit changing
+	LimitManager.limit() returns the current limit
+*/
 class LimitManager
 {
 	constructor(limit_choices, selected_limit = false)

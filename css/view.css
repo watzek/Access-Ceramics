@@ -9812,6 +9812,12 @@ nav {
   }
 }
 
+nav + hr {
+  background-color: #7A6451;
+  padding: 1px;
+  margin: 0;
+}
+
 html, body {
   margin: 0;
   height: 100vh;

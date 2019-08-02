@@ -16,7 +16,7 @@ export default class{
 		this.children = [];
 		if (sorted === false)
 			array.sort(function(a,b){
-				return (a[attr] < b[attr]) ? -1 : a[attr] == b[attr] ? 0 : 1;
+				return (a[attr].toUpperCase() < b[attr].toUpperCase()) ? -1 : a[attr] == b[attr] ? 0 : 1;
 			});
 
 		{ //fill this.letters

@@ -45,7 +45,7 @@
 	padding-bottom: 1em;
 	display: inline-grid;
 
-	grid-template-columns: auto auto auto auto;
+	grid-template-columns: 25% 25% 25% 25%;
 	grid-auto-rows: min-content;
 	grid-row-gap: 1.5em;
 
@@ -55,13 +55,13 @@
 
 	@include media-breakpoint-up(md)
 	{
-		grid-template-columns: auto auto auto auto auto;
+		grid-template-columns: 20% 20% 20% 20% 20%;
 		grid-row-gap: 1.5em;
 
 	}
 	@include media-breakpoint-up(lg)
 	{
-		grid-template-columns: auto auto auto auto auto auto;
+		grid-template-columns: 16.67% 16.67% 16.67% 16.67% 16.67% 16.67%;
 		grid-row-gap: 1em;
 	}
 }

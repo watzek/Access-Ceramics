@@ -50,7 +50,7 @@ export default class PageManager
 		{
 			self.set_page(self.current_page);
 
-			self.pnm.set_pages(self.calculate_pages());//calculate_pages also sets self.n_pages
+			self.pnm.set_pages(self.calculate_pages(),0);//calculate_pages also sets self.n_pages
 			if (self.n_pages == 1)
 			{
 				self.current_page = 0;
@@ -64,15 +64,16 @@ export default class PageManager
 
 	// returns the number of elements on a given page
 	result_count()
-	{var amount;
+	{
+		var amount;
 
 		let lim =  this.lm.limit();
 
 		if (this.current_page == this.n_pages-1)
-			amount = this.total_items % amount;
+			amount = this.total_items % lim;
 		else amount = lim;
 
-		return lim > amount ? amount : lim;
+		return amount < lim ? amount : lim;
 	}
 
 	calculate_pages()
@@ -89,7 +90,7 @@ export default class PageManager
 		this.items = array;
 		this.total_items = array.length;
 
-		this.pnm.set_pages(this.calculate_pages());
+		this.pnm.set_pages(this.calculate_pages(),0);
 		this.pnm.set_labels();
 		this.set_page(0);
 
@@ -102,6 +103,7 @@ export default class PageManager
 	align_children(lim)
 	{
 		let n_results = this.results_body.childElementCount;
+		let results = this.results_body.children;
 		while (n_results != lim)
 		{
 			let index = n_results-1;
@@ -127,7 +129,7 @@ export default class PageManager
 	// 'page' to the current page
 	set_page(index)
 	{
-		console.log('setting page: ',index,this.n_pages);
+		//console.log('setting page: ',index,this.n_pages);
 
 		this.current_page = index;
 		let lim = this.result_count();
@@ -155,54 +157,60 @@ class PageNumberManager
 {
 	constructor(n_pages)
 	{
-		let navs = document.getElementsByClassName("navigate");
+		this.navs = document.getElementsByClassName("navigate");
 		this.arrows = [[],[]];
 		this.nums = [[],[]];
 		this.current_page = 0;
-		this.set_pages(n_pages)
+		this.set_pages(n_pages, 0);
 		this.page_selected = (index) => {};
+
 		let self = this;
-		for (var i = 0; i < navs.length; i++)
+		for (var i = 0; i < this.navs.length; i++)
 		{
 			let child = this.create_child('<');
 			child.addEventListener('click', () => self.beg());
-
-			navs[i].appendChild(child); //add to dom
+			this.navs[i].appendChild(child); //add to dom
 			this.arrows[i].push(child); //add to array
 
-			if (this.current_page == 0)
-				child.classList.add('invisible');
-			let self = this;
-			for (var k = 0; k < this.n_labels; k++)
-			{
-				child = this.create_child(k+1);
-				child.value = k;
-				child.innerHTML = k+1;
-				if(k == this.current_page)
-					child.classList.add('active');
-				child.addEventListener('click',function() {
-					self.select_page(this.value);
-				});
-
-				navs[i].appendChild(child); //add to dom
-				this.nums[i].push(child); //add to array
-			}
 
 			child = this.create_child('>');
 			child.addEventListener('click', () => self.end());
-
-			navs[i].appendChild(child); //add to dom
+			this.navs[i].appendChild(child); //add to dom
 			this.arrows[i].push(child); //add to array
-
-			if (this.current_page == this.n_pages-1)
-				child.classList.add('invisible');
 		}
+		this.set_labels();
 	}
 
-	set_pages(n_pages)
+	align_children()
+	{
+		let self = this;
+		for (var i = 0; i < this.nums.length; i++)
+			while (this.nums[i].length != this.n_labels)
+			{
+				let nav = this.navs[i];
+				if (this.nums[i].length < this.n_labels)
+				{
+					let child = this.create_child('');
+					child.addEventListener('click',function() {
+						self.select_page(this.value);
+					});
+					nav.insertBefore(child, nav.children[nav.childElementCount-1]); //add to dom
+					this.nums[i].push(child); //add to array
+				}
+				else
+				{
+					nav.removeChild(nav.children[nav.childElementCount-2]); //remove from dom
+					this.nums[i].pop(); //remove to array
+				}
+			}
+			console.log("labels",this.n_labels);
+	}
+
+	set_pages(n_pages, current_page)
 	{
 		this.n_labels = MAX_PAGES < n_pages ? MAX_PAGES : n_pages;
 		this.n_pages = n_pages;
+		this.current_page = current_page;
 	}
 
 	valid_then_set(index)
@@ -269,7 +277,7 @@ class PageNumberManager
 		{//decide whether edge arrow should be visible
 			let top = this.arrows[0];
 			let bot = this.arrows[1];
-			if (this.current_page == 0)
+			if (this.current_page == 0 || this.n_pages <= this.n_labels)
 			{
 				top[0].classList.add('invisible');
 				bot[0].classList.add('invisible');
@@ -280,7 +288,7 @@ class PageNumberManager
 				bot[0].classList.remove('invisible');
 			}
 
-			if (this.current_page == this.n_pages-1)
+			if (this.current_page == this.n_pages-1 || this.n_pages <= this.n_labels)
 			{
 				top[1].classList.add('invisible');
 				bot[1].classList.add('invisible');
@@ -292,17 +300,16 @@ class PageNumberManager
 			}
 		}
 
+		this.align_children();
 		let mid = Math.floor(this.n_labels/2);
 		let cp = this.current_page;
 
 		if (cp < mid) mid = cp;
-		else if (this.n_pages - cp < mid) mid = this.n_labels - (this.n_pages - cp);
-
+		else if (this.n_pages - cp <= mid) mid = this.n_labels - (this.n_pages - cp);
 
 		for (var i = 0; i < this.nums.length; i++)
 		{
-			var children = this.nums[i];
-
+			let children = this.nums[i];
 			children[mid].value = cp;
 			children[mid].innerHTML = cp+1;
 			children[mid].classList.add('active');
@@ -311,7 +318,7 @@ class PageNumberManager
 				let val = cp - (mid-k);
 
 				let ch = children[k];
-				if (this.n_pages == 1 || val < 0 || val >= this.n_pages)
+				if (this.n_pages == 1)
 				{
 					ch.innerHTML = '';
 					ch.value = -1;

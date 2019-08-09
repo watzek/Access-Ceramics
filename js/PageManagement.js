@@ -10,6 +10,16 @@ var page_num = "<span class=\"clickable pagenum\"></span>";
 var view_mode = "<span class=\"view-mode pressable\"></span>";
 var default_sheets = style_pack; //provided from php
 
+
+/*
+PageManager relies on 3 other classes
+	PageNumberManager -> handles pagination
+	LimitManager -> handles rpp (results per page)
+	StyleChangeManager -> handles style changes for result styles
+
+
+
+*/
 export default class PageManager
 {
 	constructor(q_results, //all current results
@@ -26,6 +36,7 @@ export default class PageManager
 		this.show_callback = show_callback;
 		this.call_on_page = call_on_page;
 		this.results_body = document.getElementById('results');
+
 		this.st = new StyleChangeManager(sheets);
 
 		this.lm = new LimitManager(limit_choices, selected_limit);
@@ -50,21 +61,27 @@ export default class PageManager
 
 		this.set_page(0);
 	}
+
 	// returns the number of elements on a given page
-	result_count(page)
-	{
-		let lim = this.lm.limit();
-		if (page == this.n_pages)
-			return this.total_items % lim;
-		else return lim;
+	result_count()
+	{var amount;
+
+		let lim =  this.lm.limit();
+
+		if (this.current_page == this.n_pages-1)
+			amount = this.total_items % amount;
+		else amount = lim;
+
+		return lim > amount ? amount : lim;
 	}
 
 	calculate_pages()
 	{
 		return (this.n_pages = Math.ceil(this.total_items/this.lm.limit()));
 	}
+
 	// set the context for paging, aka what array results come from
-	// returns the current_context
+	// returns the previous context
 	set_context(array)
 	{
 		let current = this.items;
@@ -79,25 +96,12 @@ export default class PageManager
 		return current;
 	}
 
-	// 'page' to the current page
-	set_page(index)
+	/*
+		destroy/add dom elements to match lim
+	*/
+	align_children(lim)
 	{
-		console.log('setting page: ',index,this.n_pages);
-		this.current_page = index;
-		let lim = this.lm.limit();
-
-		{//set limit
-			let res_count = this.result_count(index+1);
-			lim = lim > res_count ? res_count : lim;
-		}
-
-		let results = this.results_body.children;
 		let n_results = this.results_body.childElementCount;
-
-		/*
-			if the page limit does not match the amount of results we have currently on the page,
-			remove or add results until these values match
-		*/
 		while (n_results != lim)
 		{
 			let index = n_results-1;
@@ -119,23 +123,33 @@ export default class PageManager
 			}
 		}
 
-		{ //populate the results with with their corresponding pictures and values
+	}
+	// 'page' to the current page
+	set_page(index)
+	{
+		console.log('setting page: ',index,this.n_pages);
 
+		this.current_page = index;
+		let lim = result_count();
+
+		let results = this.results_body.children;
+		align_children(lim) // make sure we have the correct amount of dom elems
+
+
+		{ //populate the results with with their corresponding pictures and values
 			let page_offset = this.current_page * this.lm.limit();
 			for (var i = 0; (i < lim) && (page_offset+i < this.items.length); i++)
 			{
 				let res = results[i];
-				res.children[0].src = this.items[page_offset + i].src;
-				res.children[1].innerHTML = this.items[page_offset + i].title;
+				res.children[0].src = this.items[page_offset + i].src; //picture
+				res.children[1].innerHTML = this.items[page_offset + i].title; //text
 				res.value = page_offset+i;
 			}
-
 		}
 
 		if (this.call_on_page) this.show_callback(results[0]);
-
 	}
-}
+} //end PageManager
 
 class PageNumberManager
 {
@@ -184,11 +198,13 @@ class PageNumberManager
 				child.classList.add('invisible');
 		}
 	}
+
 	set_pages(n_pages)
 	{
 		this.n_nums = MAX_PAGES < n_pages ? MAX_PAGES : n_pages;
 		this.n_pages = n_pages;
 	}
+
 	valid_then_set(index)
 	{
 		if (index < 0 || index >= this.n_pages)
@@ -275,21 +291,6 @@ class PageNumberManager
 				bot[1].classList.remove('invisible');
 			}
 		}
-		/*
-			Consider the labels 1 2 3 4 5
-			We want the current page to be displayed in the middle of the labels
-			ie. 1 2 <3> 4 5 (3 is current). In this case, the index of the middle elm. is length/2.
-
-			However, if we are on page 2, 1 <2> 3 4 5
-				the number 2 cant be in the middle because there arent enough pages to pad it
-				on the left. So, we have to shift the middle over.
-
-			If we are on the 4th page, 1 2 3 <4> 5
-			we have to shift the middle one to the right if there's only 5 pages,
-			if theres more than 5 page we get 2 3 <4> 5 6: 4 Can be in the middle.
-
-			The following accounts for these posibilities
-		*/
 
 		let mid = Math.floor(this.n_nums/2);
 		let cp = this.current_page;
@@ -396,63 +397,5 @@ class StyleChangeManager
 			else
 				element.classList.remove('active-view');
 		});
-	}
-}
-
-/*
-
-	Handles the dom elements used to switch limits
-	offers an event (LimitManager.limit_changed), called upon the limit changing
-	LimitManager.limit() returns the current limit
-*/
-class LimitManager
-{
-	constructor(limit_choices, selected_limit = false)
-	{
-		this.limit_changed = () => {};
-		this.choices = limit_choices;
-		this.children = document.getElementsByClassName("limit-choice");
-		this.selected = selected_limit ? selected_limit : 0;
-
-		var parent = this;
-		for (var i = 0; i < this.choices.length; i++)
-		{
-			let child = this.children[i];
-
-			child.value = i;
-			child.innerHTML = this.choices[i];
-
-			child.addEventListener('click', function()
-			{
-				parent.set_limit(this.value);
-			});
-
-			if (this.selected == i ) child.classList.add('active')
-			else if (child.classList.contains('active')) child.classList.remove('active');
-		}
-	}
-
-	set_limit(ind)
-	{
-		if(ind < 0 || ind >= this.choices.length || this.choices[ind] == this.limit)
-		{
-			console.log('limit remains unchanged');
-			return;
-		}
-
-		this.children[this.selected].classList.remove('active');
-		this.selected = ind;
-		this.children[ind].classList.add('active');
-
-		this.limit_changed();
-		console.log("Browse Limit set to: " + this.choices[ind]);
-	}
-
-	limit()
-	{
-		let choice = this.choices[this.selected];
-		if (choice == 'all') return 10000;
-
-		return choice;
 	}
 }

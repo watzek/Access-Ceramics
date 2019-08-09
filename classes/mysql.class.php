@@ -15,7 +15,7 @@ class mysql
 		'institutions' => 'in'
 	];
 
-	public function __construct($NO_DB)
+	public function __construct($NO_DB = false)
 	{
 		if ($NO_DB) return;
 		$server = Credentials::SERVER; //correct syntax?
@@ -101,7 +101,6 @@ class mysql
 		return $result;
 	}
 
-static $artist_query = "SELECT * from artists a WHERE a.id = ?";
 public function artist_information($args)
 {
 	$stmt = $this->db->prepare(Queries::$artist_query);

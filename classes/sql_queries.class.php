@@ -120,7 +120,7 @@ class Queries
         AND i.artist_lname LIKE (:last)',
 
   		'artist_id' => '
-        JOIN artist_match am ON am.image_id = i.id 
+        JOIN artist_match am ON am.image_id = i.id
         AND am.artist_id = :id',
 
   		'added' =>' i.timestamp BETWEEN :time_s and :time_e',
@@ -164,7 +164,7 @@ class Queries
         WHERE tm.image_id = ?',
 
       'temp' => 'SELECT
-        tt.temperature
+        tt.temperature, 
         tt.id AS temperature_id
         FROM temperature_match ttm
         JOIN temperature tt ON tt.id = ttm.temperature_id
@@ -257,6 +257,8 @@ class Queries
           ORDER BY RAND() LIMIT 1) AS src
         FROM temperature t;'
     ];
+
+    static $artist_query = "SELECT * from artists a WHERE a.id = ?";
 
   }
 

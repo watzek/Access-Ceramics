@@ -5,5 +5,6 @@ package-lock.json
 classes/sql_credentials.class.php
 /test*
 css/*.map
+css/*.css
 old/*
 !.htaccess

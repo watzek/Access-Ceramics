@@ -1,5 +1,4 @@
 <?php
-	//maybe more understandable to make this a class
 	const DEFAULT_CATEGORY = 'artists';
 	const DEFAULT_LIM = 20;
 	const MAX_QUERY_LIM = 10000;

@@ -130,10 +130,10 @@ export default class PageManager
 		console.log('setting page: ',index,this.n_pages);
 
 		this.current_page = index;
-		let lim = result_count();
+		let lim = this.result_count();
 
 		let results = this.results_body.children;
-		align_children(lim) // make sure we have the correct amount of dom elems
+		this.align_children(lim) // make sure we have the correct amount of dom elems
 
 
 		{ //populate the results with with their corresponding pictures and values
@@ -173,7 +173,7 @@ class PageNumberManager
 			if (this.current_page == 0)
 				child.classList.add('invisible');
 			let self = this;
-			for (var k = 0; k < this.n_nums; k++)
+			for (var k = 0; k < this.n_labels; k++)
 			{
 				child = this.create_child(k+1);
 				child.value = k;
@@ -201,7 +201,7 @@ class PageNumberManager
 
 	set_pages(n_pages)
 	{
-		this.n_nums = MAX_PAGES < n_pages ? MAX_PAGES : n_pages;
+		this.n_labels = MAX_PAGES < n_pages ? MAX_PAGES : n_pages;
 		this.n_pages = n_pages;
 	}
 
@@ -292,11 +292,12 @@ class PageNumberManager
 			}
 		}
 
-		let mid = Math.floor(this.n_nums/2);
+		let mid = Math.floor(this.n_labels/2);
 		let cp = this.current_page;
 
 		if (cp < mid) mid = cp;
-		else if (this.n_pages - cp < mid) mid += (this.n_pages - cp);
+		else if (this.n_pages - cp < mid) mid = this.n_labels - (this.n_pages - cp);
+
 
 		for (var i = 0; i < this.nums.length; i++)
 		{
@@ -397,5 +398,57 @@ class StyleChangeManager
 			else
 				element.classList.remove('active-view');
 		});
+	}
+}
+
+class LimitManager
+{
+	constructor(limit_choices, selected_limit = false)
+	{
+		this.limit_changed = () => {};
+		this.choices = limit_choices;
+		this.children = document.getElementsByClassName("limit-choice");
+		this.selected = selected_limit ? selected_limit : 0;
+
+		var parent = this;
+		for (var i = 0; i < this.choices.length; i++)
+		{
+			let child = this.children[i];
+
+			child.value = i;
+			child.innerHTML = this.choices[i];
+
+			child.addEventListener('click', function()
+			{
+				parent.set_limit(this.value);
+			});
+
+			if (this.selected == i ) child.classList.add('active')
+			else if (child.classList.contains('active')) child.classList.remove('active');
+		}
+	}
+
+	set_limit(ind)
+	{
+		if(ind < 0 || ind >= this.choices.length || this.choices[ind] == this.limit)
+		{
+			console.log('limit remains unchanged');
+			return;
+		}
+
+		this.children[this.selected].classList.remove('active');
+		this.selected = ind;
+		this.children[ind].classList.add('active');
+
+		this.limit_changed();
+		console.log("Browse Limit set to: " + this.choices[ind]);
+	}
+
+	limit()
+	{
+		let choice = this.choices[this.selected];
+		if (choice == 'all') return 10000;
+
+		return choice;
 	}
 }

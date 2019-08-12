@@ -13,7 +13,6 @@ export default class UrlManager
   constructor(get_args)
   {
     this.args = get_args;
-    this.base = '?';
     this.params = {'limit':0,'page':0,'view':0};
 
     // let i = 0;
@@ -23,7 +22,6 @@ export default class UrlManager
     //   else i++;
     //   this.base += key + '=' +this.args[key];
     // }
-    console.log(this.base);
   }
 
   update_params(obj)
@@ -44,15 +42,23 @@ export default class UrlManager
     obj = this.update_params(obj);
     console.log(obj);
 
-    let newrl = this.base;
-    let i = 0;
-    for (var key in obj)
-      if (obj[key] != 0)
-      {
-        newrl += key + '=' + obj[key];
-        if (i > 0) newrl += '&';
-        else i++;
-      }
+    let newrl = '';
+    let flag = false;
+
+    if (obj['page'] !== undefined)
+      newrl += ''+obj['page']+'/';
+
+    newrl+='?';
+
+    if(obj['view'] !== undefined)
+    {
+      newrl += 'view='+obj['view'];
+      flag = true;
+    }
+    if(obj['limit'] !== undefined)
+    {
+      newrl += (flag?'&':'') + 'limit='+obj['limit'];
+    }
 
     return newrl;
   }
@@ -61,6 +67,7 @@ export default class UrlManager
   {
     return;
     let newrl = this.build_url(obj);
+    console(newrl);
     window.history.replaceState("",document.title,newrl);
   }
 }

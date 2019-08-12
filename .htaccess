@@ -3,36 +3,35 @@ RewriteEngine on
 
 #browse, collection, artists, glazings, materials, objects, techniques, temperatures, search
 
-#add trailing slash
-RewriteRule ^browse$ /browse/ [R]
-RewriteRule ^collection$ /collection/ [R]
-RewriteRule ^artists$ /artists/ [R]
-RewriteRule ^glazings$ /glazings/ [R]
-RewriteRule ^materials$ /materials/ [R]
-RewriteRule ^objects$ /objects/ [R]
-RewriteRule ^techniques$ /techniques/ [R]
-RewriteRule ^temperatures$ /temperatures/ [R]
-RewriteRule ^search$ /search/ [R]
-RewriteRule ^info$ /info/ [R]
-RewriteRule ^info/$ /info/about/ [R]
 
-RewriteRule ^(\w+)/(\w+)$ /$1/$2/ [R]
-RewriteRule ^(\w+)/(\d+)$ /$1/$2/ [R]
+# Add default page number (1) if not specified
+RewriteRule ^category/(\w+)/$ /category/$1/1/ [R]
+
+# Convert category/category_name/page_num/id -> /category_name/id/
+RewriteRule ^category/(\w+)/(\d+)/(\d+)/$ /$1/$3/ [R]
+
+# add trailing slash
+RewriteRule ^(\w+)$ /$1/ [R]
+RewriteRule ^category/(\w+)/(\d+)/(\d+)$ /category/$1/$2/$3/ [R]
+RewriteRule ^collection/(\d+)$ /collection/$1/ [R]
+
+# special case for info pages
+RewriteRule ^info/(\w+)/$ info\.php\?state=$1
+
+# special cases for 'collection' state
+RewriteRule ^collection/$ browse.php?state=view
+RewriteRule ^collection/(\d+)/$ browse.php?state=view&page=$1
+
+# Pass page number through GET
+RewriteRule ^category/(\w+)/(\d+)/$ browse\.php\?state=category\&category=$1\&page=$2
 
 RewriteCond $1 =artists
+RewriteRule ^(\w+)/(\d+)/(\d+)/ browse\.php\?state=artist\&category=$1&artist_id=$2&page=$3
+# else
+RewriteRule ^(\w+)/(\d+)/(\d+)/ browse\.php\?state=view\&category=$1&id=$2&page=$3
+
+# 'artists' state requires special treatment
+RewriteCond $1 =artists
 RewriteRule ^(\w+)/(\d+)/$ browse\.php\?state=artist\&category=$1&artist_id=$2
-
+# else
 RewriteRule ^(\w+)/(\d+)/$ browse\.php\?state=view\&category=$1&id=$2
-
-
-#Redirect (internally) to the proper page
-RewriteRule ^browse/$ browse\.php\?state=main
-RewriteRule ^collection/$ browse\.php\?state=view
-RewriteRule ^artists/$ browse\.php\?state=category&category=artists
-RewriteRule ^glazings/$ browse\.php\?state=category&category=glazings
-RewriteRule ^materials/$ browse\.php\?state=category&category=materials
-RewriteRule ^objects/$ browse\.php\?state=category&category=objects
-RewriteRule ^techniques/$ browse\.php\?state=category&category=techniques
-RewriteRule ^temperatures/$ browse\.php\?state=category&category=temperatures
-RewriteRule ^search/$ browse\.php\?state=category&category=search
-RewriteRule ^info/(\w+)/$ info\.php\?state=$1

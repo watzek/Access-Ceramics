@@ -7,8 +7,7 @@ export function elaborate(image_id, responseFunction)
 			responseFunction(xhttp.responseText);
 	}
 	let str = "/ajax_backend.php?elaborate=1&id="+image_id;
-
-
+	console.log(str);
 	xhttp.open("GET",str, true);
 	xhttp.send();
 }
@@ -22,6 +21,7 @@ export function get_range(offset, limit, resFunc)
 			resFunc(xhttp.responseText);
 	}
 	let str = "/ajax_backend.php"+query_string()+"offset="+offset+"&limit="+limit;
+	console.log(str);
 	xhttp.open("GET", str, true);
 	xhttp.send();
 }
@@ -40,6 +40,7 @@ export function ajax_take_the_wheel(array, current_amount, target, chunk_size)
 					{
 						obj = Object.values(JSON.parse(resText)['res']);
 						array.push.apply(array, obj);
+						console.log(obj);
 					} catch(e)
 					{
 						console.log(resText, e);

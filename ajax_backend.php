@@ -25,7 +25,7 @@
 			$results = ["info"=>'no id'];
 		}
 	}
-	else if($args['category'])
+	else if($args['state'] == 'category')
 	{
 		$results = $db->query_category($args);
 	}

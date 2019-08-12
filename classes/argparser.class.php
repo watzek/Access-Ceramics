@@ -1,5 +1,5 @@
 <?php
-require_once('config.class.php');
+require_once 'config.class.php';
 class ArgParser
 {
 	private $args;
@@ -7,26 +7,26 @@ class ArgParser
 	{
 		$this->original = $args;
 		$this->args = [
-			'category' => isset($args['c']) ? $args['c'] : DEFAULT_CATEGORY,
-		    'artist_fn' => isset($args['af']) ? $args['af'] : '',
-		    'artist_ln' => isset($args['al']) ? $args['al'] : '',
-		    'artist_id' => isset($args['id']) ? $args['id'] : '',
-		    'glazing' => isset($args['g']) ? $args['g'] : '',
-		    'material' => isset($args['m']) ? $args['m'] : '',
-		    'object' => isset($args['o']) ? $args['o'] : '',
-		    'technique' => isset($args['t']) ? $args['t'] : '',
-		    'temperature' => isset($args['tem']) ? $args['tem'] : '',
-		    'date_s'=>isset($args['ds']) ? $args['ds'] : '',
-		    'date_e'=>isset($args['de']) ? $args['de'] : '',
-		    'limit'=>(isset($args['l']) and $args['l'] < MAX_QUERY_LIM) ? $args['l'] : DEFAULT_LIM,
-		    'offset'=>isset($args['of']) ? $args['of'] : DEFAULT_OFFSET,
-		    'orderby'=>isset($args['ob']) ? $args['ob'] : '',
-		    'order'=>isset($args['or']) ? $args['or'] : DEFAULT_ORDER,
-		    'view' => isset($args['v']) ? $args['v'] : DEFAULT_VIEW,
-		    'elaborate' => isset($args['e']) ? $args['e'] : 0,
+				'category' => isset($args['category']) ? $args['category'] : DEFAULT_CATEGORY,
+		    'artist_fn' => isset($args['artist_fn']) ? $args['artist_fn'] : '',
+		    'artist_ln' => isset($args['artist_ln']) ? $args['artist_ln'] : '',
+		    'artist_id' => isset($args['artist_id']) ? $args['artist_id'] : '',
+		    'glazing' => isset($args['glazing']) ? $args['glazing'] : '',
+		    'material' => isset($args['material']) ? $args['material'] : '',
+		    'object' => isset($args['object']) ? $args['object'] : '',
+		    'technique' => isset($args['technique']) ? $args['technique'] : '',
+		    'temperature' => isset($args['temperature']) ? $args['temperature'] : '',
+		    'date_s'=>isset($args['date_s']) ? $args['date_s'] : '',
+		    'date_e'=>isset($args['date_e']) ? $args['date_e'] : '',
+		    'limit'=>(isset($args['limit']) and $args['limit'] < MAX_QUERY_LIM) ? $args['limit'] : DEFAULT_LIM,
+		    'offset'=>isset($args['offset']) ? $args['offset'] : DEFAULT_OFFSET,
+		    'orderby'=>isset($args['orderby']) ? $args['orderby'] : '',
+		    'order'=>isset($args['order']) ? $args['order'] : DEFAULT_ORDER,
+		    'view' => isset($args['view']) ? $args['view'] : DEFAULT_VIEW,
+		    'elaborate' => isset($args['elaborate']) ? $args['elaborate'] : 0,
 		    'id' => isset($args['id']) ? $args['id'] : '',
-				'state' => isset($args['s']) ? $args['s'] : DEFAULT_STATE
-
+				'state' => isset($args['state']) ? $args['state'] : DEFAULT_STATE,
+				'page' => isset($args['page']) ? $args['page'] : 0
   		];
   		/*foreach ($this->args as $key => $value) {;
 			echo ($key .'=>'. $value);

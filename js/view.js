@@ -45,7 +45,6 @@ window.onload = function()
 //show image with given ID in the viewpane
 function show_image(dom_elm)
 {
-
 	let id = parseInt(dom_elm.value);
 
 	if (id < 0 || id >= q_results.length)

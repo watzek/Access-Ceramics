@@ -3,8 +3,8 @@
   require('classes/main.class.php');
 
   $style = -1;
-  if (isset($_GET['s']) && $_GET['s'] == 'category') $style = 1; //fix this
-  else if (isset($_GET['s']) && ($_GET['s'] == 'view' || $_GET['s'] == 'artist')) $style = 0; //fix this
+  if (isset($_GET['state']) && $_GET['state'] == 'category') $style = 1; //fix this
+  else if (isset($_GET['state']) && ($_GET['state'] == 'view' || $_GET['state'] == 'artist')) $style = 0; //fix this
   $main = new Main($style);
 
   //move these 2 to a snippits function taking a desc_string
@@ -62,6 +62,7 @@
         <?php if(isset($style))echo ('var style_pack  ='. json_encode($style).';');?>
         console.log(get_args);
     </script>
+    <script type="module" src="/js/UrlManager.js"></script>
     <script type="module" src="/js/PageManagement.js"></script>
     <script type="module" src="/js/ajax.js?version=1"></script>
 

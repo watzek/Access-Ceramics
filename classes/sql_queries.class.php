@@ -164,7 +164,7 @@ class Queries
         WHERE tm.image_id = ?',
 
       'temp' => 'SELECT
-        tt.temperature, 
+        tt.temperature,
         tt.id AS temperature_id
         FROM temperature_match ttm
         JOIN temperature tt ON tt.id = ttm.temperature_id
@@ -258,7 +258,7 @@ class Queries
         FROM temperature t;'
     ];
 
-    static $artist_query = "SELECT * from artists a WHERE a.id = ?";
+    static $artist_query = 'SELECT * from artists a WHERE a.id = ?';
 
   }
 

@@ -8,17 +8,16 @@ function create_result()
 var MAX_PAGES = 5; //keep as an odd number
 var page_num = "<span class=\"clickable pagenum\"></span>";
 var view_mode = "<span class=\"view-mode pressable\"></span>";
-var default_sheets = style_pack; //provided from php
+var default_sheets = style_pack; //provided via php
 
+import UrlManager from '/js/UrlManager.js';
 
 /*
-PageManager relies on 3 other classes
+PageManager relies on 4 other classes
 	PageNumberManager -> handles pagination
 	LimitManager -> handles rpp (results per page)
 	StyleChangeManager -> handles style changes for result styles
-
-
-
+	UrlManager -> Handles setting the URL to reflect frontend changes (pagenum, view...)
 */
 export default class PageManager
 {
@@ -36,8 +35,9 @@ export default class PageManager
 		this.show_callback = show_callback;
 		this.call_on_page = call_on_page;
 		this.results_body = document.getElementById('results');
+		this.urlm = new UrlManager(_get);
 
-		this.st = new StyleChangeManager(sheets);
+		this.st = new StyleChangeManager(sheets,'',style => {this.urlm.set_url({'view':style});});
 
 		this.lm = new LimitManager(limit_choices, selected_limit);
 		this.n_pages = this.calculate_pages();
@@ -57,8 +57,10 @@ export default class PageManager
 				self.pnm.current_page = 0;
 			}
 			self.pnm.set_labels();
+			self.urlm.set_url({'limit':this.lm.limit()});
 		};
 
+		this.urlm.set_url({'limit':this.lm.limit(),'page':0+1});
 		this.set_page(0);
 	}
 
@@ -68,8 +70,7 @@ export default class PageManager
 		var amount;
 
 		let lim =  this.lm.limit();
-
-		if (this.current_page == this.n_pages-1)
+		if (this.current_page == this.n_pages-1 && this.total_items != lim)
 			amount = this.total_items % lim;
 		else amount = lim;
 
@@ -124,19 +125,16 @@ export default class PageManager
 				n_results++;
 			}
 		}
-
 	}
 	// 'page' to the current page
 	set_page(index)
 	{
-		//console.log('setting page: ',index,this.n_pages);
-
 		this.current_page = index;
 		let lim = this.result_count();
 
+		this.align_children(lim);
 		let results = this.results_body.children;
-		this.align_children(lim) // make sure we have the correct amount of dom elems
-
+		 // make sure we have the correct amount of dom elems
 
 		{ //populate the results with with their corresponding pictures and values
 			let page_offset = this.current_page * this.lm.limit();
@@ -150,6 +148,7 @@ export default class PageManager
 		}
 
 		if (this.call_on_page) this.show_callback(results[0]);
+		this.urlm.set_url({'page':this.current_page+1});
 	}
 } //end PageManager
 
@@ -203,7 +202,6 @@ class PageNumberManager
 					this.nums[i].pop(); //remove to array
 				}
 			}
-			console.log("labels",this.n_labels);
 	}
 
 	set_pages(n_pages, current_page)
@@ -341,9 +339,10 @@ class PageNumberManager
 */
 class StyleChangeManager
 {
-	constructor(style_sheets)
+	constructor(style_sheets, active_style = '', style_changed = () => {})
 	{
 		this.sheets = style_sheets;
+		this.style_changed = style_changed;
 		this.children = Array.from(document.getElementsByClassName('view-mode'));
 		if (this.sheets === undefined)
 		{
@@ -353,11 +352,14 @@ class StyleChangeManager
 
 		let active = this.sheets['active'];
 		delete this.sheets['active'];
+		if (active_style != '' && this.sheets[active_style] !== undefined)
+			active = this.sheets[active_style]
 
-		{ let chlen = this.children.length, shlen = Object.keys(this.sheets).length;
+		{
+			let chlen = this.children.length, shlen = Object.keys(this.sheets).length;
 			parent = document.getElementById('views');
-			var cnt = 0;
-			while (chlen != shlen && cnt < 10)
+			let count = 0;
+			while (chlen != shlen && count < 10)
 			{
 				if (chlen > shlen)
 				{
@@ -371,7 +373,7 @@ class StyleChangeManager
 					parent.appendChild(cp.content.children[0]);
 					chlen++;
 				}
-				cnt++;
+				count++;
 			}
 		}
 
@@ -389,7 +391,9 @@ class StyleChangeManager
 			this.children[i].innerHTML = key;
 			if (key == active) this.children[i].classList.add('active-view');
 		}
+		this.keys = Object.keys(this.sheets);
 		this.sheets = Object.values(this.sheets);
+		this.style_changed(active);
 	}
 
 	set_style(index)
@@ -405,6 +409,7 @@ class StyleChangeManager
 			else
 				element.classList.remove('active-view');
 		});
+		this.style_changed(this.keys[index]);
 	}
 }
 

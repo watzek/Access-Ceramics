@@ -91,7 +91,7 @@ class mysql
     	$stmt->bindValue(1,intval($id));
 			$stmt->execute();
 			$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+			'Query String: '.$stmt->queryString; //query string (without bound arguments)
 			if (count($res) == 0) $result[$key] = [];
 			else
 				foreach ($res as $r)
@@ -217,7 +217,7 @@ public function do_custom_query($args)
 		$stmt->bindValue(':lim',$lim, PDO::PARAM_INT);
 		$stmt->bindValue(':ofs', $ofs, PDO::PARAM_INT);
 
-		//echo 'Query String: '.$stmt->queryString; //query string (without bound arguments)
+		//'Query String: '.$stmt->queryString; //query string (without bound arguments)
 
 		$querystart = microtime(true);
 		try

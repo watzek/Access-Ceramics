@@ -38,13 +38,7 @@ class Main
 		}
 	}
 
-
-
-	// public function show()
-	// {
-	// 	$this->template->getHTML();
-	// 	unset($this->template);
-	// }
+	
 
 	public function get_args()
 	{

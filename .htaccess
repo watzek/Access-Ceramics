@@ -13,38 +13,26 @@ RewriteRule ^objects$ /objects/ [R]
 RewriteRule ^techniques$ /techniques/ [R]
 RewriteRule ^temperatures$ /temperatures/ [R]
 RewriteRule ^search$ /search/ [R]
+RewriteRule ^info$ /info/ [R]
+RewriteRule ^info/$ /info/about/ [R]
 
-#Handle categorical search params
+RewriteRule ^(\w+)/(\w+)$ /$1/$2/ [R]
 RewriteRule ^(\w+)/(\d+)$ /$1/$2/ [R]
 
-#s (state) is either, main, category or artist
-
 RewriteCond $1 =artists
-RewriteRule ^(\w+)/(\d+)/$ browse\.php\?s=artist\&c=$1&id=$2
+RewriteRule ^(\w+)/(\d+)/$ browse\.php\?state=artist\&category=$1&artist_id=$2
 
-RewriteRule ^(\w+)/(\d+)/$ browse\.php\?s=view\&c=$1&id=$2
-
-
-#Redirect (internally) each of the above to the proper page
-RewriteRule ^browse/$ browse\.php\?s=main
-RewriteRule ^collection/$ browse\.php\?s=view
-RewriteRule ^artists/$ browse\.php\?s=category&c=artists
-RewriteRule ^glazings/$ browse\.php\?s=category&c=glazings
-RewriteRule ^materials/$ browse\.php\?s=category&c=materials
-RewriteRule ^objects/$ browse\.php\?s=category&c=objects
-RewriteRule ^techniques/$ browse\.php\?s=category&c=techniques
-RewriteRule ^temperatures/$ browse\.php\?s=category&c=temperatures
-RewriteRule ^search/$ browse\.php\?s=category&c=search
+RewriteRule ^(\w+)/(\d+)/$ browse\.php\?state=view\&category=$1&id=$2
 
 
-
-
-
-#RewriteRule ^(\w+)$  /$1/  [R]
-#RewriteRule ^(\w+)/$ category\.php\?c=$1
-
-
-#RewriteRule ^(\w+)/(\d+)$ /$1/$2/ [R]
-#RewriteRule ^artists/(\d+)/$ artist\.php\?id=$1
-
-#RewriteRule ^(\w+)/(\d+)/$ view\.php\?id=$2
+#Redirect (internally) to the proper page
+RewriteRule ^browse/$ browse\.php\?state=main
+RewriteRule ^collection/$ browse\.php\?state=view
+RewriteRule ^artists/$ browse\.php\?state=category&category=artists
+RewriteRule ^glazings/$ browse\.php\?state=category&category=glazings
+RewriteRule ^materials/$ browse\.php\?state=category&category=materials
+RewriteRule ^objects/$ browse\.php\?state=category&category=objects
+RewriteRule ^techniques/$ browse\.php\?state=category&category=techniques
+RewriteRule ^temperatures/$ browse\.php\?state=category&category=temperatures
+RewriteRule ^search/$ browse\.php\?state=category&category=search
+RewriteRule ^info/(\w+)/$ info\.php\?state=$1

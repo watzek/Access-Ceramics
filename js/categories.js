@@ -38,5 +38,5 @@ function navigate(dom_elm)
 	let id = dom_elm.value;
 	let link = q_results[id]['id'];
 	console.log(link);
-	window.location.href += link;
+	window.location.href = link;
 }

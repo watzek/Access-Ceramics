@@ -27,7 +27,7 @@
 		<div id="info" class="my-md-0 py-pd-0 pb-5 mb-5 mx-auto col-sm-4 order-sm-2 lead text-center mx-auto">
 			<h3 class="h4 mb-0 mt-4">Access Ceramics</h3>
 			<hr class="pb-1 mt-4 divider bg-primary">
-				<span class="accessText">access</span><span class="ceramicsText">Ceramics</span>
+				<span class="access-text">access</span><span class="ceramics-text">Ceramics</span>
 				is a growing collection of contemporary ceramics images by recognized artists enhancing ceramics education worldwide.
 		</div> <!-- end info section -->
 
@@ -35,7 +35,7 @@
 			<h3 class="h4 mb-0 mt-4">Something</h3>
 			<hr class="pb-1 mt-4 divider bg-primary">
 		</div> <!-- end 'extra' section -->
-		
+
 		<div class="col-12 col-sm-4 order-sm-3 lead text-center" id="news-container">
 			<h3 class="h4 mb-0 mt-4">News</h3>
 			<hr class="pb-1 mt-4 divider bg-primary">
@@ -48,15 +48,15 @@
 				<br/><br/>
 			</p>
 		</div>	<!-- end news section -->
-	</div>	
+	</div>
 </div> <!-- end container-fluid -->
 
 <div class="container-fluid bg-white text-center mt-5">
-	
+
 
 
 </div>
-	
+
 
 	<script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

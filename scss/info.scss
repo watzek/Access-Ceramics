@@ -8,21 +8,110 @@
 
 body
 {
-	background-color: $l_background;
 }
 
-
-#content 
+#content
 {
 	padding-top: 5vh;
 	padding-right: 4vw;
 	padding-left: 4vw;
 	padding-bottom:0;
-	height: $body-height;
 	background-color: white;
-	margin: 1em 1em 0 1em;
 	h1
 	{
 		color: $l_background;
 	}
+	h1::after
+	{
+		content: '    ';
+		white-space: pre;
+		text-decoration: line-through;
+	}
+}
+
+div.info-page
+{
+	hr + span
+	{
+		display: block;
+		margin-top:1em;
+		margin-bottom:1em;
+	}
+	h1::after
+	{
+		content: '    ';
+		white-space: pre;
+		text-decoration: line-through;
+	}
+	div.resource
+	{
+		a
+		{
+			padding-left: 1em;
+			font-size: .7rem;
+			display: block;
+		}
+		a:hover
+		{
+			text-decoration: underline;
+		}
+	}
+	div.resource::after
+	{
+		margin-bottom: 1em;
+	}
+
+	div.faq-section
+	{
+		h2::after
+		{
+			content: '    ';
+			white-space: pre;
+			text-decoration: line-through;
+		}
+	}
+	span
+	{
+
+	}
+	div.faq-question
+	{
+		overflow-y: hidden;
+		span
+		{
+			display: block;
+			padding-left: 1em;
+			max-height: 0px;
+			padding-bottom: 0;
+			font-size: 90%;
+			background-color: $l_light;
+			border-radius: 5px;
+			font-weight: bold;
+			transition: height linear .5s, padding-bottom linear .1s;
+		}
+	}
+	div.faq-question:hover
+	{
+		overflow-y: visible;
+		span
+		{
+			visibility: visible;
+			max-height: 500px;
+			padding-bottom: 1em;
+			transition: height linear 1s, padding-bottom linear .2s;
+		}
+	}
+	div.faq-question::after
+	{
+		margin-bottom: 1em;
+	}
+}
+
+div#decorative
+{
+	padding-top: 1em;
+	float: right;
+	object-fit: contain;
+	max-height: 80vh;
+	max-width: 40vw;
 }

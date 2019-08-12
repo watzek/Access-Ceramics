@@ -29,9 +29,8 @@
 </head>
 <body>
 	<?php $navbar->show();?>
+	<div id='decorative' class="bg-primary"></div>
 	<div id="content">
-		<h1 class="h3">Info</h1>
-		<hr class="divider pt-1 ml-0">
 		<?php $content->show();?>
 	</div>
 </body>

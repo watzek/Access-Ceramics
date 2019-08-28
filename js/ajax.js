@@ -26,7 +26,7 @@ export function get_range(offset, limit, resFunc)
 	xhttp.send();
 }
 
-export function ajax_take_the_wheel(array, current_amount, target, chunk_size)
+export function ajax_take_the_wheel(array, offset, current_amount, target, chunk_size)
 {
 	let current = current_amount;
 
@@ -39,8 +39,10 @@ export function ajax_take_the_wheel(array, current_amount, target, chunk_size)
 					try
 					{
 						obj = Object.values(JSON.parse(resText)['res']);
-						array.push.apply(array, obj);
-						console.log(obj);
+						for (var i = 0; i < chunk_size && i < obj.length; i++)
+							array[current+i] = obj[i];
+						//array.push.apply(array, obj);
+						//console.log(obj);
 					} catch(e)
 					{
 						console.log(resText, e);

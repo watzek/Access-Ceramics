@@ -35,11 +35,14 @@ window.onload = function()
 
 	let query_time = q_results['time'];
 	let count = q_results['count'];
+	let page = parseInt(get_args['page']), limit = parseInt(get_args['limit']);
+
 	q_results = Object.assign(Object.values(q_results['res']));
 	let n_results = q_results.length;
 	var pm = new PageManager(q_results, count, LIMIT_CHOICES, show_image, true, false);
+	
 	if (n_results < count)
-		ajax_take_the_wheel(q_results, n_results, count, chunk_size);
+		ajax_take_the_wheel(q_results, page*limit, n_results, count, chunk_size);
 }
 
 //show image with given ID in the viewpane

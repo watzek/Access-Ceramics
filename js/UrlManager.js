@@ -65,7 +65,6 @@ export default class UrlManager
 
   set_url(obj)
   {
-    return;
     let newrl = this.build_url(obj);
     console(newrl);
     window.history.replaceState("",document.title,newrl);

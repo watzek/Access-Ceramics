@@ -3,20 +3,22 @@ import PageManager from "./PageManagement.js";
 import Alphabet from './alphabet.js';
 
 var LIMIT_CHOICES = [20,50,100,'all'];
+var CHUNK_SIZE = 40;
 
 window.onload = function()
 {
-	let chunk_size = 40;
-
-	var results = document.getElementsByClassName('result').children;
 
 	let count = q_results['count'];
 
 	q_results = Object.values(q_results['res']);
-	let n_results = q_results.length;
+	let n_results = q_results.length,
+	 		page = parseInt(get_args['page']),
+			limit = parseInt(get_args['limit']);
 
-// Alphabet sorts the array, so we call it before PageManager loads results
-	let alp = new Alphabet(q_results,
+	document.getElementById('search-title').innerHTML = get_args['category']+' ('+count+')';
+
+	// Alphabet sorts the array, so we call it before PageManager loads results
+	var alp = new Alphabet(q_results,
 				(get_args['category'] == 'artists') ? 'lname' : 'title',
 				false,
 				document.getElementById('alphabet'),
@@ -27,10 +29,9 @@ window.onload = function()
 
 	alp.letter_clicked = (el,st,end) => {pm.set_context(q_results.slice(st,end));};
 
-	if (n_results < count) ajax_take_the_wheel(q_results, n_results, count, chunk_size);
-
-	document.getElementById('search-title').innerHTML = get_args['category']+' ('+count+')';
-
+	// below not needed
+	if (n_results < count)
+		ajax_take_the_wheel(q_results, page*limit, n_results, count, CHUNK_SIZE);
 }
 
 function navigate(dom_elm)

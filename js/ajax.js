@@ -26,33 +26,47 @@ export function get_range(offset, limit, resFunc)
 	xhttp.send();
 }
 
+
 export function ajax_take_the_wheel(array, offset, current_amount, target, chunk_size)
 {
-	let current = current_amount;
+	var current = 0, flag = 0;
+	if (offset === 0)
+	{
+		current = current_amount;
+		flag = 1;
+	}
 
 	for (current; current < target; current += chunk_size)
 	{
-		get_range(current, chunk_size, (resText) => {
+		var amount = chunk_size;
+		//if next chunk starts in the middle of existing elements
+		if (!flag && current >= offset && current < offset+current_amount)
+		{
+				current = offset+current_amount;
+				flag = 1;
+		}
+		else
+		{
+			//if next chunk would skip over existing elements
+			if (!flag && current+chunk_size > offset)
+				amount -= (offset-current);
+
+			get_range(current, amount, (resText) => {
 				if(resText !== '')
 				{
-					let obj;
 					try
 					{
-						obj = Object.values(JSON.parse(resText)['res']);
+						let obj = Object.values(JSON.parse(resText)['res']);
 						for (var i = 0; i < chunk_size && i < obj.length; i++)
 							array[current+i] = obj[i];
-						//array.push.apply(array, obj);
-						//console.log(obj);
-					} catch(e)
-					{
-						console.log(resText, e);
 					}
+					catch(e) console.log(resText, e);
 				}
-			});
-	}
-	//might instead have callback function just call this function again
-	//incase queries will arrive out of order
-}
+				});
+		}
+	} //end for
+
+}// end 'ajax_take_the_wheel'
 
 function query_string()
 {

@@ -54,7 +54,7 @@ class mysql
 	{
 		$query_key = $args['category'];
 		$limit = $args['limit'];
-		$offset = $args['offset'];
+		$offset = $args['offset'];//(intval($args['page'])-1)*intval($args['limit']); 
 
 		$stmt = $this->db->prepare(Queries::$category_queries[$query_key]);
 		$stmt->bindValue(1,intval($limit),PDO::PARAM_INT);

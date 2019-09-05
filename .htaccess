@@ -8,6 +8,8 @@ RewriteEngine on
 RewriteRule ^category/(\w+)/$ /category/$1/1/ [R]
 
 # Convert category/category_name/page_num/id -> /category_name/id/
+# this is used so going to a specific category is as simple as
+# appending an id to the end of the url
 RewriteRule ^category/(\w+)/(\d+)/(\d+)/$ /$1/$3/ [R]
 
 # add trailing slash

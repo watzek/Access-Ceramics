@@ -38,143 +38,21 @@ class Main
 		}
 	}
 
-	
-
 	public function get_args()
 	{
 		return $this->args;
 	}
 
-
 	public function get_results()
 	{
+		$offset = (intval($this->args['page'])-1)*intval($this->args['limit']);
+		$this->args['offset'] = $offset;
 		if($this->args['state'] == 'main')
-		{
-			if ($this->NO_DB)
-			{
-				$this->results = [
-					  'object' => [
-							'src' =>'/img/acpics/Hirotake-Imanishi.shell.jpg',
-							'ct' => 0
-					]
-					, 'glazing' => [
-							'src' =>'/img/acpics/Hirotake-Imanishi.shell.jpg',
-							'ct' => 0
-					]
-					, 'material' => [
-							'src' =>'/img/acpics/Hirotake-Imanishi.shell.jpg',
-							'ct' => 0
-					]
-					, 'technique' => [
-							'src' =>'/img/acpics/Hirotake-Imanishi.shell.jpg',
-							'ct' => 0
-					]
-					, 'temperature' => [
-							'src' =>'/img/acpics/Hirotake-Imanishi.shell.jpg',
-							'ct' => 0
-					]
-					, 'artists' => [
-							'src' =>'/img/acpics/Hirotake-Imanishi.shell.jpg',
-							'ct' => 0
-					]
-					, 'collection' => [
-							'src' =>'/img/acpics/Hirotake-Imanishi.shell.jpg',
-							'ct' => 0
-					]
-
-				];
-			}
-			else
 				$this->results = $this->db->categories();
-		}
 		else if($this->args['state'] == 'category')
-		{
-			if ($this->NO_DB)
-			{
-				$this->results = [
-					'count' => 30,
-					'time' => 0,
-					'res' => [
-						 ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-					]
-				];
-			}
-			else
 				$this->results = $this->db->query_category($this->args);
-		}
 		else if($this->args)
-		{
-			if ($this->NO_DB)
-			{
-				$this->results = [
-					'count' => 30,
-					'time' => 0,
-					'res' => [
-						 ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-						, ['id'=>'0009','src'=>'/img/acpics/Hirotake-Imanishi.shell.jpg','title'=>'Fake Picture!']
-					]
-				];
-			}
-			else
 				$this->results = $this->db->do_custom_query($this->args);
-		}
 
 		return $this->results;
 	}

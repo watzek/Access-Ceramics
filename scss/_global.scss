@@ -22,6 +22,26 @@ html {
   }
 }
 
+.loading
+{
+    content: url('/img/spinner-solid.svg');
+    -webkit-animation-name: spin; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+
+    animation: spin 5s linear infinite;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes spin {
+  from {transform: rotate(0);}
+  to {transform: rotate(360deg);}
+}
+/* Standard syntax */
+@keyframes spin {
+  from {transform: rotate(0);}
+  to {transform: rotate(360deg);}
+}
+
 
 .access-text
 {

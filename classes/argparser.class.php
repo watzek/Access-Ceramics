@@ -26,7 +26,7 @@ class ArgParser
 		    'elaborate' => isset($args['elaborate']) ? $args['elaborate'] : 0,
 		    'id' => isset($args['id']) ? $args['id'] : '',
 				'state' => isset($args['state']) ? $args['state'] : DEFAULT_STATE,
-				'page' => isset($args['page']) ? $args['page'] : 0
+				'page' => isset($args['page']) ? $args['page'] : 1
   		];
   		/*foreach ($this->args as $key => $value) {;
 			echo ($key .'=>'. $value);

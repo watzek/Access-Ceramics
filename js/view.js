@@ -1,4 +1,4 @@
-import {ajax_take_the_wheel, elaborate, get_range} from "./ajax.js";
+import {elaborate, object_insert} from "./ajax.js";
 import PageManager from "./PageManagement.js";
 
 var view;
@@ -36,18 +36,26 @@ window.onload = function()
 	let query_time = q_results['time'];
 	let count = q_results['count'];
 	let page = parseInt(get_args['page']), limit = parseInt(get_args['limit']);
+	let offset = (page-1)*limit;
 
-	q_results = Object.assign(Object.values(q_results['res']));
-	let n_results = q_results.length;
-	var pm = new PageManager(q_results, count, LIMIT_CHOICES, show_image, true, false);
-	
-	if (n_results < count)
-		ajax_take_the_wheel(q_results, page*limit, n_results, count, chunk_size);
+	q_results = Object.values(q_results['res']);
+	let obj = {};
+	object_insert(obj, q_results, offset);
+	q_results = obj;
+
+	var pm = new PageManager(q_results,
+													count,
+													page,
+													LIMIT_CHOICES,
+													false, //parseInt(get_args['limit']),
+													show_image,
+													true);
 }
 
 //show image with given ID in the viewpane
 function show_image(dom_elm)
 {
+	//console.log(dom_elm);
 	let id = parseInt(dom_elm.value);
 
 	if (id < 0 || id >= q_results.length)
@@ -57,6 +65,7 @@ function show_image(dom_elm)
 	}
 
 	let real_id = q_results[id]['id'];
+
 
 	if (meta_info[real_id] === undefined)
 	{
@@ -87,7 +96,7 @@ function show_image(dom_elm)
 
 	view.img.src = info['src'];
 	view.title.innerHTML = info['title'];
-	view.artist.innerHTML = info['artist'];
+	view.artist.innerHTML = String(info['artist']).toLowerCase();
 	view.date.innerHTML = info['date'];
 
 	view.stitle.innerHTML = info['stitle'] === undefined ? '' : '( '+info['stitle']+' )';

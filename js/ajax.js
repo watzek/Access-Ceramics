@@ -7,7 +7,7 @@ export function elaborate(image_id, responseFunction)
 			responseFunction(xhttp.responseText);
 	}
 	let str = "/ajax_backend.php?elaborate=1&id="+image_id;
-	console.log(str);
+	//console.log(str);
 	xhttp.open("GET",str, true);
 	xhttp.send();
 }
@@ -27,46 +27,36 @@ export function get_range(offset, limit, resFunc)
 }
 
 
-export function ajax_take_the_wheel(array, offset, current_amount, target, chunk_size)
+
+/*
+	retreives results from ajax_backend and inserts them into object_array
+*/
+export function ajax_insert_range(object_array, offset, limit, callback)
 {
-	var current = 0, flag = 0;
-	if (offset === 0)
+	get_range(offset, limit, resText =>
 	{
-		current = current_amount;
-		flag = 1;
-	}
-
-	for (current; current < target; current += chunk_size)
-	{
-		var amount = chunk_size;
-		//if next chunk starts in the middle of existing elements
-		if (!flag && current >= offset && current < offset+current_amount)
-		{
-				current = offset+current_amount;
-				flag = 1;
-		}
+		if(resText !== '')
+			try
+			{
+				let vals = Object.values(JSON.parse(resText)['res']);
+				object_insert(object_array, vals, offset);
+				callback();
+			}
+			catch(e)
+			{
+				console.log(resText, e);
+			}
 		else
-		{
-			//if next chunk would skip over existing elements
-			if (!flag && current+chunk_size > offset)
-				amount -= (offset-current);
+			console.log('got nothing',ind);
+	});
+}
 
-			get_range(current, amount, (resText) => {
-				if(resText !== '')
-				{
-					try
-					{
-						let obj = Object.values(JSON.parse(resText)['res']);
-						for (var i = 0; i < chunk_size && i < obj.length; i++)
-							array[current+i] = obj[i];
-					}
-					catch(e) console.log(resText, e);
-				}
-				});
-		}
-	} //end for
 
-}// end 'ajax_take_the_wheel'
+export function object_insert(obj, array, start_ind)
+{
+	for (var i = 0; i < array.length; i++)
+		obj[start_ind+i] = array[i];
+}
 
 function query_string()
 {

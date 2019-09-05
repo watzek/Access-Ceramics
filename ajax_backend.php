@@ -8,8 +8,6 @@
 	$args = $ap->get_args();
 	unset($ap);
 
-
-
 	if(!$args)
 	{
 		$results = $db->categories();

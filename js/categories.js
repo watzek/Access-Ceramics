@@ -1,4 +1,3 @@
-import {ajax_take_the_wheel, elaborate, get_range} from "./ajax.js";
 import PageManager from "./PageManagement.js";
 import Alphabet from './alphabet.js';
 
@@ -11,8 +10,7 @@ window.onload = function()
 	let count = q_results['count'];
 
 	q_results = Object.values(q_results['res']);
-	let n_results = q_results.length,
-	 		page = parseInt(get_args['page']),
+	let page = parseInt(get_args['page']),
 			limit = parseInt(get_args['limit']);
 
 	document.getElementById('search-title').innerHTML = get_args['category']+' ('+count+')';
@@ -25,13 +23,15 @@ window.onload = function()
 				'<span class=\'alphabet-letter clickable\'></span>'
 				);
 
-	var pm = new PageManager(q_results, count, LIMIT_CHOICES, navigate, false, false);
+	var pm = new PageManager(q_results,
+													count,
+													parseInt(get_args['page']),
+													LIMIT_CHOICES,
+													false, //parseInt(get_args['limit']),
+													navigate,
+													false);
 
 	alp.letter_clicked = (el,st,end) => {pm.set_context(q_results.slice(st,end));};
-
-	// below not needed
-	if (n_results < count)
-		ajax_take_the_wheel(q_results, page*limit, n_results, count, CHUNK_SIZE);
 }
 
 function navigate(dom_elm)

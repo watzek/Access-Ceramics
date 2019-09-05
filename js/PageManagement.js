@@ -1,3 +1,5 @@
+import {ajax_insert_range} from "./ajax.js";
+
 function create_result()
 {
 	var template = document.createElement('template');
@@ -21,16 +23,17 @@ PageManager relies on 4 other classes
 */
 export default class PageManager
 {
-	constructor(q_results, //all current results
+	constructor(array, //array of elements to be managed
 							results_total, //total, expected results
+							initial_page=1, //first page to access
 							limit_choices, //results per page posibilities
+							selected_limit=false, //limit can be preset
 							show_callback, //function called when a result is clicked
 							call_on_page=true, //determins if show_callback is called on page change
-							selected_limit=false, //limit can be preset
 							sheets=default_sheets) //style sheets for view-mode changes
 	{
-		this.current_page = 0;
-		this.items = q_results;
+		this.current_page = initial_page-1;
+		this.items = array;
 		this.total_items = results_total;
 		this.show_callback = show_callback;
 		this.call_on_page = call_on_page;
@@ -42,7 +45,7 @@ export default class PageManager
 		this.lm = new LimitManager(limit_choices, selected_limit);
 		this.n_pages = this.calculate_pages();
 
-		this.pnm = new PageNumberManager(this.n_pages);
+		this.pnm = new PageNumberManager(this.n_pages, this.current_page);
 		this.pnm.page_selected = this.set_page.bind(this);
 
 		let self = this;
@@ -61,7 +64,7 @@ export default class PageManager
 		};
 
 		this.urlm.set_url({'limit':this.lm.limit(),'page':0+1});
-		this.set_page(0);
+		this.set_page(this.current_page);
 	}
 
 	// returns the number of elements on a given page
@@ -130,37 +133,50 @@ export default class PageManager
 	set_page(index)
 	{
 		this.current_page = index;
-		let lim = this.result_count();
+		let lim = this.result_count(), limit = this.lm.limit();
 
 		this.align_children(lim);
 		let results = this.results_body.children;
-		 // make sure we have the correct amount of dom elems
+
+		// for (var i = 0; i < lim; i++)
+		// {
+		// 	let res = results[i];
+		// 	console.log(res);
+		// 	res.children[0].classList.add('loading');
+		// }
 
 		{ //populate the results with with their corresponding pictures and values
-			let page_offset = this.current_page * this.lm.limit();
-			for (var i = 0; (i < lim) && (page_offset+i < this.items.length); i++)
+			let page_offset = this.current_page * limit;
+			for (var i = 0; (i < lim); i++)
 			{
 				let res = results[i];
-				res.children[0].src = this.items[page_offset + i].src; //picture
-				res.children[1].innerHTML = this.items[page_offset + i].title; //text
-				res.value = page_offset+i;
+
+				let _i = page_offset + i
+				if (this.items[_i] === undefined)
+				{
+					ajax_insert_range(this.items, _i, limit, () => {this.set_page(index)});
+					return;
+				}
+
+				res.children[0].src = this.items[_i].src; //picture
+				res.children[1].innerHTML = this.items[_i].title; //text
+				res.value = _i;
 			}
 		}
-
 		if (this.call_on_page) this.show_callback(results[0]);
 		this.urlm.set_url({'page':this.current_page+1});
 	}
+
 } //end PageManager
 
 class PageNumberManager
 {
-	constructor(n_pages)
+	constructor(n_pages, initial_page=1)
 	{
 		this.navs = document.getElementsByClassName("navigate");
 		this.arrows = [[],[]];
 		this.nums = [[],[]];
-		this.current_page = 0;
-		this.set_pages(n_pages, 0);
+		this.set_pages(n_pages, initial_page);
 		this.page_selected = (index) => {};
 
 		let self = this;

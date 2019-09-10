@@ -7,7 +7,7 @@
   else if (isset($_GET['state']) && ($_GET['state'] == 'view' || $_GET['state'] == 'artist')) $style = 0; //fix this
   $main = new Main($style);
 
-  //move these 2 to a snippits function taking a desc_string
+  //move these 2 to a snippits function taking a desc_string, returning closure
   $navbar = new Snippits('classic-navbar');
   $header = new Snippits('header-search');
 
@@ -178,6 +178,7 @@ else
         ?>
         <?php  $header->show()?>
       </div>
+
       <div class="navigate"></div>
       <div id="results"></div>
       <div class="navigate"></div>

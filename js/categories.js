@@ -29,7 +29,8 @@ window.onload = function()
 													LIMIT_CHOICES,
 													false, //parseInt(get_args['limit']),
 													navigate,
-													false);
+													false,
+													get_args['view']);
 
 	alp.letter_clicked = (el,st,end) => {pm.set_context(q_results.slice(st,end));};
 }

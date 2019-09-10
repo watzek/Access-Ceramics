@@ -77,10 +77,9 @@ export default class UrlManager
 
   set_url(obj)
   {
-    //return;
     let newrl = this.build_url(obj);
     if (newrl === false) return;
-    console.log(this.current_page, newrl);
+    console.log('url set');
     window.history.replaceState("","", newrl);
   }
 }

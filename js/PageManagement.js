@@ -30,7 +30,8 @@ export default class PageManager
 							selected_limit=false, //limit can be preset
 							show_callback, //function called when a result is clicked
 							call_on_page=true, //determins if show_callback is called on page change
-							sheets=default_sheets) //style sheets for view-mode changes
+							sheets=default_sheets,
+							initial_style='') //style sheets for view-mode changes
 	{
 		this.current_page = initial_page-1;
 		this.items = array;
@@ -40,13 +41,19 @@ export default class PageManager
 		this.results_body = document.getElementById('results');
 		this.urlm = new UrlManager(_get);
 
-		this.st = new StyleChangeManager(sheets,'',style => {this.urlm.set_url({'view':style});});
+		this.st = new StyleChangeManager(sheets,initial_style,style => {this.urlm.set_url({'view':style});});
 
-		this.lm = new LimitManager(limit_choices, selected_limit);
+		this.lm = new LimitManager(limit_choices, false);//selected_limit);
 		this.n_pages = this.calculate_pages();
 
 		this.pnm = new PageNumberManager(this.n_pages, this.current_page);
 		this.pnm.page_selected = this.set_page.bind(this);
+
+		this.urlm.set_url(
+			{
+				'limit':this.lm.limit(),
+				'page':this.current_page+1,
+			});
 
 		let self = this;
 		this.lm.limit_changed = function() //called when limit is changed
@@ -63,7 +70,6 @@ export default class PageManager
 			self.urlm.set_url({'limit':this.lm.limit()});
 		};
 
-		this.urlm.set_url({'limit':this.lm.limit(),'page':0+1});
 		this.set_page(this.current_page);
 	}
 
@@ -365,12 +371,12 @@ class StyleChangeManager
 			console.log('no sheet provided');
 			return;
 		}
-
+		console.log(this.sheets);
 		let active = this.sheets['active'];
 		delete this.sheets['active'];
+
 		if (active_style != '' && this.sheets[active_style] !== undefined)
 			active = this.sheets[active_style]
-
 		{
 			let chlen = this.children.length, shlen = Object.keys(this.sheets).length;
 			parent = document.getElementById('views');

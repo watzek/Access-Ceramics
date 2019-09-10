@@ -47,9 +47,11 @@ window.onload = function()
 													count,
 													page,
 													LIMIT_CHOICES,
-													false, //parseInt(get_args['limit']),
+													parseInt(get_args['limit']),
 													show_image,
-													true);
+													true,
+													undefined,
+													get_args['view']);
 }
 
 //show image with given ID in the viewpane

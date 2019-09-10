@@ -18,22 +18,22 @@ RewriteRule ^category/(\w+)/(\d+)/(\d+)$ /category/$1/$2/$3/ [R]
 RewriteRule ^collection/(\d+)$ /collection/$1/ [R]
 
 # special case for info pages
-RewriteRule ^info/(\w+)/$ info\.php\?state=$1
+RewriteRule ^info/(\w+)/$ info\.php\?state=$1 [QSA]
 
 # special cases for 'collection' state
-RewriteRule ^collection/$ browse.php?state=view
-RewriteRule ^collection/(\d+)/$ browse.php?state=view&page=$1
+RewriteRule ^collection/$ browse.php?state=view [QSA]
+RewriteRule ^collection/(\d+)/$ browse.php?state=view&page=$1 [QSA]
 
 # Pass page number through GET
-RewriteRule ^category/(\w+)/(\d+)/$ browse\.php\?state=category\&category=$1\&page=$2
+RewriteRule ^category/(\w+)/(\d+)/$ browse.php?state=category&category=$1&page=$2 [QSA]
 
 RewriteCond $1 =artists
-RewriteRule ^(\w+)/(\d+)/(\d+)/ browse\.php\?state=artist\&category=$1&artist_id=$2&page=$3
+RewriteRule ^(\w+)/(\d+)/(\d+)/ browse.php?state=artist&category=$1&artist_id=$2&page=$3 [QSA]
 # else
-RewriteRule ^(\w+)/(\d+)/(\d+)/ browse\.php\?state=view\&category=$1&id=$2&page=$3
+RewriteRule ^(\w+)/(\d+)/(\d+)/ browse.php?state=view&category=$1&id=$2&page=$3 [QSA]
 
 # 'artists' state requires special treatment
 RewriteCond $1 =artists
-RewriteRule ^(\w+)/(\d+)/$ browse\.php\?state=artist\&category=$1&artist_id=$2
+RewriteRule ^(\w+)/(\d+)/$ browse.php?state=artist&category=$1&artist_id=$2 [QSA]
 # else
-RewriteRule ^(\w+)/(\d+)/$ browse\.php\?state=view\&category=$1&id=$2
+RewriteRule ^(\w+)/(\d+)/$ browse.php?state=view&category=$1&id=$2 [QSA]

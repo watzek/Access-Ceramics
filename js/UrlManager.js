@@ -14,60 +14,73 @@ export default class UrlManager
   {
     this.args = get_args;
     this.params = {'limit':0,'page':0,'view':0};
+    this.current_page = get_args['state'];
 
-    // let i = 0;
-    // for (var key in this.args)
-    // {
-    //   if (i > 0) this.base += '&';
-    //   else i++;
-    //   this.base += key + '=' +this.args[key];
-    // }
+    if (this.current_page === "view") this.current_page = 'collection';
+    this.id = get_args['id'];
+    if (this.id === undefined) this.id = "";
+    else
+    {
+      if(this.current_page === 'artist')
+      {
+        this.current_page = 'artists';
+        this.id = get_args['artist_id'];
+      }
+      this.id+='/';
+    }
   }
 
   update_params(obj)
   {
+      let f = false;
       for(var key in this.params)
       {
         if (obj[key] === undefined)
-        {
+
           obj[key] = this.params[key];
+        else if(obj[key] !== this.params[key])
+        {
+          f = true;
+          console.log(key, this.params[key], obj[key]);
         }
       }
       this.params = obj;
-      return obj;
+      return f ? obj : false;
   }
 
   build_url(obj)
   {
     obj = this.update_params(obj);
-    console.log(obj);
+    if (obj === false) return obj;
 
-    let newrl = '';
+    let newrl = '?';
+
     let flag = false;
 
     if (obj['page'] !== undefined)
-      newrl += ''+obj['page']+'/';
-
-    newrl+='?';
+    {
+      newrl += 'page='+obj['page'];
+      flag = true;
+    }
 
     if(obj['view'] !== undefined)
     {
-      newrl += 'view='+obj['view'];
+      newrl += (flag?'&':'') + 'view='+obj['view'];
       flag = true;
     }
     if(obj['limit'] !== undefined)
     {
       newrl += (flag?'&':'') + 'limit='+obj['limit'];
     }
-
     return newrl;
   }
 
   set_url(obj)
   {
-    return;
+    //return;
     let newrl = this.build_url(obj);
-    //console.log(newrl);
-    window.history.replaceState("",document.title,newrl);
+    if (newrl === false) return;
+    console.log(this.current_page, newrl);
+    window.history.replaceState("","", newrl);
   }
 }

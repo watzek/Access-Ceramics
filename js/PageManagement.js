@@ -51,7 +51,7 @@ export default class PageManager
 		let self = this;
 		this.lm.limit_changed = function() //called when limit is changed
 		{
-			self.set_page(self.current_page);
+			self.set_page(0);
 
 			self.pnm.set_pages(self.calculate_pages(),0);//calculate_pages also sets self.n_pages
 			if (self.n_pages == 1)

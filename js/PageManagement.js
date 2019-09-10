@@ -10,7 +10,7 @@ function create_result()
 var MAX_PAGES = 5; //keep as an odd number
 var page_num = "<span class=\"clickable pagenum\"></span>";
 var view_mode = "<span class=\"view-mode pressable\"></span>";
-var default_sheets = style_pack; //provided via php
+var DEFAULT_SHEETS = style_pack; //provided via php
 
 import UrlManager from '/js/UrlManager.js';
 
@@ -27,13 +27,12 @@ export default class PageManager
 							results_total, //total, expected results
 							initial_page=1, //first page to access
 							limit_choices, //results per page posibilities
-							selected_limit=false, //limit can be preset
+							selected_limit, //limit can be preset
 							show_callback, //function called when a result is clicked
 							call_on_page=true, //determins if show_callback is called on page change
-							sheets=default_sheets,
-							initial_style='') //style sheets for view-mode changes
+							initial_style) //style sheets for view-mode changes
 	{
-		this.current_page = initial_page-1;
+		this.current_page = initial_page;
 		this.items = array;
 		this.total_items = results_total;
 		this.show_callback = show_callback;
@@ -41,19 +40,22 @@ export default class PageManager
 		this.results_body = document.getElementById('results');
 		this.urlm = new UrlManager(_get);
 
-		this.st = new StyleChangeManager(sheets,initial_style,style => {this.urlm.set_url({'view':style});});
+		this.urlm.set_url(
+			{
+				'limit':selected_limit,
+				'page':this.current_page+1,
+				'view':initial_style
+			});
 
-		this.lm = new LimitManager(limit_choices, false);//selected_limit);
+		this.st = new StyleChangeManager(DEFAULT_SHEETS,initial_style,style => {this.urlm.set_url({'view':style});});
+
+		this.lm = new LimitManager(limit_choices, selected_limit);
 		this.n_pages = this.calculate_pages();
 
 		this.pnm = new PageNumberManager(this.n_pages, this.current_page);
 		this.pnm.page_selected = this.set_page.bind(this);
 
-		this.urlm.set_url(
-			{
-				'limit':this.lm.limit(),
-				'page':this.current_page+1,
-			});
+
 
 		let self = this;
 		this.lm.limit_changed = function() //called when limit is changed
@@ -67,7 +69,7 @@ export default class PageManager
 				self.pnm.current_page = 0;
 			}
 			self.pnm.set_labels();
-			self.urlm.set_url({'limit':this.lm.limit()});
+			self.urlm.set_url({'limit':self.lm.limit()});
 		};
 
 		this.set_page(this.current_page);
@@ -177,7 +179,7 @@ export default class PageManager
 
 class PageNumberManager
 {
-	constructor(n_pages, initial_page=1)
+	constructor(n_pages, initial_page=0)
 	{
 		this.navs = document.getElementsByClassName("navigate");
 		this.arrows = [[],[]];
@@ -376,8 +378,10 @@ class StyleChangeManager
 		delete this.sheets['active'];
 
 		if (active_style != '' && this.sheets[active_style] !== undefined)
-			active = this.sheets[active_style]
-		{
+			active = active_style;
+
+
+		{/* 'aligns' DOM elements to match style sheet */
 			let chlen = this.children.length, shlen = Object.keys(this.sheets).length;
 			parent = document.getElementById('views');
 			let count = 0;
@@ -397,18 +401,20 @@ class StyleChangeManager
 				}
 				count++;
 			}
-		}
+		} //end alignment
 
+
+		/* make elements contain proper style information */
 		let keys = Object.keys(this.sheets);
 		let self = this;
 		for (var i = 0; i < this.children.length; i++)
 		{
 			let key = keys[i];
-
 			this.children[i].addEventListener('click', function()
 			{
 				self.set_style(this.value);
 			});
+
 			this.children[i].value = i;
 			this.children[i].innerHTML = key;
 			if (key == active) this.children[i].classList.add('active-view');
@@ -442,8 +448,13 @@ class LimitManager
 		this.limit_changed = () => {};
 		this.choices = limit_choices;
 		this.children = document.getElementsByClassName("limit-choice");
-		this.selected = selected_limit ? selected_limit : 0;
 
+		if (selected_limit !== false && limit_choices.includes(selected_limit))
+			this.selected = limit_choices.indexOf(selected_limit);
+		else
+			this.selected = 0;
+
+		/* Add event listeners to change limit, */
 		var parent = this;
 		for (var i = 0; i < this.choices.length; i++)
 		{
@@ -457,14 +468,14 @@ class LimitManager
 				parent.set_limit(this.value);
 			});
 
-			if (this.selected == i ) child.classList.add('active')
+			if (this.selected == i) child.classList.add('active')
 			else if (child.classList.contains('active')) child.classList.remove('active');
 		}
 	}
 
 	set_limit(ind)
 	{
-		if(ind < 0 || ind >= this.choices.length || this.choices[ind] == this.limit)
+		if(ind < 0 || ind >= this.choices.length)
 		{
 			console.log('limit remains unchanged');
 			return;

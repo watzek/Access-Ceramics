@@ -50,7 +50,6 @@ window.onload = function()
 													parseInt(get_args['limit']),
 													show_image,
 													true,
-													undefined,
 													get_args['view']);
 }
 

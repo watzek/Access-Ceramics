@@ -27,7 +27,7 @@ window.onload = function()
 													count,
 													parseInt(get_args['page']),
 													LIMIT_CHOICES,
-													false, //parseInt(get_args['limit']),
+													parseInt(get_args['limit']),
 													navigate,
 													false,
 													get_args['view']);

@@ -3,7 +3,7 @@
 	const DEFAULT_LIM = 20;
 	const MAX_QUERY_LIM = 10000;
 	const DEFAULT_OFFSET = 0;
-	const DEFAULT_VIEW = 'comfort';
+	const DEFAULT_VIEW = 'comfortable';
 	const DEFAULT_ORDER = '';
 	const DEFAULT_STATE ='main';
 

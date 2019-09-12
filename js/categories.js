@@ -4,6 +4,8 @@ import Alphabet from './alphabet.js';
 var LIMIT_CHOICES = [20,50,100,'all'];
 var CHUNK_SIZE = 40;
 
+var get_item;
+
 window.onload = function()
 {
 
@@ -25,12 +27,14 @@ window.onload = function()
 
 	var pm = new PageManager(q_results,
 													count,
-													parseInt(get_args['page']),
+													parseInt(get_args['page'])-1,
 													LIMIT_CHOICES,
 													parseInt(get_args['limit']),
 													navigate,
 													false,
 													get_args['view']);
+
+get_item = pm.get_item.bind(pm);
 
 	alp.letter_clicked = (el,st,end) => {pm.set_context(q_results.slice(st,end));};
 }
@@ -38,7 +42,6 @@ window.onload = function()
 function navigate(dom_elm)
 {
 	let id = dom_elm.value;
-	let link = q_results[id]['id'];
-	console.log(link);
+	let link = get_item(id).id;
 	window.location.href = link;
 }

@@ -33,10 +33,11 @@ window.onload = function()
 			license : document.getElementById('meta-license')
 		};
 
+/*ISSUE WITH PAGE REPRESENTATIONS url vs in javascript*/
 	let query_time = q_results['time'];
 	let count = q_results['count'];
-	let page = parseInt(get_args['page']), limit = parseInt(get_args['limit']);
-	let offset = (page-1)*limit;
+	let page = parseInt(get_args['page'])-1, limit = parseInt(get_args['limit']);
+	let offset = (page)*limit;
 
 	q_results = Object.values(q_results['res']);
 	let obj = {};

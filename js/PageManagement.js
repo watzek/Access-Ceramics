@@ -43,7 +43,7 @@ export default class PageManager
 		this.urlm.set_url(
 			{
 				'limit':selected_limit,
-				'page':this.current_page+1,
+				'page':this.current_page,
 				'view':initial_style
 			});
 
@@ -74,7 +74,10 @@ export default class PageManager
 
 		this.set_page(this.current_page);
 	}
-
+	get_item(id)
+	{
+		return this.items[id];
+	}
 	// returns the number of elements on a given page
 	result_count()
 	{
@@ -140,6 +143,7 @@ export default class PageManager
 	// 'page' to the current page
 	set_page(index)
 	{
+		//console.log(this.items);
 		this.current_page = index;
 		let lim = this.result_count(), limit = this.lm.limit();
 
@@ -172,7 +176,7 @@ export default class PageManager
 			}
 		}
 		if (this.call_on_page) this.show_callback(results[0]);
-		this.urlm.set_url({'page':this.current_page+1});
+		this.urlm.set_url({'page':this.current_page});
 	}
 
 } //end PageManager

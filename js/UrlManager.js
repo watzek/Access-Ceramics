@@ -59,7 +59,7 @@ export default class UrlManager
 
     if (obj['page'] !== undefined)
     {
-      newrl += 'page='+obj['page'];
+      newrl += 'page='+(obj['page']+1); //add one to page to offset 0 indexing
       flag = true;
     }
 
